@@ -1,1 +1,145 @@
-PLACEHOLDER_USE_LOCAL
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>FUCKRUNNER</title><script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;touch-action:manipulation}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a1020;font-family:ui-monospace,Menlo,Consolas,monospace;user-select:none}
+#wrap{position:relative;width:100%;height:100%}
+canvas{display:block;width:100%;height:100%;background:#3a2460;image-rendering:pixelated}
+#hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:15px;text-shadow:0 2px 0 #000;pointer-events:none;z-index:4}
+#buff{color:#7ad4ff;font-size:12px;margin-top:4px}
+#cityTag{position:absolute;top:42px;left:50%;transform:translateX(-50%);color:#ffe08a;font-weight:800;font-size:13px;text-shadow:0 2px 0 #000;pointer-events:none;z-index:4;opacity:0;transition:opacity .3s}
+#overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,4,14,.82);color:#fff;text-align:center;padding:16px;z-index:6}
+#overlay h1{font-size:26px;margin-bottom:8px;color:#ff4d6d;text-shadow:3px 3px 0 #3a0010}
+#overlay p{opacity:.92;margin:6px 0 16px;max-width:340px;line-height:1.35}
+button.main{appearance:none;border:3px solid #fff;background:#ff4d6d;color:#fff;font-weight:800;font-size:17px;font-family:inherit;padding:12px 24px;cursor:pointer}
+button.main:disabled{opacity:.4}
+.hint{font-size:12px;opacity:.7;margin-top:12px}
+#screen-pick{display:none;width:min(520px,96vw)}
+#screen-pick.show{display:block}
+#screen-title.hide{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 16px}
+.card{background:#2a1630;border:3px solid #5a3a50;color:#fff;cursor:pointer;padding:8px 6px 10px;font-family:inherit}
+.card .nm{font-size:11px;font-weight:800;margin-bottom:6px;color:#ffe08a}
+.card.sel{border-color:#ff4d6d;box-shadow:0 0 0 3px rgba(255,77,109,.35)}
+#hero{position:absolute;left:90px;width:54px;height:96px;pointer-events:none;z-index:3}
+#hero .cap{position:absolute;left:8px;top:0;width:38px;height:16px;background:#111;border-radius:8px 8px 2px 2px;z-index:3}
+#hero .cap:after{content:'';position:absolute;right:-8px;bottom:2px;width:18px;height:6px;background:#111;border-radius:0 6px 6px 0}
+#hero .vega{position:absolute;left:8px;top:3px;width:38px;color:#eee;font:800 7px/1 sans-serif;text-align:center;z-index:4}
+#hero .head{position:absolute;left:14px;top:10px;width:26px;height:26px;background:#f0b48a;border-radius:50%}
+#hero .eye{position:absolute;top:18px;width:4px;height:4px;background:#222;border-radius:50%}
+#hero .eye.l{left:20px}#hero .eye.r{left:30px}
+#hero .shirt{position:absolute;left:6px;top:32px;width:42px;height:38px;background:#2ea44f;border-radius:8px 8px 4px 4px}
+#hero .collar{position:absolute;left:6px;top:32px;width:42px;height:8px;background:#217a3a;border-radius:8px 8px 0 0}
+#hero .hair,#hero .chain{display:none}
+#hero .arm{position:absolute;top:36px;width:10px;height:24px;background:#e0a07a;border-radius:5px;transform-origin:50% 0;animation:arms .32s linear infinite}
+#hero .arm.l{left:0;animation-direction:reverse}#hero .arm.r{right:0}
+#hero .leg{position:absolute;bottom:0;width:10px;height:26px;background:#3a2a22;border-radius:5px;transform-origin:50% 0;animation:legs .32s linear infinite}
+#hero .leg.l{left:14px}#hero .leg.r{right:14px;animation-direction:reverse}
+#hero.jump .arm,#hero.jump .leg,#hero.idle .arm,#hero.idle .leg{animation-play-state:paused}
+#hero.skin-bumble .head,#hero.skin-bumble .arm{background:#6b3a22}
+#hero.skin-bumble .shirt{background:#111}
+#hero.skin-bumble .collar{background:#c9a227}
+#hero.skin-bumble .chain{display:block;position:absolute;left:14px;top:40px;width:26px;height:14px;border:3px solid #efc44a;border-top:0;border-radius:0 0 14px 14px;z-index:5}
+#hero.skin-bumble .cap,#hero.skin-bumble .cap:after{background:#c9a227}
+#hero.skin-bumble .vega{color:#111}
+#hero.skin-labuba{width:72px}
+#hero.skin-labuba .head{left:22px;width:30px;height:28px}
+#hero.skin-labuba .eye.l{left:28px}#hero.skin-labuba .eye.r{left:42px}
+#hero.skin-labuba .shirt{left:4px;width:64px;height:42px;background:#c45a2a;border-radius:16px}
+#hero.skin-labuba .collar{left:4px;width:64px;background:#8a3a18}
+#hero.skin-labuba .cap,#hero.skin-labuba .vega{left:16px}
+#hero.skin-girl .hair{display:block;position:absolute;left:10px;top:6px;width:34px;height:28px;background:#f2d36b;border-radius:16px 16px 4px 4px;z-index:1}
+#hero.skin-girl .cap,#hero.skin-girl .vega,#hero.skin-girl .collar{display:none}
+#hero.skin-girl .shirt{background:#ff7ab0;border-radius:10px 10px 18px 18px;height:42px}
+#hero.skin-girl .head,#hero.skin-girl .arm{background:#f7c9a8}
+#hero.shielded{filter:drop-shadow(0 0 8px #4df) drop-shadow(0 0 14px #2af)}
+#hero.in-car{opacity:0}
+.mini-hero{position:relative;height:70px;margin:0 auto;width:54px}
+.mini-hero .cap{position:absolute;left:8px;top:0;width:38px;height:16px;background:#111;border-radius:8px}
+.mini-hero .vega{position:absolute;left:8px;top:3px;width:38px;color:#eee;font:800 7px/1 sans-serif;text-align:center}
+.mini-hero .head{position:absolute;left:14px;top:10px;width:26px;height:26px;background:#f0b48a;border-radius:50%}
+.mini-hero .shirt{position:absolute;left:6px;top:32px;width:42px;height:34px;background:#2ea44f;border-radius:8px}
+.mh-bumble .head{background:#6b3a22}.mh-bumble .shirt{background:#111}.mh-bumble .cap{background:#c9a227}.mh-bumble .vega{color:#111}
+.mh-labuba{width:70px}.mh-labuba .shirt{width:60px;left:0;background:#c45a2a;border-radius:14px}.mh-labuba .head{left:20px}
+.mh-girl .cap,.mh-girl .vega{display:none}.mh-girl .shirt{background:#ff7ab0;border-radius:10px 10px 16px 16px}.mh-girl .head{background:#f7c9a8;box-shadow:0 -6px 0 8px #f2d36b}
+@keyframes legs{0%{transform:rotate(28deg)}50%{transform:rotate(-28deg)}100%{transform:rotate(28deg)}}
+@keyframes arms{0%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}100%{transform:rotate(-24deg)}}
+</style></head>
+<body>
+<div id="wrap">
+<canvas id="c"></canvas>
+<div id="hero" class="idle skin-vega"><div class="hair"></div><div class="cap"></div><div class="vega">ВЕГА</div><div class="head"></div><div class="eye l"></div><div class="eye r"></div><div class="arm l"></div><div class="arm r"></div><div class="shirt"></div><div class="collar"></div><div class="chain"></div><div class="leg l"></div><div class="leg r"></div></div>
+<div id="hud"><div><div id="score">0 м</div><div id="buff"></div></div><div id="best">лучший счет 0</div></div>
+<div id="cityTag"></div>
+<div id="overlay">
+<div id="screen-title"><h1>FUCKRUNNER</h1><p>Обычный скинхед живёт свою обычную жизнь.</p><button class="main" id="pickBtn">ВЫБЕРИ БОЙЦА</button><div class="hint">тап — прыжок, второй тап в воздухе — выше</div></div>
+<div id="screen-pick"><h1>ВЫБЕРИ БОЙЦА</h1>
+<div class="grid">
+<button class="card" data-id="vega"><div class="nm">Вегамэн</div><div class="mini-hero"><div class="cap"></div><div class="vega">ВЕГА</div><div class="head"></div><div class="shirt"></div></div></button>
+<button class="card" data-id="bumble"><div class="nm">Бамбл Бизи</div><div class="mini-hero mh-bumble"><div class="cap"></div><div class="vega">BEE</div><div class="head"></div><div class="shirt"></div></div></button>
+<button class="card" data-id="labuba"><div class="nm">Лабуба</div><div class="mini-hero mh-labuba"><div class="cap"></div><div class="vega">ЛАБ</div><div class="head"></div><div class="shirt"></div></div></button>
+<button class="card" data-id="girl"><div class="nm">Вагина реалистик</div><div class="mini-hero mh-girl"><div class="head"></div><div class="shirt"></div></div></button>
+</div>
+<button class="main" id="start" disabled>ПОГНАЛИ</button></div></div></div>
+<script>
+(()=>{
+const tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();try{tg.setHeaderColor('#2a1630');tg.setBackgroundColor('#1a1020')}catch(e){}}
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+const overlay=document.getElementById('overlay'),titleScr=document.getElementById('screen-title'),pickScr=document.getElementById('screen-pick');
+const startBtn=document.getElementById('start'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best');
+const buffEl=document.getElementById('buff'),cityTag=document.getElementById('cityTag'),heroEl=document.getElementById('hero');
+const CITIES=[{name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},{name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},{name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},{name:'КАЗАНЬ',src:'../bg_kzn.jpg'},{name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'}];
+const cityImgs=CITIES.map(c=>{const im=new Image();im.src=c.src;return im});
+let W=0,H=0,dpr=1;
+function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false}
+addEventListener('resize',resize);resize();
+const BEST_KEY='fuckrunner_ekb_best';let best=parseInt(localStorage.getItem(BEST_KEY)||'0',10);
+function renderBest(){bestEl.textContent='лучший счет '+best}renderBest();
+let skin='vega';
+document.getElementById('pickBtn').onclick=()=>{titleScr.classList.add('hide');pickScr.classList.add('show')};
+document.querySelectorAll('.card').forEach(card=>{card.onclick=()=>{document.querySelectorAll('.card').forEach(c=>c.classList.remove('sel'));card.classList.add('sel');skin=card.dataset.id;startBtn.disabled=false;applySkin()}});
+function applySkin(){heroEl.classList.remove('skin-vega','skin-bumble','skin-labuba','skin-girl');heroEl.classList.add('skin-'+(skin==='girl'?'girl':skin));heroEl.querySelector('.vega').textContent=skin==='vega'?'ВЕГА':skin==='bumble'?'BEE':skin==='labuba'?'ЛАБ':'';player.w=skin==='labuba'?72:54}
+const state={running:false,over:false,t:0,speed:280,dist:0,gravity:2400,groundY:0,city:0};
+const player={x:90,y:0,vy:0,w:54,h:86,onGround:true,jumpsUsed:0};
+const obstacles=[],bits=[];let spawnTimer=0,shieldT=0,uazT=0;
+function toastCity(){cityTag.textContent=CITIES[state.city].name;cityTag.style.opacity='1';clearTimeout(toastCity._t);toastCity._t=setTimeout(()=>cityTag.style.opacity='0',1800)}
+function reset(){state.running=true;state.over=false;state.t=0;state.speed=280;state.dist=0;state.city=0;obstacles.length=0;bits.length=0;spawnTimer=.7;player.vy=0;player.onGround=true;player.jumpsUsed=0;shieldT=0;uazT=0;applySkin();overlay.style.display='none';toastCity()}
+function boom(x,y,col){for(let i=0;i<10;i++)bits.push({x,y,vx:(Math.random()-.5)*220,vy:-80-Math.random()*160,life:.45,col})}
+function jump(){if(!state.running||state.over||uazT>0||player.jumpsUsed>=2)return;player.vy=player.jumpsUsed===0?-820:-1160;player.onGround=false;player.jumpsUsed++}
+addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='ArrowUp'){e.preventDefault();if(state.running)jump()}});
+addEventListener('pointerdown',e=>{if(e.target.closest('#overlay'))return;if(state.running)jump()});
+const TRACKS=['ushet.mp3','../bogi.mp3','../gorod.mp3','../Chto.mp3','../Police.mp3','../Big.mp3'];
+let lastTrack=-1,musicOn=false,skipGuard=0;const music=new Audio();music.volume=.55;
+function playRandom(){let i=Math.floor(Math.random()*TRACKS.length);if(TRACKS.length>1&&i===lastTrack)i=(i+1)%TRACKS.length;lastTrack=i;music.src=TRACKS[i];music.play().then(()=>skipGuard=0).catch(()=>{})}
+music.addEventListener('ended',playRandom);music.addEventListener('error',()=>{if(skipGuard++>8)return;playRandom()});
+startBtn.onclick=e=>{e.stopPropagation();reset();if(!musicOn){musicOn=true;playRandom()}};
+function spawn(){const r=Math.random();if(r<.08)obstacles.push({type:'shield',x:W+40,y:0,w:36,h:36});else if(r<.16)obstacles.push({type:'wheel',x:W+40,y:0,w:36,h:36});else if(r<.58)obstacles.push({type:'poop',x:W+40,y:0,w:46,h:38});else obstacles.push({type:'dick',x:W+40,y:0,flyY:70+Math.random()*90,w:52,h:22,wob:Math.random()*6.28})}
+const hit=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+function gameOver(kind){state.over=true;state.running=false;const score=Math.floor(state.dist);if(score>best){best=score;localStorage.setItem(BEST_KEY,String(best));renderBest()}titleScr.classList.remove('hide');pickScr.classList.remove('show');overlay.querySelector('#screen-title h1').textContent=kind==='dick'?'Есть пробитие':'Это конец, ты в говне';overlay.querySelector('#screen-title p').textContent='Обычная жизнь оборвалась на '+score+' м.';overlay.style.display='flex'}
+function drawTiled(img,y,h,scroll){if(!img||!img.complete||!img.naturalWidth)return false;const dw=Math.max(W*.95,h*(img.naturalWidth/img.naturalHeight));let x=-(scroll%dw);if(x>0)x-=dw;while(x<W+2){ctx.drawImage(img,Math.floor(x),Math.floor(y),Math.ceil(dw)+1,Math.ceil(h));x+=dw}return true}
+function drawBackdrop(){const gy=state.groundY;const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#4a2a70');g.addColorStop(.45,'#d06a40');g.addColorStop(1,'#c9a27a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);drawTiled(cityImgs[state.city],0,gy+6,state.dist*2.2);ctx.fillStyle='#d7b48a';ctx.fillRect(0,gy,W,H-gy);ctx.fillStyle='#c49a6a';ctx.fillRect(0,gy,W,10);ctx.fillStyle='#e8cda8';ctx.fillRect(0,gy+10,W,6);const tile=28,shift=(state.dist*10)%tile;for(let x=-tile;x<W+tile;x+=tile){ctx.fillStyle='#b88654';ctx.fillRect(x-shift,gy+18,16,5);ctx.fillStyle='#9a6a3c';ctx.fillRect(x-shift+8,gy+32,10,4);ctx.fillStyle='#efd3ae';ctx.fillRect(x-shift+14,gy+46,8,3)}}
+function drawPoop(o){const x=o.x+o.w/2,y=o.y+o.h;ctx.save();ctx.translate(x,y);ctx.fillStyle='#5a2c10';ctx.beginPath();ctx.ellipse(0,-10,20,12,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(-4,-22,14,10,-.2,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(2,-32,9,8,.2,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(-6,-22,3,0,7);ctx.arc(4,-20,2.4,0,7);ctx.fill();ctx.fillStyle='#222';ctx.beginPath();ctx.arc(-6,-22,1.4,0,7);ctx.arc(4,-20,1.2,0,7);ctx.fill();ctx.restore()}
+function drawDick(o,t){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(t*6+o.wob)*6;ctx.save();ctx.translate(x,y);ctx.rotate(-.15+Math.sin(t*4+o.wob)*.12);ctx.fillStyle='#f0b48a';ctx.beginPath();ctx.roundRect(-22,-8,36,16,8);ctx.fill();ctx.fillStyle='#e08a8a';ctx.beginPath();ctx.ellipse(16,0,11,10,0,0,7);ctx.fill();ctx.fillStyle='#e0a07a';ctx.beginPath();ctx.ellipse(-20,6,8,7,0,0,7);ctx.ellipse(-12,8,8,7,0,0,7);ctx.fill();ctx.restore()}
+function drawShieldIcon(o){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(state.t*5)*4;ctx.save();ctx.translate(x,y);ctx.fillStyle='#1c6cff';ctx.beginPath();ctx.arc(0,0,16,0,7);ctx.fill();ctx.strokeStyle='#bfe6ff';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('S',0,1);ctx.restore()}
+function drawWheelIcon(o){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(state.t*5)*4;ctx.save();ctx.translate(x,y);ctx.fillStyle='#2a2a2a';ctx.beginPath();ctx.arc(0,0,16,0,7);ctx.fill();ctx.strokeStyle='#ddd';ctx.lineWidth=4;ctx.stroke();ctx.strokeStyle='#aaa';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-10,0);ctx.lineTo(10,0);ctx.moveTo(0,-10);ctx.lineTo(0,10);ctx.stroke();ctx.restore()}
+function drawUaz(px,py){ctx.save();ctx.translate(px-10,py+18);ctx.fillStyle='#3f6b32';ctx.fillRect(0,18,118,36);ctx.fillStyle='#2d4f24';ctx.fillRect(38,0,52,22);ctx.fillStyle='#8fd4ff';ctx.fillRect(44,6,18,12);ctx.fillRect(66,6,18,12);ctx.fillStyle='#c9a227';ctx.fillRect(8,22,16,8);ctx.fillStyle='#111';ctx.beginPath();ctx.arc(24,56,12,0,7);ctx.arc(96,56,12,0,7);ctx.fill();ctx.fillStyle='#888';ctx.beginPath();ctx.arc(24,56,5,0,7);ctx.arc(96,56,5,0,7);ctx.fill();ctx.restore()}
+let last=performance.now();
+function loop(now){const dt=Math.min(.033,(now-last)/1000);last=now;state.groundY=Math.floor(H*.72);if(player.onGround&&uazT<=0)player.y=state.groundY-player.h;
+if(state.running&&!state.over){state.t+=dt;state.speed+=dt*8;state.dist+=state.speed*dt*.12;const shown=Math.floor(state.dist);scoreEl.textContent=shown+' м';const nextCity=Math.min(CITIES.length-1,Math.floor(shown/70));if(nextCity!==state.city){state.city=nextCity;toastCity()}shieldT=Math.max(0,shieldT-dt);uazT=Math.max(0,uazT-dt);const parts=[];if(shieldT>0)parts.push('ЩИТ '+Math.ceil(shieldT)+'с');if(uazT>0)parts.push('УАЗ '+Math.ceil(uazT)+'с');buffEl.textContent=parts.join(' · ');
+if(uazT<=0){player.vy+=state.gravity*(player.vy>0?2:1)*dt;player.y+=player.vy*dt;if(player.y>=state.groundY-player.h){player.y=state.groundY-player.h;player.vy=0;player.onGround=true;player.jumpsUsed=0}}else{player.y=state.groundY-player.h-8;player.vy=0;player.onGround=true;player.jumpsUsed=0}
+spawnTimer-=dt;if(spawnTimer<=0){spawn();spawnTimer=.8+Math.random()*.65-Math.min(.35,state.speed/1600)}
+const pBox=uazT>0?{x:player.x-8,y:player.y+10,w:120,h:80}:{x:player.x+8,y:player.y+12,w:player.w-16,h:player.h-16};
+for(let i=obstacles.length-1;i>=0;i--){const o=obstacles[i];o.x-=state.speed*dt;if(o.type==='dick')o.y=state.groundY-o.flyY-o.h;else o.y=state.groundY-o.h-(o.type==='shield'||o.type==='wheel'?8:0);const oBox={x:o.x+4,y:o.y+4,w:o.w-8,h:o.h-6};if(hit(pBox,oBox)){if(o.type==='shield'){shieldT=15;boom(o.x,o.y,'#4df');obstacles.splice(i,1);continue}if(o.type==='wheel'){uazT=15;boom(o.x,o.y,'#3f6');obstacles.splice(i,1);continue}if(shieldT>0||uazT>0){boom(o.x+o.w/2,o.y,'#fff');obstacles.splice(i,1);continue}gameOver(o.type)}if(o.x+o.w<-40)obstacles.splice(i,1)}}
+else if(uazT<=0)player.y=state.groundY-player.h;
+for(let i=bits.length-1;i>=0;i--){const p=bits[i];p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=400*dt;if(p.life<=0)bits.splice(i,1)}
+drawBackdrop();for(const o of obstacles){if(o.type==='poop')drawPoop(o);else if(o.type==='dick')drawDick(o,state.t);else if(o.type==='shield')drawShieldIcon(o);else drawWheelIcon(o)}
+for(const p of bits){ctx.globalAlpha=Math.max(0,p.life*2);ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,5,5);ctx.globalAlpha=1}
+if(uazT>0&&state.running)drawUaz(player.x,player.y);
+heroEl.classList.toggle('jump',!player.onGround&&state.running&&uazT<=0);
+heroEl.classList.toggle('idle',!state.running||state.over);
+heroEl.classList.toggle('shielded',shieldT>0);
+heroEl.classList.toggle('in-car',uazT>0&&state.running);
+heroEl.style.left=player.x+'px';heroEl.style.top=player.y+'px';requestAnimationFrame(loop)}
+requestAnimationFrame(loop)})();
+</script></body></html>
