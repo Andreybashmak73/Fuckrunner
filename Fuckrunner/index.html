@@ -107,11 +107,8 @@
       }
 
       const CONFIG = {
-        game: {
-          acceleration: 6,
-          maxSpeed: 450,
-          powerSpawnInterval: 5
-        }
+        player: { w: 54, h: 96 },
+        game: { acceleration: 6, maxSpeed: 450, powerSpawnInterval: 5 }
       };
 
       const canvas = document.getElementById('c');
@@ -124,6 +121,7 @@
       const scoreEl = document.getElementById('score');
       const bestEl = document.getElementById('best');
       const buffEl = document.getElementById('buff');
+      const cityTag = document.getElementById('cityTag');
       const heroEl = document.getElementById('hero');
 
       const FIGHTERS = [
@@ -198,8 +196,8 @@
       let score = 0;
 
       const player = {
-        w: 54,
-        h: 96,
+        w: CONFIG.player.w,
+        h: CONFIG.player.h,
         x: 90,
         y: 0,
         vy: 0,
@@ -249,6 +247,7 @@
       }
 
       function update(dt) {
+        // Физика игрока
         player.vy += player.gravity * dt;
         player.y += player.vy * dt;
 
@@ -257,3 +256,172 @@
           player.onGround = true;
           player.vy = 0;
         } else {
+          player.onGround = false;
+        }
+
+        // Препятствия
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          const o = obstacles[i];
+          o.x += o.speed * dt;
+
+          // Проверка столкновения (хитбокс строго по размерам)
+          if (rectIntersect(player, o)) {
+            gameOver();
+            return;
+          }
+
+          if (o.x + o.w < 0) {
+            obstacles.splice(i, 1);
+          }
+        }
+
+        // Пауэр-апы (щит и АК-47)
+        if (Date.now() / 1000 >= nextPowerSpawn) {
+          spawnPower();
+          nextPowerSpawn = (Date.now() / 1000) + CONFIG.game.powerSpawnInterval;
+        }
+
+        for (let i = powers.length - 1; i >= 0; i--) {
+          const p = powers[i];
+          p.x += p.speed * dt;
+
+          if (rectIntersect(player, p)) {
+            // Подбор предмета
+            if (p.type === 'shield') {
+              player.hasShield = true;
+              heroEl.classList.add('shielded');
+              buffEl.textContent = 'ЩИТ АКТИВЕН';
+              setTimeout(() => {
+                player.hasShield = false;
+                heroEl.classList.remove('shielded');
+                buffEl.textContent = '';
+              }, 8000);
+            } else if (p.type === 'ak47') {
+              player.hasAK = true;
+              heroEl.classList.add('armed');
+              buffEl.textContent = 'АК-47 В РУКАХ';
+              // Можно добавить стрельбу, пока просто показываем эффект
+              setTimeout(() => {
+                player.hasAK = false;
+                heroEl.classList.remove('armed');
+                buffEl.textContent = '';
+              }, 10000);
+            }
+            powers.splice(i, 1);
+          } else if (p.x + p.w < 0) {
+            powers.splice(i, 1);
+          }
+        }
+
+        // Спавн препятствий (примерно каждые 1.2–2.0 сек)
+        const spawnInterval = 1.2 + Math.random() * 0.8;
+        if (score > 0 && (score / speed) % spawnInterval < dt) {
+          spawnObstacle();
+        }
+
+        score += speed * dt;
+        scoreEl.textContent = Math.floor(score) + ' м';
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Рисуем препятствия
+        ctx.fillStyle = '#ff4d6d';
+        obstacles.forEach(o => {
+          ctx.fillRect(o.x, o.y, o.w, o.h);
+        });
+
+        // Рисуем пауэр-апы
+        powers.forEach(p => {
+          ctx.fillStyle = p.type === 'shield' ? '#4df' : '#ffaa00';
+          ctx.fillRect(p.x, p.y, p.w, p.h);
+          // Простая иконка внутри
+          ctx.fillStyle = '#000';
+          ctx.font = '24px ui-monospace';
+          if (p.type === 'shield') ctx.fillText('🛡', p.x + 12, p.y + 36);
+          else ctx.fillText('🔫', p.x + 12, p.y + 36);
+        });
+
+        // Синхронизируем CSS-персонажа с физикой Canvas (для анимации)
+        heroEl.style.left = player.x + 'px';
+        heroEl.style.top = player.y + 'px';
+
+        // Если персонаж бежит — включаем анимацию
+        if (!player.onGround || Math.abs(player.vy) > 50) {
+          heroEl.classList.add('run');
+        } else {
+          heroEl.classList.remove('run');
+        }
+      }
+
+      function gameLoop(t) {
+        if (!lastTime) lastTime = t;
+        const dt = (t - lastTime) / 1000;
+        lastTime = t;
+
+        if (gameRunning) {
+          update(dt);
+          draw();
+        }
+        requestAnimationFrame(gameLoop);
+      }
+
+      function startGame() {
+        gameRunning = true;
+        player.y = H - player.h;
+        obstacles.length = 0;
+        powers.length = 0;
+        score = 0;
+        scoreEl.textContent = '0 м';
+        buffEl.textContent = '';
+        nextPowerSpawn = (Date.now() / 1000) + CONFIG.game.powerSpawnInterval;
+        titleScr.classList.add('hide');
+        pickScr.classList.add('show'); // оставляем экран выбора, но игра уже идёт
+        pickScr.style.display = 'none'; // скрываем выбор, чтобы не мешал
+        overlay.style.pointerEvents = 'none';
+      }
+
+      function gameOver() {
+        gameRunning = false;
+        overlay.style.pointerEvents = '';
+        pickScr.style.display = 'block';
+        pickScr.classList.add('show');
+
+        const currentScore = Math.floor(score);
+        if (currentScore > best) {
+          best = currentScore;
+          localStorage.setItem(BEST_KEY, best.toString());
+          renderBest();
+        }
+      }
+
+      startBtn.onclick = () => {
+        startGame();
+      };
+
+      // Управление (тапы/клик)
+      function handleInput() {
+        if (!gameRunning) return;
+        if (player.onGround) {
+          player.vy = player.jumpPower;
+          player.onGround = false;
+        } else if (!player.doubleJumpUsed) {
+          // двойной прыжок
+          player.vy = Math.max(player.vy, player.jumpPower * 0.7);
+          player.doubleJumpUsed = true;
+        }
+      }
+
+      document.addEventListener('mousedown', handleInput);
+      document.addEventListener('touchstart', e => {
+        e.preventDefault();
+        handleInput();
+      }, { passive: false });
+
+      requestAnimationFrame(gameLoop);
+    })();
+  </script>
+</body>
+</html>
+
