@@ -7,117 +7,38 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
-    html, body {
-      width: 100%; height: 100%;
-      overflow: hidden;
-      background: #1a1020;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      user-select: none;
-      -webkit-user-select: none;
-    }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1020; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; user-select: none; -webkit-user-select: none; }
     #wrap { position: relative; width: 100%; height: 100%; }
-    canvas {
-      display: block; width: 100%; height: 100%;
-      background: #2a1630;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-    }
-    #hud {
-      position: absolute; top: 12px; left: 12px; right: 12px;
-      display: flex; justify-content: space-between;
-      color: #fff; font-weight: 800; font-size: 16px;
-      letter-spacing: 0.04em;
-      text-shadow: 0 2px 0 #000, 2px 0 0 #000;
-      pointer-events: none;
-    }
-    #overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: rgba(8, 4, 14, 0.78);
-      color: #fff; text-align: center; padding: 24px;
-      animation: overlayIn 0.35s ease-out;
-    }
-    #overlay h1 {
-      font-size: 34px; margin-bottom: 8px; color: #ff4d6d;
-      letter-spacing: 0.08em; text-shadow: 3px 3px 0 #3a0010;
-      animation: titlePulse 1.1s ease-in-out infinite;
-    }
-    #overlay p { opacity: 0.92; margin: 6px 0 18px; line-height: 1.4; max-width: 340px; animation: fadeUp 0.5s ease-out 0.1s both; }
-    button {
-      appearance: none; border: 3px solid #fff; background: #ff4d6d; color: #fff;
-      font-weight: 800; font-size: 18px; font-family: inherit; padding: 14px 28px; cursor: pointer;
-      animation: btnPulse 1.4s ease-in-out infinite;
-      transition: transform 0.12s ease, filter 0.12s ease;
-    }
-    button:hover { filter: brightness(1.08); }
+    canvas { display: block; width: 100%; height: 100%; background: #2a1630; image-rendering: pixelated; image-rendering: crisp-edges; }
+    #hud { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; color: #fff; font-weight: 800; font-size: 16px; letter-spacing: 0.04em; text-shadow: 0 2px 0 #000, 2px 0 0 #000; pointer-events: none; }
+    #overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(8, 4, 14, 0.78); color: #fff; text-align: center; padding: 24px; animation: overlayIn 0.35s ease-out; }
+    #overlay h1 { font-size: 30px; margin-bottom: 8px; color: #ff4d6d; letter-spacing: 0.06em; text-shadow: 3px 3px 0 #3a0010; animation: titlePulse 1.1s ease-in-out infinite; }
+    #overlay p { opacity: 0.92; margin: 6px 0 18px; line-height: 1.4; max-width: 340px; }
+    button { appearance: none; border: 3px solid #fff; background: #ff4d6d; color: #fff; font-weight: 800; font-size: 18px; font-family: inherit; padding: 14px 28px; cursor: pointer; animation: btnPulse 1.4s ease-in-out infinite; }
     button:active { transform: translateY(3px) scale(0.97); animation: none; }
-    .hint { font-size: 12px; opacity: 0.7; margin-top: 14px; animation: fadeUp 0.5s ease-out 0.2s both; }
-    #score, #best { animation: hudIn 0.4s ease-out both; }
-    #score.pop { animation: scorePop 0.25s ease-out; }
-    #hero {
-      position: absolute; left: 90px; width: 54px; height: 96px;
-      pointer-events: none; transform-origin: 50% 100%; z-index: 2;
-    }
-    #hero .cap {
-      position: absolute; left: 8px; top: 0; width: 38px; height: 16px;
-      background: #111; border-radius: 8px 8px 2px 2px; z-index: 3;
-    }
-    #hero .cap:after {
-      content: ''; position: absolute; right: -8px; bottom: 2px;
-      width: 18px; height: 6px; background: #111; border-radius: 0 6px 6px 0;
-    }
-    #hero .vega {
-      position: absolute; left: 8px; top: 3px; width: 38px; color: #eee;
-      font: 800 7px/1 ui-monospace, sans-serif; text-align: center; z-index: 4; letter-spacing: 0.5px;
-    }
-    #hero .head {
-      position: absolute; left: 14px; top: 10px; width: 26px; height: 26px;
-      background: #f0b48a; border-radius: 50%;
-    }
+    .hint { font-size: 12px; opacity: 0.7; margin-top: 14px; }
+    #hero { position: absolute; left: 90px; width: 54px; height: 96px; pointer-events: none; transform-origin: 50% 100%; z-index: 2; }
+    #hero .cap { position: absolute; left: 8px; top: 0; width: 38px; height: 16px; background: #111; border-radius: 8px 8px 2px 2px; z-index: 3; }
+    #hero .cap:after { content: ''; position: absolute; right: -8px; bottom: 2px; width: 18px; height: 6px; background: #111; border-radius: 0 6px 6px 0; }
+    #hero .vega { position: absolute; left: 8px; top: 3px; width: 38px; color: #eee; font: 800 7px/1 ui-monospace, sans-serif; text-align: center; z-index: 4; }
+    #hero .head { position: absolute; left: 14px; top: 10px; width: 26px; height: 26px; background: #f0b48a; border-radius: 50%; }
     #hero .eye { position: absolute; top: 18px; width: 4px; height: 4px; background: #222; border-radius: 50%; }
-    #hero .eye.l { left: 20px; }
-    #hero .eye.r { left: 30px; }
-    #hero .shirt {
-      position: absolute; left: 6px; top: 32px; width: 42px; height: 38px;
-      background: #2ea44f; border-radius: 8px 8px 4px 4px;
-    }
-    #hero .collar {
-      position: absolute; left: 6px; top: 32px; width: 42px; height: 8px;
-      background: #217a3a; border-radius: 8px 8px 0 0;
-    }
-    #hero .arm {
-      position: absolute; top: 36px; width: 10px; height: 24px;
-      background: #e0a07a; border-radius: 5px; transform-origin: 50% 0%;
-      animation: arms 0.32s linear infinite;
-    }
-    #hero .arm.l { left: 0; animation-direction: reverse; }
-    #hero .arm.r { right: 0; }
-    #hero .leg {
-      position: absolute; bottom: 0; width: 10px; height: 26px;
-      background: #3a2a22; border-radius: 5px; transform-origin: 50% 0%;
-      animation: legs 0.32s linear infinite;
-    }
-    #hero .leg.l { left: 14px; }
-    #hero .leg.r { right: 14px; animation-direction: reverse; }
+    #hero .eye.l { left: 20px; } #hero .eye.r { left: 30px; }
+    #hero .shirt { position: absolute; left: 6px; top: 32px; width: 42px; height: 38px; background: #2ea44f; border-radius: 8px 8px 4px 4px; }
+    #hero .collar { position: absolute; left: 6px; top: 32px; width: 42px; height: 8px; background: #217a3a; border-radius: 8px 8px 0 0; }
+    #hero .arm { position: absolute; top: 36px; width: 10px; height: 24px; background: #e0a07a; border-radius: 5px; transform-origin: 50% 0%; animation: arms 0.32s linear infinite; }
+    #hero .arm.l { left: 0; animation-direction: reverse; } #hero .arm.r { right: 0; }
+    #hero .leg { position: absolute; bottom: 0; width: 10px; height: 26px; background: #3a2a22; border-radius: 5px; transform-origin: 50% 0%; animation: legs 0.32s linear infinite; }
+    #hero .leg.l { left: 14px; } #hero .leg.r { right: 14px; animation-direction: reverse; }
     #hero.jump { animation: jumpTilt 0.45s ease-out; }
-    #hero.jump .arm, #hero.jump .leg { animation-play-state: paused; }
-    #hero.idle .arm, #hero.idle .leg { animation-play-state: paused; }
+    #hero.jump .arm, #hero.jump .leg, #hero.idle .arm, #hero.idle .leg { animation-play-state: paused; }
     @keyframes legs { 0% { transform: rotate(28deg); } 50% { transform: rotate(-28deg); } 100% { transform: rotate(28deg); } }
     @keyframes arms { 0% { transform: rotate(-24deg); } 50% { transform: rotate(24deg); } 100% { transform: rotate(-24deg); } }
-    @keyframes jumpTilt {
-      0% { transform: scaleY(0.92) scaleX(1.06); }
-      35% { transform: scaleY(1.08) scaleX(0.94) rotate(-8deg); }
-      100% { transform: scaleY(1) scaleX(1) rotate(0); }
-    }
+    @keyframes jumpTilt { 0% { transform: scaleY(0.92) scaleX(1.06); } 35% { transform: scaleY(1.08) scaleX(0.94) rotate(-8deg); } 100% { transform: none; } }
     @keyframes titlePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-    @keyframes btnPulse {
-      0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,77,109,0.6); }
-      50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(255,77,109,0); }
-    }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 0.92; transform: translateY(0); } }
+    @keyframes btnPulse { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,77,109,0.6); } 50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(255,77,109,0); } }
     @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes hudIn { from { transform: translateY(-8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    #score.pop { animation: scorePop 0.25s ease-out; }
     @keyframes scorePop { 0% { transform: scale(1); } 50% { transform: scale(1.18); color: #ffd36a; } 100% { transform: scale(1); } }
   </style>
 </head>
@@ -125,186 +46,137 @@
   <div id="wrap">
     <canvas id="c"></canvas>
     <div id="hero" class="idle">
-      <div class="cap"></div>
-      <div class="vega">ВЕГА</div>
-      <div class="head"></div>
-      <div class="eye l"></div>
-      <div class="eye r"></div>
-      <div class="arm l"></div>
-      <div class="arm r"></div>
-      <div class="shirt"></div>
-      <div class="collar"></div>
-      <div class="leg l"></div>
-      <div class="leg r"></div>
+      <div class="cap"></div><div class="vega">ВЕГА</div><div class="head"></div>
+      <div class="eye l"></div><div class="eye r"></div>
+      <div class="arm l"></div><div class="arm r"></div>
+      <div class="shirt"></div><div class="collar"></div>
+      <div class="leg l"></div><div class="leg r"></div>
     </div>
-    <div id="hud">
-      <div id="score">0 м</div>
-      <div id="best">лучший счет 0</div>
-    </div>
+    <div id="hud"><div id="score">0 м</div><div id="best">лучший счет 0</div></div>
     <div id="overlay">
       <h1>FUCKRUNNER</h1>
       <p>Обычный скинхед живёт свою обычную жизнь.</p>
       <button id="start">ПОГНАЛИ</button>
-      <div class="hint">тап / пробел — прыжок</div>
+      <div class="hint">тап — прыжок, второй тап в воздухе — выше</div>
     </div>
   </div>
 <script>
 (() => {
   const tg = window.Telegram && window.Telegram.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand();
-    try { tg.setHeaderColor('#2a1630'); tg.setBackgroundColor('#1a1020'); } catch(e) {}
-  }
+  if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#2a1630'); tg.setBackgroundColor('#1a1020'); } catch(e) {} }
   const canvas = document.getElementById('c');
   const ctx = canvas.getContext('2d');
   const overlay = document.getElementById('overlay');
   const startBtn = document.getElementById('start');
   const scoreEl = document.getElementById('score');
   const bestEl = document.getElementById('best');
-  function loadImg(src) { const im = new Image(); im.src = src; return im; }
-  const bgFar = loadImg('../bg_far.jpg');
+  const bgFar = new Image(); bgFar.src = '../bg_far.jpg';
   let W = 0, H = 0, dpr = 1;
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth; H = window.innerHeight;
     canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.imageSmoothingEnabled = false;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.imageSmoothingEnabled = false;
   }
   window.addEventListener('resize', resize); resize();
   const BEST_KEY = 'fuckrunner_ekb_best';
-  const STATS_URLS = [
-    'https://andreybashmak73.github.io/Fuckrunner/stats.json',
-    'https://raw.githubusercontent.com/Andreybashmak73/Fuckrunner/main/stats.json'
-  ];
   let best = parseInt(localStorage.getItem(BEST_KEY) || '0', 10);
   function renderBest() { bestEl.textContent = 'лучший счет ' + best; }
   renderBest();
-  async function loadWorldBest() {
-    for (const url of STATS_URLS) {
-      try {
-        const r = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
-        if (!r.ok) continue;
-        const data = await r.json();
-        const w = parseInt(data.best || 0, 10);
-        if (w > best) { best = w; localStorage.setItem(BEST_KEY, String(best)); renderBest(); }
-        return;
-      } catch (e) {}
-    }
-  }
-  loadWorldBest();
   const state = { running: false, over: false, t: 0, speed: 280, dist: 0, gravity: 2400, groundY: 0 };
-  const player = { x: 90, y: 0, vy: 0, w: 54, h: 86, onGround: true, jumpLock: false, runPhase: 0 };
+  const player = { x: 90, y: 0, vy: 0, w: 54, h: 86, onGround: true, jumpsUsed: 0, runPhase: 0 };
   const obstacles = [];
   let spawnTimer = 0;
   const heroEl = document.getElementById('hero');
   let lastShownScore = 0;
   function syncHero() {
     if (!heroEl) return;
-    heroEl.style.left = player.x + 'px';
-    heroEl.style.top = player.y + 'px';
+    heroEl.style.left = player.x + 'px'; heroEl.style.top = player.y + 'px';
     heroEl.classList.toggle('jump', !player.onGround && state.running);
     heroEl.classList.toggle('idle', !state.running || state.over);
   }
   function reset() {
     state.running = true; state.over = false; state.t = 0; state.speed = 280; state.dist = 0;
     obstacles.length = 0; spawnTimer = 0.8;
-    player.vy = 0; player.onGround = true; player.jumpLock = false; player.runPhase = 0;
+    player.vy = 0; player.onGround = true; player.jumpsUsed = 0; player.runPhase = 0;
     overlay.style.display = 'none';
   }
   function jump() {
-    if (!state.running || state.over) return;
-    if (player.onGround && !player.jumpLock) {
-      player.vy = -820; player.onGround = false; player.jumpLock = true;
-      if (tg && tg.HapticFeedback) { try { tg.HapticFeedback.impactOccurred('light'); } catch(e) {} }
-    }
+    if (!state.running || state.over || player.jumpsUsed >= 2) return;
+    player.vy = player.jumpsUsed === 0 ? -820 : -1160;
+    player.onGround = false; player.jumpsUsed += 1;
+    if (tg && tg.HapticFeedback) { try { tg.HapticFeedback.impactOccurred(player.jumpsUsed === 1 ? 'light' : 'medium'); } catch(e) {} }
   }
   window.addEventListener('keydown', e => {
-    if (e.code === 'Space' || e.code === 'ArrowUp') {
-      e.preventDefault();
-      if (!state.running) reset(); else jump();
-    }
+    if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); if (!state.running) reset(); else jump(); }
   });
   window.addEventListener('pointerdown', () => { if (state.running) jump(); });
   const TRACKS = ['ushet.mp3','../bogi.mp3','../gorod.mp3','../Chto.mp3','../Police.mp3','../Big.mp3'];
-  let trackIndex = 0, musicOn = false, skipGuard = 0;
+  let lastTrack = -1, musicOn = false, skipGuard = 0;
   const music = new Audio(); music.volume = 0.55;
-  music.addEventListener('ended', () => playTrack(trackIndex + 1));
-  music.addEventListener('error', () => { if (skipGuard++ > TRACKS.length + 2) return; playTrack(trackIndex + 1); });
-  function playTrack(i) {
-    trackIndex = ((i % TRACKS.length) + TRACKS.length) % TRACKS.length;
-    music.src = TRACKS[trackIndex];
+  function pickRandomTrack() {
+    let i = Math.floor(Math.random() * TRACKS.length);
+    if (TRACKS.length > 1 && i === lastTrack) i = (i + 1) % TRACKS.length;
+    return i;
+  }
+  function playRandom() {
+    const i = pickRandomTrack(); lastTrack = i; music.src = TRACKS[i];
     music.play().then(() => { skipGuard = 0; }).catch(() => {});
   }
-  function startMusic() { if (musicOn) return; musicOn = true; playTrack(0); }
+  music.addEventListener('ended', playRandom);
+  music.addEventListener('error', () => { if (skipGuard++ > TRACKS.length + 2) return; playRandom(); });
+  function startMusic() { if (musicOn) return; musicOn = true; playRandom(); }
   startBtn.addEventListener('click', (e) => { e.stopPropagation(); reset(); startMusic(); });
   function spawn() {
-    const r = Math.random();
-    if (r < 0.55) obstacles.push({ type: 'poop', x: W + 40, y: 0, w: 46, h: 38 });
+    if (Math.random() < 0.55) obstacles.push({ type: 'poop', x: W + 40, y: 0, w: 46, h: 38 });
     else obstacles.push({ type: 'dick', x: W + 40, y: 0, flyY: 70 + Math.random() * 90, w: 52, h: 22, wob: Math.random() * Math.PI * 2 });
   }
-  function rectsOverlap(a, b) {
-    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
-  }
-  function gameOver() {
+  function rectsOverlap(a, b) { return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
+  function gameOver(hit) {
     state.over = true; state.running = false;
     const score = Math.floor(state.dist);
     if (score > best) { best = score; localStorage.setItem(BEST_KEY, String(best)); renderBest(); }
-    else loadWorldBest();
-    overlay.querySelector('h1').textContent = 'GAME OVER';
+    overlay.querySelector('h1').textContent = hit === 'dick' ? 'Есть пробитие' : 'Это конец, ты в говне';
     overlay.querySelector('p').textContent = 'Обычная жизнь оборвалась на ' + score + ' м.';
-    startBtn.textContent = 'ЕЩЁ РАЗ';
-    overlay.style.display = 'flex';
+    startBtn.textContent = 'ЕЩЁ РАЗ'; overlay.style.display = 'flex';
     if (tg && tg.HapticFeedback) { try { tg.HapticFeedback.notificationOccurred('error'); } catch(e) {} }
   }
   function drawTiled(img, y, h, scroll) {
-    if (!img.complete || !img.naturalWidth) return false;
+    if (!img.complete || !img.naturalWidth) return;
     const dw = Math.max(W * 0.95, h * (img.naturalWidth / img.naturalHeight));
-    let x = -(scroll % dw);
-    if (x > 0) x -= dw;
-    while (x < W + 2) {
-      ctx.drawImage(img, Math.floor(x), Math.floor(y), Math.ceil(dw) + 1, Math.ceil(h));
-      x += dw;
-    }
-    return true;
+    let x = -(scroll % dw); if (x > 0) x -= dw;
+    while (x < W + 2) { ctx.drawImage(img, Math.floor(x), Math.floor(y), Math.ceil(dw) + 1, Math.ceil(h)); x += dw; }
   }
   function drawBackdrop() {
     const gy = state.groundY;
     const g = ctx.createLinearGradient(0, 0, 0, H);
     g.addColorStop(0, '#3a2460'); g.addColorStop(0.45, '#c45a3a'); g.addColorStop(1, '#2a1a20');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    const scroll = state.dist * 10;
-    drawTiled(bgFar, 0, gy + 4, scroll * 0.22);
+    drawTiled(bgFar, 0, gy + 4, state.dist * 10 * 0.22);
     ctx.fillStyle = '#3a271c'; ctx.fillRect(0, gy, W, H - gy);
     ctx.fillStyle = '#2a1a16'; ctx.fillRect(0, gy, W, 8);
-    const tile = 36; const shift = (scroll * 0.9) % tile;
+    const tile = 36, shift = (state.dist * 9) % tile;
     ctx.fillStyle = '#5a3a28';
     for (let x = -tile; x < W + tile; x += tile) ctx.fillRect(x - shift, gy + 12, 20, 5);
     ctx.fillStyle = 'rgba(20,10,16,0.18)'; ctx.fillRect(0, gy - 8, W, 16);
   }
   function drawPoop(o) {
     const x = o.x + o.w / 2, y = o.y + o.h;
-    ctx.save(); ctx.translate(x, y);
-    ctx.fillStyle = '#6b3a16';
+    ctx.save(); ctx.translate(x, y); ctx.fillStyle = '#6b3a16';
     ctx.beginPath(); ctx.ellipse(0, -10, 20, 12, 0, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.ellipse(-4, -22, 14, 10, -0.2, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.ellipse(2, -32, 9, 8, 0.2, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(-6, -22, 3, 0, Math.PI * 2); ctx.arc(4, -20, 2.4, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(-6, -22, 1.4, 0, Math.PI * 2); ctx.arc(4, -20, 1.2, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#3a1e0c'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(-1, -14, 5, 0.2, Math.PI - 0.2); ctx.stroke();
-    ctx.restore();
+    ctx.strokeStyle = '#3a1e0c'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(-1, -14, 5, 0.2, Math.PI - 0.2); ctx.stroke(); ctx.restore();
   }
   function drawDick(o, t) {
     const x = o.x + o.w / 2, y = o.y + o.h / 2 + Math.sin(t * 6 + o.wob) * 6;
-    ctx.save(); ctx.translate(x, y);
-    ctx.rotate(-0.15 + Math.sin(t * 4 + o.wob) * 0.12);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-0.15 + Math.sin(t * 4 + o.wob) * 0.12);
     ctx.fillStyle = '#f0b48a'; ctx.beginPath(); ctx.roundRect(-22, -8, 36, 16, 8); ctx.fill();
     ctx.fillStyle = '#e08a8a'; ctx.beginPath(); ctx.ellipse(16, 0, 11, 10, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#e0a07a'; ctx.beginPath(); ctx.ellipse(-20, 6, 8, 7, 0, 0, Math.PI * 2); ctx.ellipse(-12, 8, 8, 7, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.restore();
+    ctx.fillStyle = '#e0a07a'; ctx.beginPath(); ctx.ellipse(-20, 6, 8, 7, 0, 0, Math.PI * 2); ctx.ellipse(-12, 8, 8, 7, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
   }
   let last = performance.now();
   function loop(now) {
@@ -313,42 +185,24 @@
     if (player.onGround) player.y = state.groundY - player.h;
     if (state.running && !state.over) {
       state.t += dt; state.speed += dt * 8; state.dist += state.speed * dt * 0.12;
-      const shown = Math.floor(state.dist);
-      scoreEl.textContent = shown + ' м';
-      if (shown !== lastShownScore && shown % 10 === 0) {
-        scoreEl.classList.remove('pop'); void scoreEl.offsetWidth; scoreEl.classList.add('pop');
-      }
+      const shown = Math.floor(state.dist); scoreEl.textContent = shown + ' м';
+      if (shown !== lastShownScore && shown % 10 === 0) { scoreEl.classList.remove('pop'); void scoreEl.offsetWidth; scoreEl.classList.add('pop'); }
       lastShownScore = shown;
-      player.runPhase += dt * 12;
-      player.vy += state.gravity * (player.vy > 0 ? 2 : 1) * dt;
-      player.y += player.vy * dt;
-      if (player.y >= state.groundY - player.h) {
-        player.y = state.groundY - player.h; player.vy = 0; player.onGround = true; player.jumpLock = false;
-      }
+      player.vy += state.gravity * (player.vy > 0 ? 2 : 1) * dt; player.y += player.vy * dt;
+      if (player.y >= state.groundY - player.h) { player.y = state.groundY - player.h; player.vy = 0; player.onGround = true; player.jumpsUsed = 0; }
       spawnTimer -= dt;
-      if (spawnTimer <= 0) {
-        spawn();
-        spawnTimer = 0.85 + Math.random() * 0.7 - Math.min(0.4, state.speed / 1400);
-      }
+      if (spawnTimer <= 0) { spawn(); spawnTimer = 0.85 + Math.random() * 0.7 - Math.min(0.4, state.speed / 1400); }
       const pBox = { x: player.x + 10, y: player.y + 12, w: player.w - 20, h: player.h - 16 };
       for (let i = obstacles.length - 1; i >= 0; i--) {
-        const o = obstacles[i];
-        o.x -= state.speed * dt;
-        if (o.type === 'poop') o.y = state.groundY - o.h;
-        else o.y = state.groundY - o.flyY - o.h;
-        const oBox = { x: o.x + 6, y: o.y + 4, w: o.w - 12, h: o.h - 6 };
-        if (rectsOverlap(pBox, oBox)) gameOver();
+        const o = obstacles[i]; o.x -= state.speed * dt;
+        if (o.type === 'poop') o.y = state.groundY - o.h; else o.y = state.groundY - o.flyY - o.h;
+        if (rectsOverlap(pBox, { x: o.x + 6, y: o.y + 4, w: o.w - 12, h: o.h - 6 })) gameOver(o.type);
         if (o.x + o.w < -20) obstacles.splice(i, 1);
       }
-    } else {
-      player.y = state.groundY - player.h;
-    }
+    } else player.y = state.groundY - player.h;
     drawBackdrop();
-    for (const o of obstacles) {
-      if (o.type === 'poop') drawPoop(o); else drawDick(o, state.t);
-    }
-    syncHero();
-    requestAnimationFrame(loop);
+    for (const o of obstacles) { if (o.type === 'poop') drawPoop(o); else drawDick(o, state.t); }
+    syncHero(); requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
 })();
