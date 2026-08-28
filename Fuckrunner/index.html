@@ -115,21 +115,12 @@
         } catch (e) {}
       }
 
-      // --- Config (легко менять баланс, можно позже подгрузить с Python) ---
+      // --- Config ---
       const CONFIG = {
-        player: {
-          hitOffsetX: 2,  // отступ слева/справа от края текстуры
-          hitOffsetY: 2   // отступ сверху/снизу
-        },
-        obstacle: {
-          // для предметов оставляем те же отступы, чтобы не было "прилипания"
-          hitOffsetX: 0,
-          hitOffsetY: 0
-        },
         game: {
-          acceleration: 6,   // скорость разгона
-          maxSpeed: 450,     // макс. скорость
-          powerSpawnInterval: 40 // секунд между появлением щита/АК
+          acceleration: 6,
+          maxSpeed: 450,
+          powerSpawnInterval: 5 // секунд между появлением щита/АК
         }
       };
 
@@ -158,8 +149,6 @@
         { name: 'САМАРА', src: '../bg_sam.jpg' }
       ];
       
-      const cityImgs = CITIES.map(c => { const im = new Image(); im.src = c.src; return im; });
-
       const FIGHTERS = [
         { id: 'vega', name: 'Вегамэн', tag: 'ВЕГА' },
         { id: 'bumble', name: 'Бамбл Бизи', tag: 'BEE' },
@@ -179,23 +168,20 @@
               <div class="hair"></div><div class="cap"></div><div class="tag">${f.tag}</div>
               <div class="head"></div><div class="eye l"></div><div class="eye r"></div>
               <div class="arm l"></div><div class="arm r"></div><div class="shirt"></div>
-              <div class="collar"></div><div class="chain"></div><div class="leg l"></div><div class="leg r"></div>
+              <div class="collar"></div><div class="chain"></div><div class="leg l"></div><div="leg r"></div>
             </div>
           </div>`;
         grid.appendChild(b);
       });
 
-      let W = 0, H = 0, dpr = 1;
+      let W = 0, H = 0;
       function resize() {
-        dpr = Math.min(devicePixelRatio || 1, 2);
         W = innerWidth;
         H = innerHeight;
-        canvas.width = Math.floor(W * dpr);
-        canvas.height = Math.floor(H * dpr);
+        canvas.width = W;
+        canvas.height = H;
         canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        ctx.imageSmoothingEnabled = false;
       }
       addEventListener('resize', resize);
       resize();
@@ -220,11 +206,60 @@
           });
           card.classList.add('sel');
           card.querySelector('.doll').classList.add('run');
-          skin = card.dataset.id;
           startBtn.disabled = false;
-          applySkin();
+          applySkin(card.dataset.id);
         };
       });
 
-      function applySkin() {
-        heroEl.classList.remove
+      function applySkin(skinId) {
+        heroEl.className = `doll idle skin-${skinId}`;
+      }
+
+      // --- Game State ---
+      let gameRunning = false;
+      let lastTime = 0;
+      let speed = 400; // px/s
+      let score = 0;
+
+      const player = {
+        w: 54, // ширина под спрайт
+        h: 96, // высота под спрайт
+        x: 90,
+        y: 0, // будет установлено при старте
+        vy: 0,
+        onGround: true,
+        jumpPower: -320,
+        gravity: 800
+      };
+
+      const obstacles = [];
+      const powers = []; // щит и АК-47
+      const powerTypes = ['shield', 'ak47'];
+
+      let nextPowerSpawn = 0; // время следующего спавна
+
+      // --- Collision (строго по границам) ---
+      function rectIntersect(a, b) {
+        return (
+          a.x < b.x + b.w &&
+          a.x + a.w > b.x &&
+          a.y < b.y + b.h &&
+          a.y + a.h > b.y
+        );
+      }
+
+      // --- Spawn ---
+      function spawnObstacle() {
+        const w = 60 + Math.random() * 40;
+        const h = 80 + Math.random() * 60;
+        obstacles.push({
+          x: W,
+          y: H - h,
+          w,
+          h,
+          speed: -speed
+        });
+      }
+
+      function spawnPower() {
+        const type = powerTypes[Math.floor(Math.random() * powerTypes.length)];
