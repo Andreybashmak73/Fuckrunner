@@ -11,14 +11,11 @@
     #wrap { position: relative; width: 100%; height: 100%; }
     canvas { display: block; width: 100%; height: 100%; background: #3a2460; image-rendering: pixelated; }
 
-    /* HUD */
     #hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; color: #fff; font-weight: 800; font-size: 15px; text-shadow: 0 2px 0 #000; pointer-events: none; z-index: 4; }
     #buff { color: #9fef6a; font-size: 12px; margin-top: 4px; }
     
-    /* City tag */
     #cityTag { position: absolute; top: 42px; left: 50%; transform: translateX(-50%); color: #ffe08a; font-weight: 800; font-size: 13px; text-shadow: 0 2px 0 #000; pointer-events: none; z-index: 4; opacity: 0; transition: opacity .3s; }
 
-    /* Overlay */
     #overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(8,4,14,.86); color: #fff; text-align: center; padding: 16px; z-index: 6; overflow: auto; }
     #overlay h1 { font-size: 26px; margin-bottom: 8px; color: #ff4d6d; text-shadow: 3px 3px 0 #3a0010; }
     #overlay p { opacity: .92; margin: 6px 0 16px; max-width: 340px; line-height: 1.35; }
@@ -26,7 +23,6 @@
     button.main:disabled { opacity: .4; }
     .hint { font-size: 12px; opacity: .7; margin-top: 12px; }
 
-    /* Pick screen */
     #screen-pick { display: none; width: min(560px, 96vw); }
     #screen-pick.show { display: block; }
     #screen-title.hide { display: none; }
@@ -36,7 +32,6 @@
     .card .nm { font-size: 12px; font-weight: 800; margin-bottom: 4px; color: #ffe08a; }
     .card.sel { border-color: #ff4d6d; box-shadow: 0 0 0 3px rgba(255,77,109,.35); }
 
-    /* Doll styles (skins) */
     .stage { position: relative; height: 110px; overflow: hidden; }
     .doll { position: absolute; left: 50%; bottom: 4px; width: 54px; height: 96px; margin-left: -27px; pointer-events: none; }
     .doll.skin-labuba { width: 72px; margin-left: -36px; }
@@ -55,7 +50,6 @@
     .doll .leg { position: absolute; bottom: 0; width: 10px; height: 26px; background: #3a2a22; border-radius: 5px; transform-origin: 50% 0; }
     .doll .leg.l { left: 14px; } .doll .leg.r { right: 14px; }
     
-    /* Animations */
     .doll.run .arm, .doll.run .leg { animation: arms .32s linear infinite; }
     .doll.run .leg { animation-name: legs; }
     .doll.run .arm.l, .doll.run .leg.r { animation-direction: reverse; }
@@ -63,7 +57,6 @@
     @keyframes legs { 0% { transform: rotate(28deg); } 50% { transform: rotate(-28deg); } 100% { transform: rotate(28deg); } }
     @keyframes arms { 0% { transform: rotate(-24deg); } 50% { transform: rotate(24deg); } 100% { transform: rotate(-24deg); } }
 
-    /* Hero overlay (sync with canvas) */
     #hero { position: absolute; left: 90px; width: 54px; height: 96px; pointer-events: none; z-index: 3; }
     #hero.shielded { filter: drop-shadow(0 0 8px #4df); }
     #hero.armed .arm.r { display: none; }
@@ -72,7 +65,6 @@
 <body>
   <div id="wrap">
     <canvas id="c"></canvas>
-    <!-- Дубликат персонажа для CSS-анимаций (бежит поверх canvas) -->
     <div id="hero" class="doll idle skin-vega">
       <div class="hair"></div><div class="cap"></div><div class="tag">ВЕГА</div>
       <div class="head"></div><div class="eye l"></div><div class="eye r"></div>
@@ -104,7 +96,6 @@
 
   <script>
     (() => {
-      // --- Telegram Integration ---
       const tg = window.Telegram && window.Telegram.WebApp;
       if (tg) {
         tg.ready();
@@ -115,12 +106,11 @@
         } catch (e) {}
       }
 
-      // --- Config ---
       const CONFIG = {
         game: {
           acceleration: 6,
           maxSpeed: 450,
-          powerSpawnInterval: 5 // секунд между появлением щита/АК
+          powerSpawnInterval: 5
         }
       };
 
@@ -130,25 +120,12 @@
       const overlay = document.getElementById('overlay');
       const titleScr = document.getElementById('screen-title');
       const pickScr = document.getElementById('screen-pick');
-      
       const startBtn = document.getElementById('start');
       const scoreEl = document.getElementById('score');
       const bestEl = document.getElementById('best');
       const buffEl = document.getElementById('buff');
-      const cityTag = document.getElementById('cityTag');
       const heroEl = document.getElementById('hero');
 
-      // --- Data ---
-      const CITIES = [
-        { name: 'ЕКАТЕРИНБУРГ', src: '../bg_far.jpg' },
-        { name: 'ТОЛЬЯТТИ', src: '../bg_tlt.jpg' },
-        { name: 'УЛЬЯНОВСК', src: '../bg_uln.jpg' },
-        { name: 'КАЗАНЬ', src: '../bg_kzn.jpg' },
-        { name: 'ЙОШКАР-ОЛА', src: '../bg_yosh.jpg' },
-        { name: 'САРАТОВ', src: '../bg_sar.jpg' },
-        { name: 'САМАРА', src: '../bg_sam.jpg' }
-      ];
-      
       const FIGHTERS = [
         { id: 'vega', name: 'Вегамэн', tag: 'ВЕГА' },
         { id: 'bumble', name: 'Бамбл Бизи', tag: 'BEE' },
@@ -168,7 +145,7 @@
               <div class="hair"></div><div class="cap"></div><div class="tag">${f.tag}</div>
               <div class="head"></div><div class="eye l"></div><div class="eye r"></div>
               <div class="arm l"></div><div class="arm r"></div><div class="shirt"></div>
-              <div class="collar"></div><div class="chain"></div><div class="leg l"></div><div="leg r"></div>
+              <div class="collar"></div><div class="chain"></div><div class="leg l"></div><div class="leg r"></div>
             </div>
           </div>`;
         grid.appendChild(b);
@@ -191,7 +168,6 @@
       function renderBest() { bestEl.textContent = 'лучший счет ' + best; }
       renderBest();
 
-      // --- Controls ---
       document.getElementById('pickBtn').onclick = () => {
         titleScr.classList.add('hide');
         pickScr.classList.add('show');
@@ -205,7 +181,8 @@
             if (d) d.classList.remove('run');
           });
           card.classList.add('sel');
-          card.querySelector('.doll').classList.add('run');
+          const doll = card.querySelector('.doll');
+          if (doll) doll.classList.add('run');
           startBtn.disabled = false;
           applySkin(card.dataset.id);
         };
@@ -215,17 +192,16 @@
         heroEl.className = `doll idle skin-${skinId}`;
       }
 
-      // --- Game State ---
       let gameRunning = false;
       let lastTime = 0;
-      let speed = 400; // px/s
+      let speed = 400;
       let score = 0;
 
       const player = {
-        w: 54, // ширина под спрайт
-        h: 96, // высота под спрайт
+        w: 54,
+        h: 96,
         x: 90,
-        y: 0, // будет установлено при старте
+        y: 0,
         vy: 0,
         onGround: true,
         jumpPower: -320,
@@ -233,12 +209,10 @@
       };
 
       const obstacles = [];
-      const powers = []; // щит и АК-47
+      const powers = [];
       const powerTypes = ['shield', 'ak47'];
+      let nextPowerSpawn = 0;
 
-      let nextPowerSpawn = 0; // время следующего спавна
-
-      // --- Collision (строго по границам) ---
       function rectIntersect(a, b) {
         return (
           a.x < b.x + b.w &&
@@ -248,7 +222,6 @@
         );
       }
 
-      // --- Spawn ---
       function spawnObstacle() {
         const w = 60 + Math.random() * 40;
         const h = 80 + Math.random() * 60;
@@ -263,3 +236,24 @@
 
       function spawnPower() {
         const type = powerTypes[Math.floor(Math.random() * powerTypes.length)];
+        const w = 48;
+        const h = 48;
+        powers.push({
+          type,
+          x: W + (Math.random() * W),
+          y: H - h - 20,
+          w,
+          h,
+          speed: -speed
+        });
+      }
+
+      function update(dt) {
+        player.vy += player.gravity * dt;
+        player.y += player.vy * dt;
+
+        if (player.y >= H - player.h) {
+          player.y = H - player.h;
+          player.onGround = true;
+          player.vy = 0;
+        } else {
