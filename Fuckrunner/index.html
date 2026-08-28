@@ -89,7 +89,15 @@ const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
 const overlay=document.getElementById('overlay'),titleScr=document.getElementById('screen-title'),pickScr=document.getElementById('screen-pick');
 const startBtn=document.getElementById('start'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best');
 const buffEl=document.getElementById('buff'),cityTag=document.getElementById('cityTag'),heroEl=document.getElementById('hero');
-const CITIES=[{name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},{name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},{name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},{name:'КАЗАНЬ',src:'../bg_kzn.jpg'},{name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'}];
+const CITIES=[
+{name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},
+{name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},
+{name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},
+{name:'КАЗАНЬ',src:'../bg_kzn.jpg'},
+{name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'},
+{name:'САРАТОВ',src:'../bg_sar.jpg'},
+{name:'САМАРА',src:'../bg_sam.jpg'}
+];
 const cityImgs=CITIES.map(c=>{const im=new Image();im.src=c.src;return im});
 let W=0,H=0,dpr=1;
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false}
@@ -126,7 +134,7 @@ function drawWheelIcon(o){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(state.t*5)*4;ct
 function drawUaz(px,py){ctx.save();ctx.translate(px-10,py+18);ctx.fillStyle='#3f6b32';ctx.fillRect(0,18,118,36);ctx.fillStyle='#2d4f24';ctx.fillRect(38,0,52,22);ctx.fillStyle='#8fd4ff';ctx.fillRect(44,6,18,12);ctx.fillRect(66,6,18,12);ctx.fillStyle='#c9a227';ctx.fillRect(8,22,16,8);ctx.fillStyle='#111';ctx.beginPath();ctx.arc(24,56,12,0,7);ctx.arc(96,56,12,0,7);ctx.fill();ctx.fillStyle='#888';ctx.beginPath();ctx.arc(24,56,5,0,7);ctx.arc(96,56,5,0,7);ctx.fill();ctx.restore()}
 let last=performance.now();
 function loop(now){const dt=Math.min(.033,(now-last)/1000);last=now;state.groundY=Math.floor(H*.72);if(player.onGround&&uazT<=0)player.y=state.groundY-player.h;
-if(state.running&&!state.over){state.t+=dt;state.speed+=dt*8;state.dist+=state.speed*dt*.12;const shown=Math.floor(state.dist);scoreEl.textContent=shown+' м';const nextCity=Math.min(CITIES.length-1,Math.floor(shown/70));if(nextCity!==state.city){state.city=nextCity;toastCity()}shieldT=Math.max(0,shieldT-dt);uazT=Math.max(0,uazT-dt);const parts=[];if(shieldT>0)parts.push('ЩИТ '+Math.ceil(shieldT)+'с');if(uazT>0)parts.push('УАЗ '+Math.ceil(uazT)+'с');buffEl.textContent=parts.join(' · ');
+if(state.running&&!state.over){state.t+=dt;state.speed+=dt*8;state.dist+=state.speed*dt*.12;const shown=Math.floor(state.dist);scoreEl.textContent=shown+' м';const nextCity=Math.floor(shown/70)%CITIES.length;if(nextCity!==state.city){state.city=nextCity;toastCity()}shieldT=Math.max(0,shieldT-dt);uazT=Math.max(0,uazT-dt);const parts=[];if(shieldT>0)parts.push('ЩИТ '+Math.ceil(shieldT)+'с');if(uazT>0)parts.push('УАЗ '+Math.ceil(uazT)+'с');buffEl.textContent=parts.join(' · ');
 if(uazT<=0){player.vy+=state.gravity*(player.vy>0?2:1)*dt;player.y+=player.vy*dt;if(player.y>=state.groundY-player.h){player.y=state.groundY-player.h;player.vy=0;player.onGround=true;player.jumpsUsed=0}}else{player.y=state.groundY-player.h-8;player.vy=0;player.onGround=true;player.jumpsUsed=0}
 spawnTimer-=dt;if(spawnTimer<=0){spawn();spawnTimer=.8+Math.random()*.65-Math.min(.35,state.speed/1600)}
 const pBox=uazT>0?{x:player.x-8,y:player.y+10,w:120,h:80}:{x:player.x+8,y:player.y+12,w:player.w-16,h:player.h-16};
