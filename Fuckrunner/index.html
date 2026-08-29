@@ -18,12 +18,11 @@
     touch-action:manipulation;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#160d1c;
+    background:#160d1d;
     font-family:ui-monospace,Menlo,Consolas,monospace;
     user-select:none;
 }
@@ -44,701 +43,332 @@ canvas{
     image-rendering:pixelated;
 }
 
-
 /* =========================================================
    PLAYER
    ========================================================= */
 
 #hero{
     position:absolute;
-
     left:90px;
     top:0;
-
-    width:64px;
-    height:104px;
-
+    width:72px;
+    height:108px;
+    z-index:8;
     pointer-events:none;
-    z-index:5;
-
-    will-change:transform;
 }
 
 .doll{
     position:absolute;
     left:0;
     top:0;
-
-    width:64px;
-    height:104px;
-
+    width:72px;
+    height:108px;
     pointer-events:none;
 }
 
-.doll.skin-labuba{
-    width:82px;
-}
+/* ---------- head ---------- */
 
-
-/* =========================================================
-   CHARACTER SHADOW
-   ========================================================= */
-
-#heroShadow{
+.doll .head{
     position:absolute;
-
-    width:64px;
-    height:12px;
-
-    border-radius:50%;
-
-    background:rgba(0,0,0,.35);
-
-    transform:translateX(-5px);
-
-    pointer-events:none;
-
-    z-index:2;
+    left:22px;
+    top:10px;
+    width:30px;
+    height:29px;
+    background:#efb187;
+    border-radius:48% 48% 45% 45%;
+    z-index:5;
 }
 
+.doll .eye{
+    position:absolute;
+    top:20px;
+    width:4px;
+    height:4px;
+    background:#19151a;
+    border-radius:50%;
+    z-index:7;
+}
 
-/* =========================================================
-   CAP
-   ========================================================= */
+.doll .eye.l{left:29px}
+.doll .eye.r{left:41px}
+
+/* ---------- hair ---------- */
+
+.doll .hair{
+    display:none;
+    position:absolute;
+    left:14px;
+    top:5px;
+    width:44px;
+    height:34px;
+    background:#f1d06c;
+    border-radius:22px 22px 10px 10px;
+    z-index:4;
+}
+
+/* ---------- cap ---------- */
 
 .doll .cap{
     position:absolute;
-
-    left:12px;
-    top:1px;
-
-    width:40px;
-    height:16px;
-
+    left:17px;
+    top:0;
+    width:43px;
+    height:17px;
     background:#111;
-
-    border-radius:
-        9px 9px 2px 2px;
-
+    border-radius:9px 9px 2px 2px;
     z-index:8;
 }
 
 .doll .cap:after{
     content:"";
-
     position:absolute;
-
     right:-9px;
-    bottom:2px;
-
-    width:19px;
+    bottom:1px;
+    width:18px;
     height:6px;
-
     background:#111;
-
-    border-radius:
-        0 6px 6px 0;
+    border-radius:0 7px 7px 0;
 }
 
 .doll .tag{
     position:absolute;
-
-    left:13px;
+    left:19px;
     top:4px;
-
     width:38px;
-
     color:#eee;
-
-    font:
-        900 7px/1
-        Arial,sans-serif;
-
+    font:800 7px/1 Arial,sans-serif;
     text-align:center;
-
     z-index:9;
 }
 
-
-/* =========================================================
-   HEAD
-   ========================================================= */
-
-.doll .head{
-    position:absolute;
-
-    left:16px;
-    top:11px;
-
-    width:28px;
-    height:28px;
-
-    background:#f0b48a;
-
-    border-radius:50%;
-
-    z-index:5;
-
-    box-shadow:
-        inset -2px -2px 0 rgba(0,0,0,.08);
-}
-
-.doll .eye{
-    position:absolute;
-
-    top:20px;
-
-    width:4px;
-    height:5px;
-
-    background:#211a1a;
-
-    border-radius:50%;
-
-    z-index:7;
-}
-
-.doll .eye.l{
-    left:22px;
-}
-
-.doll .eye.r{
-    left:33px;
-}
-
-
-/* =========================================================
-   HAIR
-   ========================================================= */
-
-.doll .hair{
-    display:none;
-}
-
-.doll.skin-girl .hair{
-    display:block;
-
-    position:absolute;
-
-    left:10px;
-    top:6px;
-
-    width:40px;
-    height:34px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffe18a,
-            #dca93f
-        );
-
-    border-radius:
-        19px 19px 8px 8px;
-
-    z-index:3;
-}
-
-
-/* =========================================================
-   BODY
-   ========================================================= */
+/* ---------- body ---------- */
 
 .doll .shirt{
     position:absolute;
-
-    left:8px;
-    top:35px;
-
-    width:48px;
-    height:43px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #36bd59,
-            #218e40
-        );
-
-    border-radius:
-        9px 9px 5px 5px;
-
+    left:11px;
+    top:36px;
+    width:50px;
+    height:42px;
+    background:#2da64e;
+    border-radius:10px 10px 5px 5px;
     z-index:4;
-
-    box-shadow:
-        inset -3px 0 0 rgba(0,0,0,.1);
 }
 
 .doll .collar{
     position:absolute;
-
-    left:8px;
-    top:35px;
-
-    width:48px;
+    left:11px;
+    top:36px;
+    width:50px;
     height:9px;
-
-    background:#196d34;
-
-    border-radius:
-        9px 9px 0 0;
-
-    z-index:6;
+    background:#21783a;
+    border-radius:10px 10px 0 0;
+    z-index:5;
 }
 
+/* ---------- arms ---------- */
 
-/* =========================================================
-   ARMS
-   ========================================================= */
-
-.arm{
+.doll .arm{
     position:absolute;
-
-    top:39px;
-
-    width:12px;
-    height:28px;
-
-    background:#e0a07a;
-
+    top:40px;
+    width:11px;
+    height:31px;
+    background:#e0a078;
     border-radius:7px;
-
-    transform-origin:
-        50% 5px;
-
+    transform-origin:50% 4px;
     z-index:3;
-
-    will-change:transform;
 }
 
-.arm.l{
-    left:0;
+.doll .arm.l{
+    left:2px;
 }
 
-.arm.r{
-    right:0;
+.doll .arm.r{
+    right:2px;
 }
 
-.hand{
+/* кисти двигаются ВМЕСТЕ с руками */
+.doll .hand{
     position:absolute;
-
-    left:1px;
-    bottom:-5px;
-
-    width:10px;
-    height:10px;
-
-    background:inherit;
-
+    width:12px;
+    height:11px;
+    background:#e0a078;
     border-radius:50%;
+    z-index:3;
 }
 
+/* ---------- legs ---------- */
 
-/* =========================================================
-   LEGS
-   ========================================================= */
-
-.leg{
+.doll .leg{
     position:absolute;
-
-    bottom:0;
-
+    bottom:10px;
     width:13px;
     height:29px;
-
-    background:#3b2b23;
-
-    border-radius:
-        6px 6px 4px 4px;
-
-    transform-origin:
-        50% 3px;
-
+    background:#3b2d28;
+    border-radius:7px;
+    transform-origin:50% 2px;
     z-index:2;
-
-    will-change:transform;
 }
 
-.leg.l{
-    left:16px;
-}
-
-.leg.r{
-    right:16px;
-}
-
-.shoe{
-    position:absolute;
-
-    left:-4px;
-    bottom:-5px;
-
-    width:20px;
-    height:9px;
-
-    background:#151515;
-
-    border-radius:
-        7px 9px 4px 4px;
-
-    box-shadow:
-        inset 0 -2px 0 #050505;
-}
-
-
-/* =========================================================
-   COLLAR / CHAIN
-   ========================================================= */
-
-.doll .chain{
-    display:none;
-}
-
-.doll.skin-bumble .chain{
-    display:block;
-
-    position:absolute;
-
-    left:15px;
-    top:44px;
-
-    width:29px;
-    height:15px;
-
-    border:
-        3px solid #efc44a;
-
-    border-top:0;
-
-    border-radius:
-        0 0 15px 15px;
-
-    z-index:8;
-}
-
-
-/* =========================================================
-   VEGA
-   ========================================================= */
-
-.doll.skin-vega .shirt{
-    background:
-        linear-gradient(
-            135deg,
-            #36bd59,
-            #218e40
-        );
-}
-
-
-/* =========================================================
-   BUMBLE
-   ========================================================= */
-
-.doll.skin-bumble .head,
-.doll.skin-bumble .arm{
-    background:#704126;
-}
-
-.doll.skin-bumble .shirt{
-    background:#111;
-}
-
-.doll.skin-bumble .collar{
-    background:#c9a227;
-}
-
-.doll.skin-bumble .cap,
-.doll.skin-bumble .cap:after{
-    background:#c9a227;
-}
-
-.doll.skin-bumble .tag{
-    color:#111;
-}
-
-
-/* =========================================================
-   LABUBA — ЖИРНЫЙ ЧЕЛОВЕК
-   ========================================================= */
-
-.doll.skin-labuba .head{
-    left:25px;
-
-    width:32px;
-    height:30px;
-}
-
-.doll.skin-labuba .eye.l{
-    left:31px;
-}
-
-.doll.skin-labuba .eye.r{
-    left:45px;
-}
-
-.doll.skin-labuba .shirt{
-    left:2px;
-
-    width:78px;
-    height:49px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #d66b31,
-            #9c3e1e
-        );
-
-    border-radius:19px;
-}
-
-.doll.skin-labuba .collar{
-    left:2px;
-    width:78px;
-
-    background:#793117;
-}
-
-.doll.skin-labuba .arm{
-    top:42px;
-    width:14px;
-    height:30px;
-}
-
-.doll.skin-labuba .arm.l{
-    left:-2px;
-}
-
-.doll.skin-labuba .arm.r{
-    right:-2px;
-}
-
-.doll.skin-labuba .leg{
-    width:14px;
-}
-
-.doll.skin-labuba .cap,
-.doll.skin-labuba .tag{
+.doll .leg.l{
     left:20px;
 }
 
-
-/* =========================================================
-   GIRL
-   ========================================================= */
-
-.doll.skin-girl .cap,
-.doll.skin-girl .tag,
-.doll.skin-girl .collar{
-    display:none;
+.doll .leg.r{
+    right:20px;
 }
 
-.doll.skin-girl .shirt{
-    background:
-        linear-gradient(
-            135deg,
-            #ff82b7,
-            #e95493
-        );
-
-    border-radius:
-        11px 11px 18px 18px;
-
-    height:45px;
+/* обувь является частью ноги и поэтому двигается вместе с ней */
+.doll .shoe{
+    position:absolute;
+    left:-4px;
+    bottom:-6px;
+    width:22px;
+    height:10px;
+    background:#171419;
+    border-radius:7px 8px 4px 4px;
 }
 
-.doll.skin-girl .head,
-.doll.skin-girl .arm{
-    background:#f7c9a8;
+/* ---------- running animation ---------- */
+
+.doll.run .arm.l{
+    animation:armLeft .30s ease-in-out infinite;
 }
 
+.doll.run .arm.r{
+    animation:armRight .30s ease-in-out infinite;
+}
 
-/* =========================================================
-   ANIMATION
-   ========================================================= */
+.doll.run .leg.l{
+    animation:legLeft .30s ease-in-out infinite;
+}
+
+.doll.run .leg.r{
+    animation:legRight .30s ease-in-out infinite;
+}
 
 @keyframes armLeft{
-    0%{
-        transform:rotate(24deg);
+    0%,100%{
+        transform:rotate(32deg);
     }
-
     50%{
-        transform:rotate(-30deg);
-    }
-
-    100%{
-        transform:rotate(24deg);
+        transform:rotate(-34deg);
     }
 }
 
 @keyframes armRight{
-    0%{
-        transform:rotate(-30deg);
+    0%,100%{
+        transform:rotate(-34deg);
     }
-
     50%{
-        transform:rotate(24deg);
-    }
-
-    100%{
-        transform:rotate(-30deg);
+        transform:rotate(32deg);
     }
 }
 
 @keyframes legLeft{
-    0%{
-        transform:rotate(-24deg);
+    0%,100%{
+        transform:rotate(-25deg);
     }
-
     50%{
-        transform:rotate(28deg);
-    }
-
-    100%{
-        transform:rotate(-24deg);
+        transform:rotate(25deg);
     }
 }
 
 @keyframes legRight{
-    0%{
-        transform:rotate(28deg);
+    0%,100%{
+        transform:rotate(25deg);
     }
-
     50%{
-        transform:rotate(-24deg);
-    }
-
-    100%{
-        transform:rotate(28deg);
+        transform:rotate(-25deg);
     }
 }
 
-.doll.run .arm.l{
-    animation:
-        armLeft .27s
-        cubic-bezier(.45,.05,.55,.95)
-        infinite;
+/* ---------- VEGA ---------- */
+
+.skin-vega .head,
+.skin-vega .arm,
+.skin-vega .hand{
+    background:#efb187;
 }
 
-.doll.run .arm.r{
-    animation:
-        armRight .27s
-        cubic-bezier(.45,.05,.55,.95)
-        infinite;
+/* ---------- BUMBLE ---------- */
+
+.skin-bumble .head,
+.skin-bumble .arm,
+.skin-bumble .hand{
+    background:#704128;
 }
 
-.doll.run .leg.l{
-    animation:
-        legLeft .27s
-        cubic-bezier(.45,.05,.55,.95)
-        infinite;
-}
-
-.doll.run .leg.r{
-    animation:
-        legRight .27s
-        cubic-bezier(.45,.05,.55,.95)
-        infinite;
-}
-
-
-/* =========================================================
-   WEAPON
-   ========================================================= */
-
-.weapon{
-    display:none;
-
-    position:absolute;
-
-    left:34px;
-    top:42px;
-
-    width:45px;
-    height:10px;
-
-    z-index:10;
-
-    transform:
-        rotate(-9deg);
-
-    transform-origin:
-        4px 5px;
-}
-
-.weapon .body{
-    position:absolute;
-
-    left:0;
-    top:1px;
-
-    width:31px;
-    height:7px;
-
-    background:#292923;
-
-    border-radius:2px;
-}
-
-.weapon .barrel{
-    position:absolute;
-
-    left:27px;
-    top:0;
-
-    width:19px;
-    height:4px;
-
-    background:#171713;
-}
-
-.weapon .stock{
-    position:absolute;
-
-    left:-8px;
-    top:0;
-
-    width:13px;
-    height:9px;
-
-    background:#5c3b20;
-
-    transform:
-        skewY(-15deg);
-}
-
-.weapon .mag{
-    position:absolute;
-
-    left:10px;
-    top:6px;
-
-    width:8px;
-    height:13px;
-
-    background:#3d3a31;
-
-    transform:
-        rotate(12deg);
-}
-
-.weapon .sight{
-    position:absolute;
-
-    left:17px;
-    top:-4px;
-
-    width:7px;
-    height:4px;
-
+.skin-bumble .shirt{
     background:#111;
 }
 
-#hero.has-gun .weapon{
+.skin-bumble .collar{
+    background:#d1aa32;
+}
+
+.skin-bumble .cap,
+.skin-bumble .cap:after{
+    background:#d1aa32;
+}
+
+.skin-bumble .tag{
+    color:#111;
+}
+
+/* ---------- LABUBA = жирный человек ---------- */
+
+.skin-labuba .head{
+    left:18px;
+    width:36px;
+    height:31px;
+}
+
+.skin-labuba .eye.l{left:27px}
+.skin-labuba .eye.r{left:43px}
+
+.skin-labuba .shirt{
+    left:2px;
+    width:68px;
+    height:46px;
+    background:#bd5829;
+    border-radius:18px 18px 9px 9px;
+}
+
+.skin-labuba .collar{
+    left:2px;
+    width:68px;
+    background:#8b3919;
+}
+
+.skin-labuba .arm.l{left:0}
+.skin-labuba .arm.r{right:0}
+
+.skin-labuba .leg.l{left:19px}
+.skin-labuba .leg.r{right:19px}
+
+/* ---------- GIRL ---------- */
+
+.skin-girl .hair{
     display:block;
 }
 
+.skin-girl .cap,
+.skin-girl .tag,
+.skin-girl .collar{
+    display:none;
+}
+
+.skin-girl .head,
+.skin-girl .arm,
+.skin-girl .hand{
+    background:#f6c7a7;
+}
+
+.skin-girl .shirt{
+    background:#ff70ae;
+    border-radius:11px 11px 20px 20px;
+    height:45px;
+}
 
 /* =========================================================
    HUD
@@ -746,689 +376,466 @@ canvas{
 
 #hud{
     position:absolute;
-
     top:10px;
     left:10px;
     right:10px;
+    z-index:20;
 
     display:flex;
     justify-content:space-between;
 
     color:#fff;
-
-    font-weight:900;
     font-size:15px;
-
-    text-shadow:
-        0 2px 0 #000;
+    font-weight:800;
+    text-shadow:0 2px 0 #000;
 
     pointer-events:none;
-
-    z-index:20;
 }
 
 #buff{
     margin-top:4px;
-
-    color:#9fef6a;
-
+    color:#9ff56a;
     font-size:12px;
 }
 
-#difficultyHud{
+#cityTag{
     position:absolute;
-
-    top:39px;
+    top:43px;
     left:50%;
-
-    transform:
-        translateX(-50%);
+    transform:translateX(-50%);
+    z-index:20;
 
     color:#ffe08a;
+    font-size:13px;
+    font-weight:800;
+    text-shadow:0 2px 0 #000;
 
-    font:
-        900 11px/1
-        monospace;
-
-    text-shadow:
-        0 2px 0 #000;
+    opacity:0;
+    transition:opacity .3s;
 
     pointer-events:none;
-
-    z-index:20;
 }
 
-
 /* =========================================================
-   OVERLAY
+   OVERLAY / MENUS
    ========================================================= */
 
 #overlay{
     position:absolute;
-
     inset:0;
+    z-index:50;
 
     display:flex;
-
-    flex-direction:column;
-
     align-items:center;
     justify-content:center;
+    flex-direction:column;
 
-    background:
-        rgba(8,4,14,.88);
+    background:rgba(8,4,14,.88);
 
     color:#fff;
-
     text-align:center;
-
     padding:16px;
-
-    z-index:50;
 }
 
-#overlay h1{
-    font-size:27px;
+.screen{
+    width:min(560px,96vw);
+}
 
+.screen.hidden{
+    display:none;
+}
+
+.screen h1{
+    font-size:25px;
     margin-bottom:8px;
-
     color:#ff4d6d;
-
-    text-shadow:
-        3px 3px 0 #3a0010;
+    text-shadow:3px 3px 0 #3a0010;
 }
 
-#overlay p{
-    opacity:.92;
-
-    margin:6px 0 15px;
-
-    max-width:360px;
-
+.screen p{
+    opacity:.9;
     line-height:1.35;
+    margin:7px auto 15px;
+    max-width:390px;
 }
-
-button.main{
-    appearance:none;
-
-    border:3px solid #fff;
-
-    background:#ff4d6d;
-
-    color:#fff;
-
-    font-weight:900;
-
-    font-size:17px;
-
-    font-family:inherit;
-
-    padding:12px 24px;
-
-    cursor:pointer;
-}
-
-button.main:disabled{
-    opacity:.35;
-}
-
-.hint{
-    font-size:11px;
-
-    opacity:.68;
-
-    margin-top:11px;
-}
-
-
-/* =========================================================
-   SCREENS
-   ========================================================= */
-
-#screen-pick{
-    display:none;
-
-    width:min(600px,96vw);
-}
-
-#screen-pick.show{
-    display:block;
-}
-
-#screen-title.hide{
-    display:none;
-}
-
-
-/* =========================================================
-   DIFFICULTY
-   ========================================================= */
-
-.difficulty-title{
-    margin-top:4px;
-    margin-bottom:9px;
-
-    color:#ffe08a;
-
-    font-size:15px;
-    font-weight:900;
-
-    text-transform:uppercase;
-}
-
-.difficulty-list{
-    display:grid;
-
-    grid-template-columns:
-        1fr;
-
-    gap:7px;
-
-    margin-bottom:14px;
-}
-
-.difficulty{
-    width:100%;
-
-    padding:11px;
-
-    border:
-        2px solid #55394e;
-
-    background:#241428;
-
-    color:#fff;
-
-    font:
-        800 13px
-        monospace;
-
-    cursor:pointer;
-
-    text-align:left;
-}
-
-.difficulty small{
-    display:block;
-
-    margin-top:3px;
-
-    color:#aaa;
-
-    font-size:10px;
-}
-
-.difficulty.selected{
-    border-color:#ff4d6d;
-
-    background:#32182a;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(255,77,109,.2);
-}
-
-
-/* =========================================================
-   FIGHTERS
-   ========================================================= */
 
 .grid{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:9px;
-
-    margin:
-        9px 0 14px;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:12px 0 16px;
 }
 
 .card{
+    min-height:145px;
+    padding:8px 5px;
+    border:3px solid #53384f;
     background:#241428;
-
-    border:
-        3px solid #5a3a50;
-
     color:#fff;
-
-    cursor:pointer;
-
-    padding:8px 4px 5px;
-
     font-family:inherit;
-
-    min-height:143px;
+    cursor:pointer;
 }
 
 .card .nm{
-    font-size:11px;
-
-    font-weight:900;
-
-    margin-bottom:4px;
-
     color:#ffe08a;
+    font-weight:800;
+    font-size:12px;
+    margin-bottom:4px;
 }
 
 .card.sel{
     border-color:#ff4d6d;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,77,109,.3);
+    box-shadow:0 0 0 3px rgba(255,77,109,.3);
 }
 
 .stage{
     position:relative;
-
-    height:104px;
-
+    height:105px;
     overflow:hidden;
 }
 
-
-/* =========================================================
-   CITY
-   ========================================================= */
-
-#cityTag{
-    position:absolute;
-
-    top:62px;
+.stage .doll{
     left:50%;
-
-    transform:
-        translateX(-50%);
-
-    color:#ffe08a;
-
-    font-weight:900;
-    font-size:13px;
-
-    text-shadow:
-        0 2px 0 #000;
-
-    pointer-events:none;
-
-    z-index:20;
-
-    opacity:0;
-
-    transition:
-        opacity .25s;
+    transform:translateX(-50%) scale(.86);
+    transform-origin:top center;
 }
 
+.difficulty-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:15px auto 18px;
+    width:min(390px,94vw);
+}
+
+.difficulty{
+    padding:14px 12px;
+    border:3px solid #53384f;
+    background:#241428;
+    color:#fff;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.difficulty small{
+    display:block;
+    margin-top:4px;
+    color:#aaa;
+    font-size:10px;
+    font-weight:400;
+}
+
+.difficulty.sel{
+    border-color:#ff4d6d;
+    background:#32172a;
+    box-shadow:0 0 0 3px rgba(255,77,109,.3);
+}
+
+button.main{
+    appearance:none;
+    border:3px solid #fff;
+    background:#ff4d6d;
+    color:#fff;
+    font-weight:800;
+    font-size:17px;
+    font-family:inherit;
+    padding:12px 24px;
+    cursor:pointer;
+}
+
+button.main:disabled{
+    opacity:.4;
+    cursor:default;
+}
+
+.hint{
+    margin-top:11px;
+    font-size:11px;
+    opacity:.65;
+}
 
 /* =========================================================
-   GAME OVER EXTRA
+   SHIELD VISUAL
    ========================================================= */
 
-#gameInfo{
-    margin-top:5px;
+#shieldAura{
+    position:absolute;
+    z-index:7;
+    pointer-events:none;
 
-    color:#aaa;
+    width:100px;
+    height:120px;
 
-    font-size:11px;
+    border:3px solid rgba(70,170,255,.85);
+    border-radius:50%;
+
+    box-shadow:
+        0 0 10px #198cff,
+        0 0 22px #198cff,
+        inset 0 0 18px rgba(60,170,255,.45);
+
+    opacity:0;
+    transform:translate(-14px,-8px);
+
+    animation:shieldPulse .8s ease-in-out infinite alternate;
+}
+
+#shieldAura.active{
+    opacity:1;
+}
+
+@keyframes shieldPulse{
+    from{
+        filter:brightness(.9);
+        transform:translate(-14px,-8px) scale(.98);
+    }
+    to{
+        filter:brightness(1.35);
+        transform:translate(-14px,-8px) scale(1.03);
+    }
 }
 </style>
 </head>
-
 
 <body>
 
 <div id="wrap">
 
-    <canvas id="c"></canvas>
+<canvas id="c"></canvas>
 
+<div id="hero">
 
-    <!-- PLAYER -->
+    <div id="shieldAura"></div>
 
-    <div id="hero">
+    <div class="doll skin-vega">
 
-        <div class="doll skin-vega">
+        <div class="hair"></div>
+        <div class="cap"></div>
+        <div class="tag">ВЕГА</div>
 
-            <div class="hair"></div>
+        <div class="head"></div>
 
-            <div class="cap"></div>
+        <div class="eye l"></div>
+        <div class="eye r"></div>
 
-            <div class="tag">ВЕГА</div>
-
-            <div class="head"></div>
-
-            <div class="eye l"></div>
-            <div class="eye r"></div>
-
-            <div class="arm l">
-                <div class="hand"></div>
-            </div>
-
-            <div class="arm r">
-                <div class="hand"></div>
-            </div>
-
-            <div class="shirt"></div>
-
-            <div class="collar"></div>
-
-            <div class="chain"></div>
-
-            <div class="leg l">
-                <div class="shoe"></div>
-            </div>
-
-            <div class="leg r">
-                <div class="shoe"></div>
-            </div>
-
+        <div class="arm l">
+            <div class="hand"></div>
         </div>
 
+        <div class="arm r">
+            <div class="hand"></div>
+        </div>
 
-        <div class="weapon">
+        <div class="shirt"></div>
+        <div class="collar"></div>
 
-            <div class="stock"></div>
-            <div class="body"></div>
-            <div class="barrel"></div>
-            <div class="mag"></div>
-            <div class="sight"></div>
+        <div class="leg l">
+            <div class="shoe"></div>
+        </div>
 
+        <div class="leg r">
+            <div class="shoe"></div>
         </div>
 
     </div>
+</div>
 
+<div id="hud">
+    <div>
+        <div id="score">0 м</div>
+        <div id="buff"></div>
+    </div>
 
-    <div id="heroShadow"></div>
+    <div id="best">лучший счет 0</div>
+</div>
 
+<div id="cityTag"></div>
 
-    <!-- HUD -->
+<!-- =======================================================
+     MENU
+     ======================================================= -->
 
-    <div id="hud">
+<div id="overlay">
 
-        <div>
-            <div id="score">0 м</div>
-            <div id="buff"></div>
-        </div>
+    <!-- SCREEN 1 -->
+    <div id="characterScreen" class="screen">
 
-        <div id="best">
-            лучший счет 0
-        </div>
+        <h1>ВЫБЕРИ БОЙЦА</h1>
+
+        <p>
+            Выбери персонажа, которым будешь бежать.
+        </p>
+
+        <div class="grid" id="fighterGrid"></div>
+
+        <button class="main" id="toDifficulty" disabled>
+            ДАЛЕЕ
+        </button>
 
     </div>
 
-    <div id="difficultyHud"></div>
+    <!-- SCREEN 2 -->
+    <div id="difficultyScreen" class="screen hidden">
 
-    <div id="cityTag"></div>
+        <h1>ВЫБОР СЛОЖНОСТИ</h1>
 
+        <p>
+            Скорость начинается медленно и постепенно растёт.
+            Чем выше сложность — тем быстрее ускорение.
+        </p>
 
-    <!-- MENU -->
+        <div class="difficulty-list">
 
-    <div id="overlay">
-
-        <div id="screen-title">
-
-            <h1 id="menuTitle">
-                FUCKRUNNER
-            </h1>
-
-            <p id="menuText">
-                Обычный работяга живёт
-                свою обычную жизнь.
-            </p>
-
-            <button
-                class="main"
-                id="pickBtn">
-                ВЫБЕРИ БОЙЦА
+            <button class="difficulty" data-difficulty="easy">
+                СОСУНОК ЕБАНЫЙ
+                <small>Медленное ускорение · больше времени на реакцию</small>
             </button>
 
-            <div class="hint">
-                тап — прыжок<br>
-                второй тап в воздухе — второй прыжок
-            </div>
+            <button class="difficulty" data-difficulty="normal">
+                ОБЫЧНЫЙ РАБОТЯГА С ЗАВОДА
+                <small>Среднее ускорение · стандартная сложность</small>
+            </button>
+
+            <button class="difficulty" data-difficulty="hard">
+                КИБОРГ УБИЙЦА
+                <small>Быстрое ускорение · максимальная сложность</small>
+            </button>
 
         </div>
 
+        <button class="main" id="start" disabled>
+            ПОГНАЛИ
+        </button>
 
-        <div id="screen-pick">
-
-            <h1>
-                ВЫБОР
-            </h1>
-
-
-            <div class="difficulty-title">
-                ВЫБОР СЛОЖНОСТИ
-            </div>
-
-            <div
-                class="difficulty-list"
-                id="difficultyList">
-            </div>
-
-
-            <div class="difficulty-title">
-                ВЫБОР БОЙЦА
-            </div>
-
-            <div
-                class="grid"
-                id="grid">
-            </div>
-
-
-            <button
-                class="main"
-                id="start"
-                disabled>
-                ПОГНАЛИ
-            </button>
-
+        <div class="hint">
+            АК-47: 1500 м · 4500 м · 7500 м...
+            &nbsp;&nbsp; Щит: 3000 м · 6000 м · 9000 м...
         </div>
 
     </div>
 
 </div>
 
-
 <script>
-(() => {
-
+(()=>{
 'use strict';
-
 
 /* =========================================================
    TELEGRAM
    ========================================================= */
 
-const tg =
-    window.Telegram &&
-    window.Telegram.WebApp;
+const tg=window.Telegram && window.Telegram.WebApp;
 
 if(tg){
-
     tg.ready();
     tg.expand();
 
     try{
         tg.setHeaderColor('#2a1630');
-        tg.setBackgroundColor('#160d1c');
+        tg.setBackgroundColor('#1a1020');
     }catch(e){}
-
 }
-
 
 /* =========================================================
    DOM
    ========================================================= */
 
-const canvas =
-    document.getElementById('c');
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
 
-const ctx =
-    canvas.getContext('2d');
+const overlay=document.getElementById('overlay');
 
-const overlay =
-    document.getElementById('overlay');
+const characterScreen=
+    document.getElementById('characterScreen');
 
-const titleScreen =
-    document.getElementById('screen-title');
+const difficultyScreen=
+    document.getElementById('difficultyScreen');
 
-const pickScreen =
-    document.getElementById('screen-pick');
+const fighterGrid=
+    document.getElementById('fighterGrid');
 
-const pickBtn =
-    document.getElementById('pickBtn');
+const toDifficulty=
+    document.getElementById('toDifficulty');
 
-const startBtn =
+const startBtn=
     document.getElementById('start');
 
-const scoreEl =
+const scoreEl=
     document.getElementById('score');
 
-const bestEl =
+const bestEl=
     document.getElementById('best');
 
-const buffEl =
+const buffEl=
     document.getElementById('buff');
 
-const difficultyHud =
-    document.getElementById('difficultyHud');
-
-const cityTag =
+const cityTag=
     document.getElementById('cityTag');
 
-const heroEl =
+const heroEl=
     document.getElementById('hero');
 
-const heroShadow =
-    document.getElementById('heroShadow');
-
-const dollEl =
+const heroDoll=
     heroEl.querySelector('.doll');
 
-const grid =
-    document.getElementById('grid');
-
-const difficultyList =
-    document.getElementById('difficultyList');
-
-const menuTitle =
-    document.getElementById('menuTitle');
-
-const menuText =
-    document.getElementById('menuText');
-
+const shieldAura=
+    document.getElementById('shieldAura');
 
 /* =========================================================
    CANVAS
    ========================================================= */
 
-let W = 0;
-let H = 0;
-let dpr = 1;
+let W=0;
+let H=0;
+let dpr=1;
 
 function resize(){
 
-    dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
+    dpr=Math.min(window.devicePixelRatio||1,2);
 
-    W =
-        window.innerWidth;
+    W=window.innerWidth;
+    H=window.innerHeight;
 
-    H =
-        window.innerHeight;
+    canvas.width=Math.floor(W*dpr);
+    canvas.height=Math.floor(H*dpr);
 
-    canvas.width =
-        Math.floor(W * dpr);
+    canvas.style.width=W+'px';
+    canvas.style.height=H+'px';
 
-    canvas.height =
-        Math.floor(H * dpr);
-
-    canvas.style.width =
-        W + 'px';
-
-    canvas.style.height =
-        H + 'px';
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-    ctx.imageSmoothingEnabled =
-        false;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.imageSmoothingEnabled=false;
 }
 
-window.addEventListener(
-    'resize',
-    resize
-);
-
+window.addEventListener('resize',resize);
 resize();
-
 
 /* =========================================================
    CITIES
    ========================================================= */
 
-const CITIES = [
-    {
-        name:'ЕКАТЕРИНБУРГ',
-        src:'../bg_far.jpg'
-    },
-    {
-        name:'ТОЛЬЯТТИ',
-        src:'../bg_tlt.jpg'
-    },
-    {
-        name:'УЛЬЯНОВСК',
-        src:'../bg_uln.jpg'
-    },
-    {
-        name:'КАЗАНЬ',
-        src:'../bg_kzn.jpg'
-    },
-    {
-        name:'ЙОШКАР-ОЛА',
-        src:'../bg_yosh.jpg'
-    },
-    {
-        name:'САРАТОВ',
-        src:'../bg_sar.jpg'
-    },
-    {
-        name:'САМАРА',
-        src:'../bg_sam.jpg'
-    }
+const CITIES=[
+    {name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},
+    {name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},
+    {name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},
+    {name:'КАЗАНЬ',src:'../bg_kzn.jpg'},
+    {name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'},
+    {name:'САРАТОВ',src:'../bg_sar.jpg'},
+    {name:'САМАРА',src:'../bg_sam.jpg'}
 ];
 
-const cityImgs =
-    CITIES.map(city => {
-
-        const img =
-            new Image();
-
-        img.src =
-            city.src;
-
-        return img;
-
-    });
-
+const cityImgs=CITIES.map(c=>{
+    const img=new Image();
+    img.src=c.src;
+    return img;
+});
 
 /* =========================================================
    FIGHTERS
    ========================================================= */
 
-const FIGHTERS = [
+const FIGHTERS=[
     {
         id:'vega',
         name:'Вегамэн',
@@ -1451,160 +858,21 @@ const FIGHTERS = [
     }
 ];
 
+let selectedSkin='vega';
 
-/* =========================================================
-   DIFFICULTIES
-   ========================================================= */
+function fighterMarkup(f){
 
-const DIFFICULTIES = [
-    {
-        id:'baby',
-
-        name:'Сосунок ебаный',
-
-        desc:'медленно · препятствий мало',
-
-        startSpeed:210,
-
-        maxSpeed:520,
-
-        acceleration:5.2,
-
-        spawnMin:1.55,
-
-        spawnMax:2.25
-    },
-
-    {
-        id:'worker',
-
-        name:'Обычный работяга с завода',
-
-        desc:'нормально · постепенно становится жарко',
-
-        startSpeed:235,
-
-        maxSpeed:650,
-
-        acceleration:7.4,
-
-        spawnMin:1.25,
-
-        spawnMax:1.85
-    },
-
-    {
-        id:'cyborg',
-
-        name:'Киборг убийца',
-
-        desc:'быстро · ускорение максимальное',
-
-        startSpeed:260,
-
-        maxSpeed:790,
-
-        acceleration:10.5,
-
-        spawnMin:1.05,
-
-        spawnMax:1.55
-    }
-];
-
-let difficulty =
-    DIFFICULTIES[1];
-
-
-/* =========================================================
-   BUILD DIFFICULTIES
-   ========================================================= */
-
-DIFFICULTIES.forEach(d => {
-
-    const button =
-        document.createElement('button');
-
-    button.className =
-        'difficulty';
-
-    button.dataset.id =
-        d.id;
-
-    button.innerHTML = `
-        ${d.name}
-        <small>${d.desc}</small>
-    `;
-
-    button.addEventListener(
-        'click',
-        () => {
-
-            document
-                .querySelectorAll('.difficulty')
-                .forEach(el =>
-                    el.classList.remove('selected')
-                );
-
-            button.classList.add(
-                'selected'
-            );
-
-            difficulty = d;
-
-            difficultyHud.textContent =
-                d.name;
-
-            checkReady();
-        }
-    );
-
-    difficultyList.appendChild(
-        button
-    );
-
-});
-
-
-document
-    .querySelector(
-        '.difficulty[data-id="worker"]'
-    )
-    .classList.add('selected');
-
-
-/* =========================================================
-   BUILD FIGHTERS
-   ========================================================= */
-
-FIGHTERS.forEach(f => {
-
-    const button =
-        document.createElement('button');
-
-    button.className =
-        'card';
-
-    button.dataset.id =
-        f.id;
-
-    button.innerHTML = `
-
-        <div class="nm">
-            ${f.name}
-        </div>
+    return `
+        <div class="nm">${f.name}</div>
 
         <div class="stage">
 
             <div class="doll skin-${f.id}">
 
                 <div class="hair"></div>
-
                 <div class="cap"></div>
 
-                <div class="tag">
-                    ${f.tag}
-                </div>
+                <div class="tag">${f.tag}</div>
 
                 <div class="head"></div>
 
@@ -1620,10 +888,7 @@ FIGHTERS.forEach(f => {
                 </div>
 
                 <div class="shirt"></div>
-
                 <div class="collar"></div>
-
-                <div class="chain"></div>
 
                 <div class="leg l">
                     <div class="shoe"></div>
@@ -1634,396 +899,243 @@ FIGHTERS.forEach(f => {
                 </div>
 
             </div>
-
         </div>
     `;
+}
 
-    grid.appendChild(button);
+FIGHTERS.forEach(f=>{
 
+    const card=document.createElement('button');
 
-    button.addEventListener(
-        'click',
-        () => {
+    card.className='card';
+    card.dataset.id=f.id;
+    card.innerHTML=fighterMarkup(f);
 
-            document
-                .querySelectorAll('.card')
-                .forEach(c => {
+    card.addEventListener('click',()=>{
 
-                    c.classList.remove(
-                        'sel'
-                    );
+        document
+            .querySelectorAll('.card')
+            .forEach(c=>c.classList.remove('sel'));
 
-                    const doll =
-                        c.querySelector(
-                            '.doll'
-                        );
+        card.classList.add('sel');
 
-                    if(doll){
-                        doll.classList.remove(
-                            'run'
-                        );
-                    }
+        selectedSkin=f.id;
 
-                });
+        toDifficulty.disabled=false;
 
+        applySkin();
 
-            button.classList.add(
-                'sel'
-            );
+    });
 
-
-            const preview =
-                button.querySelector(
-                    '.doll'
-                );
-
-            preview.classList.add(
-                'run'
-            );
-
-
-            skin =
-                f.id;
-
-            applySkin();
-
-            checkReady();
-        }
-    );
-
+    fighterGrid.appendChild(card);
 });
 
-
 /* =========================================================
-   GAME STATE
+   DIFFICULTIES
    ========================================================= */
 
-const state = {
+const DIFFICULTIES={
+    easy:{
+        name:'СОСУНОК ЕБАНЫЙ',
+        startSpeed:235,
+        acceleration:3.6,
+        maxSpeed:620
+    },
 
-    running:false,
+    normal:{
+        name:'ОБЫЧНЫЙ РАБОТЯГА С ЗАВОДА',
+        startSpeed:255,
+        acceleration:6.2,
+        maxSpeed:780
+    },
 
-    over:false,
-
-    t:0,
-
-    dist:0,
-
-    speed:0,
-
-    groundY:0,
-
-    city:-1,
-
-    nextPowerDistance:1500,
-
-    nextPowerType:'ak'
+    hard:{
+        name:'КИБОРГ УБИЙЦА',
+        startSpeed:275,
+        acceleration:10.5,
+        maxSpeed:980
+    }
 };
 
+let selectedDifficulty=null;
 
-/* =========================================================
-   PLAYER
-   ========================================================= */
+document
+    .querySelectorAll('.difficulty')
+    .forEach(button=>{
 
-const player = {
+        button.addEventListener('click',()=>{
 
-    x:90,
+            document
+                .querySelectorAll('.difficulty')
+                .forEach(b=>b.classList.remove('sel'));
 
-    y:0,
+            button.classList.add('sel');
 
-    w:54,
+            selectedDifficulty=
+                button.dataset.difficulty;
 
-    h:96,
+            startBtn.disabled=false;
+        });
+    });
 
-    vy:0,
+toDifficulty.addEventListener('click',()=>{
 
-    jumpsUsed:0,
+    if(!selectedSkin)return;
 
-    onGround:true
-};
+    characterScreen.classList.add('hidden');
+    difficultyScreen.classList.remove('hidden');
 
-
-/* =========================================================
-   OBJECTS
-   ========================================================= */
-
-const obstacles = [];
-const bullets = [];
-const particles = [];
-
-
-/* =========================================================
-   POWER UPS
-   ========================================================= */
-
-let shieldT = 0;
-let gunT = 0;
-
-let fireAcc = 0;
-
-
-/* =========================================================
-   SPAWN TIMER
-   ========================================================= */
-
-let spawnTimer = 1.5;
-
+});
 
 /* =========================================================
    SKIN
    ========================================================= */
 
-let skin = 'vega';
-
-
 function applySkin(){
 
-    heroEl.className =
-        '';
+    heroEl.className='';
+    heroEl.id='hero';
 
-    heroEl.classList.add(
-        'skin-' + skin
-    );
+    heroDoll.className=
+        'doll skin-'+selectedSkin;
 
-    dollEl.className =
-        'doll skin-' + skin;
+    const tag=heroDoll.querySelector('.tag');
 
-    const tag =
-        dollEl.querySelector(
-            '.tag'
-        );
+    const fighter=
+        FIGHTERS.find(f=>f.id===selectedSkin);
 
-    tag.textContent =
-        skin === 'vega'
-        ? 'ВЕГА'
-        : skin === 'bumble'
-        ? 'BEE'
-        : skin === 'labuba'
-        ? 'ЛАБ'
-        : '';
-
-    player.w =
-        skin === 'labuba'
-        ? 82
-        : 64;
-
-    player.h =
-        104;
-
+    tag.textContent=fighter ? fighter.tag : '';
 }
-
-
-/* =========================================================
-   MENU
-   ========================================================= */
-
-pickBtn.addEventListener(
-    'click',
-    () => {
-
-        titleScreen.classList.add(
-            'hide'
-        );
-
-        pickScreen.classList.add(
-            'show'
-        );
-
-    }
-);
-
-
-/* =========================================================
-   READY
-   ========================================================= */
-
-let selectedFighter = null;
-
-function checkReady(){
-
-    selectedFighter =
-        document.querySelector(
-            '.card.sel'
-        );
-
-    startBtn.disabled =
-        !selectedFighter ||
-        !difficulty;
-
-}
-
 
 /* =========================================================
    BEST
    ========================================================= */
 
-const BEST_KEY =
-    'fuckrunner_best_v4';
+const BEST_KEY='fuckrunner_best';
 
-let best =
-    parseInt(
-        localStorage.getItem(
-            BEST_KEY
-        ) || '0',
-        10
-    );
+let best=parseInt(
+    localStorage.getItem(BEST_KEY)||'0',
+    10
+);
 
 function renderBest(){
-
-    bestEl.textContent =
-        'лучший счет ' +
-        best +
-        ' м';
-
+    bestEl.textContent='лучший счет '+best;
 }
 
 renderBest();
 
-
 /* =========================================================
-   CITY
+   STATE
    ========================================================= */
 
-function toastCity(i){
+const state={
+    running:false,
+    over:false,
 
-    if(
-        i < 0 ||
-        i >= CITIES.length
-    ){
-        return;
-    }
+    t:0,
+    speed:255,
+    dist:0,
 
-    if(i === state.city){
-        return;
-    }
+    groundY:0,
 
-    state.city =
-        i;
+    city:-1,
 
-    cityTag.textContent =
-        CITIES[i].name;
+    difficulty:'normal'
+};
 
-    cityTag.style.opacity =
-        '1';
+const player={
+    x:90,
+    y:0,
+    vy:0,
 
-    clearTimeout(
-        toastCity.timer
-    );
+    w:54,
+    h:108,
 
-    toastCity.timer =
-        setTimeout(
-            () => {
-                cityTag.style.opacity =
-                    '0';
-            },
-            1500
-        );
-}
+    onGround:true,
+    jumpsUsed:0
+};
 
+const obstacles=[];
+const bullets=[];
+const particles=[];
+
+/* =========================================================
+   POWER-UPS
+   ========================================================= */
+
+let shieldT=0;
+let gunT=0;
+
+let fireAcc=0;
+
+/*
+    Power-ups появляются по дистанции:
+
+    АК:   1500, 4500, 7500, 10500...
+    ЩИТ:  3000, 6000, 9000, 12000...
+*/
+
+let nextGunDistance=1500;
+let nextShieldDistance=3000;
 
 /* =========================================================
    RESET
    ========================================================= */
 
-function reset(){
+function resetGame(){
 
-    state.running =
-        true;
+    const diff=
+        DIFFICULTIES[selectedDifficulty];
 
-    state.over =
-        false;
+    state.running=true;
+    state.over=false;
 
-    state.t =
-        0;
+    state.t=0;
+    state.dist=0;
 
-    state.dist =
-        0;
+    state.difficulty=selectedDifficulty;
+    state.speed=diff.startSpeed;
 
-    state.speed =
-        difficulty.startSpeed;
+    state.city=-1;
 
-    state.groundY =
-        Math.floor(
-            H * .70
-        );
+    player.vy=0;
+    player.onGround=true;
+    player.jumpsUsed=0;
 
-    state.city =
-        -1;
+    obstacles.length=0;
+    bullets.length=0;
+    particles.length=0;
 
-    state.nextPowerDistance =
-        1500;
+    shieldT=0;
+    gunT=0;
+    fireAcc=0;
 
-    state.nextPowerType =
-        'ak';
+    nextGunDistance=1500;
+    nextShieldDistance=3000;
 
+    overlay.style.display='none';
 
-    obstacles.length =
-        0;
-
-    bullets.length =
-        0;
-
-    particles.length =
-        0;
-
-
-    shieldT =
-        0;
-
-    gunT =
-        0;
-
-    fireAcc =
-        0;
-
-
-    spawnTimer =
-        1.3;
-
-
-    player.vy =
-        0;
-
-    player.jumpsUsed =
-        0;
-
-    player.onGround =
-        true;
-
+    scoreEl.textContent='0 м';
+    buffEl.textContent='';
 
     applySkin();
-
-
-    heroEl.classList.remove(
-        'has-gun'
-    );
-
-
-    scoreEl.textContent =
-        '0 м';
-
-    buffEl.textContent =
-        '';
-
-    difficultyHud.textContent =
-        difficulty.name;
-
-
-    menuTitle.textContent =
-        'FUCKRUNNER';
-
-    menuText.textContent =
-        'Обычный работяга живёт ' +
-        'свою обычную жизнь.';
-
-
-    overlay.style.display =
-        'none';
-
+    updateShieldVisual();
 
     toastCity(0);
-
 }
 
+/* =========================================================
+   START
+   ========================================================= */
+
+startBtn.addEventListener('click',()=>{
+
+    if(!selectedDifficulty)return;
+
+    resetGame();
+    startMusic();
+
+});
 
 /* =========================================================
    JUMP
@@ -2033,87 +1145,52 @@ function jump(){
 
     if(
         !state.running ||
-        state.over
+        state.over ||
+        player.jumpsUsed>=2
     ){
         return;
     }
 
-    if(
-        player.jumpsUsed >= 2
-    ){
-        return;
-    }
-
-
-    if(
-        player.jumpsUsed === 0
-    ){
-
-        player.vy =
-            -820;
-
+    if(player.jumpsUsed===0){
+        player.vy=-820;
     }else{
-
-        player.vy =
-            -1050;
-
+        player.vy=-1080;
     }
 
-
-    player.onGround =
-        false;
-
+    player.onGround=false;
     player.jumpsUsed++;
-
 }
 
+window.addEventListener('keydown',e=>{
 
-/* =========================================================
-   INPUT
-   ========================================================= */
+    if(
+        e.code==='Space' ||
+        e.code==='ArrowUp'
+    ){
+        e.preventDefault();
 
-window.addEventListener(
-    'keydown',
-    e => {
-
-        if(
-            e.code === 'Space' ||
-            e.code === 'ArrowUp'
-        ){
-
-            e.preventDefault();
-
+        if(state.running){
             jump();
-
         }
-
     }
-);
+});
 
+window.addEventListener('pointerdown',e=>{
 
-window.addEventListener(
-    'pointerdown',
-    e => {
+    if(e.target.closest('#overlay')){
+        return;
+    }
 
-        if(
-            e.target.closest(
-                '#overlay'
-            )
-        ){
-            return;
-        }
-
+    if(state.running){
         jump();
-
     }
-);
-
+});
 
 /* =========================================================
    MUSIC
    ========================================================= */
 
-const TRACKS = [
+const TRACKS=[
     'ushet.mp3',
     '../bogi.mp3',
     '../gorod.mp3',
@@ -2122,909 +1199,207 @@ const TRACKS = [
     '../Big.mp3'
 ];
 
-const music =
-    new Audio();
+const music=new Audio();
+music.volume=.55;
 
-music.volume =
-    .55;
+let lastTrack=-1;
+let musicStarted=false;
 
-let lastTrack =
-    -1;
+function playRandomTrack(){
 
-let musicOn =
-    false;
-
-let musicErrors =
-    0;
-
-
-function playRandom(){
+    let index=
+        Math.floor(Math.random()*TRACKS.length);
 
     if(
-        !TRACKS.length
+        TRACKS.length>1 &&
+        index===lastTrack
     ){
-        return;
+        index=(index+1)%TRACKS.length;
     }
 
-    let index =
-        Math.floor(
-            Math.random() *
-            TRACKS.length
-        );
+    lastTrack=index;
+    music.src=TRACKS[index];
 
-    if(
-        TRACKS.length > 1 &&
-        index === lastTrack
-    ){
-        index =
-            (index + 1) %
-            TRACKS.length;
-    }
-
-    lastTrack =
-        index;
-
-    music.src =
-        TRACKS[index];
-
-    music
-        .play()
-        .catch(() => {});
-
+    music.play().catch(()=>{});
 }
 
+music.addEventListener('ended',playRandomTrack);
 
-music.addEventListener(
-    'ended',
-    playRandom
-);
+function startMusic(){
 
+    if(musicStarted)return;
 
-music.addEventListener(
-    'error',
-    () => {
-
-        musicErrors++;
-
-        if(
-            musicErrors < 8
-        ){
-            setTimeout(
-                playRandom,
-                100
-            );
-        }
-
-    }
-);
-
-
-/* =========================================================
-   START
-   ========================================================= */
-
-startBtn.addEventListener(
-    'click',
-    e => {
-
-        e.stopPropagation();
-
-        if(
-            startBtn.disabled
-        ){
-            return;
-        }
-
-        reset();
-
-
-        if(!musicOn){
-
-            musicOn =
-                true;
-
-            playRandom();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SPAWN OBSTACLE
-   ========================================================= */
-
-function spawnObstacle(){
-
-    const roll =
-        Math.random();
-
-
-    if(roll < .58){
-
-        obstacles.push({
-
-            type:'poop',
-
-            x:W + 50,
-
-            y:0,
-
-            w:44,
-
-            h:38
-
-        });
-
-    }else{
-
-        obstacles.push({
-
-            type:'dick',
-
-            x:W + 50,
-
-            y:0,
-
-            flyY:
-                135 +
-                Math.random() * 70,
-
-            w:52,
-
-            h:22,
-
-            wob:
-                Math.random() *
-                Math.PI * 2
-
-        });
-
-    }
-
+    musicStarted=true;
+    playRandomTrack();
 }
 
-
 /* =========================================================
-   POWER SPAWN
-   ========================================================= */
-
-function spawnPowerAtDistance(){
-
-    const type =
-        state.nextPowerType;
-
-
-    obstacles.push({
-
-        type,
-
-        x:W + 70,
-
-        y:0,
-
-        w:
-            type === 'shield'
-            ? 40
-            : 48,
-
-        h:
-            type === 'shield'
-            ? 40
-            : 25,
-
-        power:true
-
-    });
-
-
-    if(type === 'ak'){
-
-        state.nextPowerType =
-            'shield';
-
-    }else{
-
-        state.nextPowerType =
-            'ak';
-
-    }
-
-
-    state.nextPowerDistance +=
-        1500;
-
-}
-
-
-/* =========================================================
-   HIT
+   COLLISION
    ========================================================= */
 
 function hit(a,b){
 
-    return (
-        a.x <
-            b.x + b.w &&
-
-        a.x + a.w >
-            b.x &&
-
-        a.y <
-            b.y + b.h &&
-
-        a.y + a.h >
-            b.y
+    return(
+        a.x < b.x+b.w &&
+        a.x+a.w > b.x &&
+        a.y < b.y+b.h &&
+        a.y+a.h > b.y
     );
-
 }
 
-
-/* =========================================================
-   PLAYER HITBOX
-   ========================================================= */
+/*
+    Хитбокс немного уже визуального тела.
+    Это делает игру честнее и не заставляет
+    игрока умирать от касания пикселей одежды.
+*/
 
 function getPlayerHitbox(){
 
-    /*
-       Персонаж визуально 64x104,
-       но игровой хитбокс чуть уже,
-       чтобы край одежды не считался
-       столкновением.
-    */
-
-    return {
-
-        x:
-            player.x + 7,
-
-        y:
-            player.y + 8,
-
-        w:
-            Math.max(
-                20,
-                player.w - 14
-            ),
-
-        h:
-            player.h - 10
-
+    return{
+        x:player.x+10,
+        y:player.y+7,
+        w:player.w-20,
+        h:player.h-12
     };
-
 }
-
 
 /* =========================================================
-   OBSTACLE HITBOX
+   SPAWN OBSTACLES
    ========================================================= */
 
-function getObstacleHitbox(o){
+let obstacleTimer=.9;
 
-    if(
-        o.type === 'dick'
-    ){
+function spawnObstacle(){
 
-        return {
+    const chance=Math.random();
 
-            x:o.x + 3,
+    if(chance<.62){
 
-            y:o.y + 2,
+        obstacles.push({
+            type:'poop',
 
-            w:o.w - 6,
+            x:W+50,
+            y:0,
 
-            h:o.h - 4
+            w:44,
+            h:38
+        });
 
-        };
+    }else{
 
+        obstacles.push({
+            type:'dick',
+
+            x:W+50,
+            y:0,
+
+            /*
+                Было слишком низко.
+                Теперь препятствие значительно выше.
+            */
+            flyY:
+                125+
+                Math.random()*95,
+
+            w:52,
+            h:22,
+
+            wob:Math.random()*Math.PI*2
+        });
     }
-
-
-    if(
-        o.type === 'poop'
-    ){
-
-        return {
-
-            x:o.x + 5,
-
-            y:o.y + 4,
-
-            w:o.w - 10,
-
-            h:o.h - 5
-
-        };
-
-    }
-
-
-    return {
-
-        x:o.x + 2,
-
-        y:o.y + 2,
-
-        w:o.w - 4,
-
-        h:o.h - 4
-
-    };
-
 }
 
+/* =========================================================
+   POWER-UP SPAWN
+   ========================================================= */
+
+function spawnGun(){
+
+    obstacles.push({
+
+        type:'ak',
+
+        x:W+60,
+        y:0,
+
+        w:48,
+        h:26,
+
+        power:true
+    });
+}
+
+function spawnShield(){
+
+    obstacles.push({
+
+        type:'shield',
+
+        x:W+60,
+        y:0,
+
+        w:40,
+        h:40,
+
+        power:true
+    });
+}
 
 /* =========================================================
    PARTICLES
    ========================================================= */
 
-function boom(
-    x,
-    y,
-    color,
-    count=10
-){
+function boom(x,y,color){
 
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
+    for(let i=0;i<12;i++){
 
         particles.push({
 
             x,
-
             y,
 
-            vx:
-                (Math.random()-.5) *
-                240,
+            vx:(Math.random()-.5)*260,
+            vy:-80-Math.random()*180,
 
-            vy:
-                -60 -
-                Math.random() *
-                180,
-
-            life:
-                .35 +
-                Math.random() *
-                .3,
+            life:.45,
 
             color
-
         });
-
     }
-
 }
 
-
 /* =========================================================
-   DRAW POOP
+   POWER VISUAL
    ========================================================= */
 
-function drawPoop(o){
+function updateShieldVisual(){
 
-    const x =
-        o.x +
-        o.w / 2;
-
-    const y =
-        o.y +
-        o.h;
-
-    ctx.save();
-
-    ctx.translate(
-        x,
-        y
+    shieldAura.classList.toggle(
+        'active',
+        shieldT>0 &&
+        state.running
     );
-
-
-    ctx.fillStyle =
-        '#5a2c10';
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        0,
-        -9,
-        20,
-        12,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        -4,
-        -21,
-        14,
-        10,
-        -.2,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        2,
-        -31,
-        9,
-        8,
-        .2,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        '#fff';
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        -6,
-        -21,
-        3,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.arc(
-        4,
-        -19,
-        2.5,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        '#222';
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        -6,
-        -21,
-        1.4,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.arc(
-        4,
-        -19,
-        1.2,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.restore();
-
 }
 
-
 /* =========================================================
-   DRAW DICK
+   CITY
    ========================================================= */
 
-function drawDick(o){
+function toastCity(index){
 
-    const x =
-        o.x +
-        o.w / 2;
+    if(index===state.city)return;
 
-    const y =
-        o.y +
-        o.h / 2 +
-        Math.sin(
-            state.t * 5 +
-            o.wob
-        ) * 6;
+    state.city=index;
 
+    cityTag.textContent=CITIES[index].name;
+    cityTag.style.opacity='1';
 
-    ctx.save();
+    clearTimeout(toastCity.timer);
 
-    ctx.translate(
-        x,
-        y
-    );
-
-
-    ctx.rotate(
-        -.15 +
-        Math.sin(
-            state.t * 4 +
-            o.wob
-        ) * .12
-    );
-
-
-    ctx.fillStyle =
-        '#f0b48a';
-
-
-    ctx.beginPath();
-
-    ctx.roundRect(
-        -22,
-        -8,
-        36,
-        16,
-        8
-    );
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        '#e08a8a';
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        16,
-        0,
-        11,
-        10,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        '#e0a07a';
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        -20,
-        6,
-        8,
-        7,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.ellipse(
-        -12,
-        8,
-        8,
-        7,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    ctx.restore();
-
+    toastCity.timer=setTimeout(()=>{
+        cityTag.style.opacity='0';
+    },1600);
 }
-
-
-/* =========================================================
-   SHIELD ICON
-   ========================================================= */
-
-function drawShieldIcon(o){
-
-    const x =
-        o.x +
-        o.w / 2;
-
-    const y =
-        o.y +
-        o.h / 2 +
-        Math.sin(
-            state.t * 5
-        ) * 4;
-
-
-    ctx.save();
-
-    ctx.translate(
-        x,
-        y
-    );
-
-
-    ctx.shadowColor =
-        '#49bfff';
-
-    ctx.shadowBlur =
-        10;
-
-
-    ctx.fillStyle =
-        '#176cff';
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        -18
-    );
-
-    ctx.lineTo(
-        15,
-        -11
-    );
-
-    ctx.lineTo(
-        13,
-        8
-    );
-
-    ctx.lineTo(
-        0,
-        18
-    );
-
-    ctx.lineTo(
-        -13,
-        8
-    );
-
-    ctx.lineTo(
-        -15,
-        -11
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
-
-
-    ctx.shadowBlur =
-        0;
-
-
-    ctx.strokeStyle =
-        '#bfeaff';
-
-    ctx.lineWidth =
-        3;
-
-    ctx.stroke();
-
-
-    ctx.fillStyle =
-        '#fff';
-
-    ctx.font =
-        '900 12px Arial';
-
-    ctx.textAlign =
-        'center';
-
-    ctx.textBaseline =
-        'middle';
-
-    ctx.fillText(
-        'S',
-        0,
-        1
-    );
-
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   AK ICON
-   ========================================================= */
-
-function drawAkIcon(o){
-
-    const x =
-        o.x +
-        o.w / 2;
-
-    const y =
-        o.y +
-        o.h / 2 +
-        Math.sin(
-            state.t * 5
-        ) * 4;
-
-
-    ctx.save();
-
-    ctx.translate(
-        x,
-        y
-    );
-
-    ctx.rotate(
-        -.2
-    );
-
-
-    ctx.fillStyle =
-        '#33332b';
-
-    ctx.fillRect(
-        -20,
-        -4,
-        39,
-        8
-    );
-
-
-    ctx.fillStyle =
-        '#704a28';
-
-    ctx.fillRect(
-        -6,
-        3,
-        9,
-        11
-    );
-
-
-    ctx.fillStyle =
-        '#191915';
-
-    ctx.fillRect(
-        15,
-        -6,
-        10,
-        4
-    );
-
-
-    ctx.fillStyle =
-        '#55554b';
-
-    ctx.fillRect(
-        -17,
-        -6,
-        8,
-        3
-    );
-
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   FORCE FIELD
-   ========================================================= */
-
-function drawShieldField(){
-
-    if(
-        shieldT <= 0 ||
-        !state.running
-    ){
-        return;
-    }
-
-
-    const cx =
-        player.x +
-        player.w / 2;
-
-    const cy =
-        player.y +
-        player.h / 2;
-
-
-    const pulse =
-        Math.sin(
-            state.t * 7
-        ) * 3;
-
-
-    ctx.save();
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        cx,
-        cy,
-        player.w * .72 + pulse,
-        player.h * .63 + pulse,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-
-    ctx.fillStyle =
-        'rgba(30,140,255,.12)';
-
-    ctx.fill();
-
-
-    ctx.strokeStyle =
-        'rgba(50,180,255,.95)';
-
-    ctx.lineWidth =
-        3;
-
-    ctx.shadowColor =
-        '#169cff';
-
-    ctx.shadowBlur =
-        16;
-
-    ctx.stroke();
-
-
-    ctx.shadowBlur =
-        0;
-
-
-    /*
-       Дополнительные энергетические
-       дуги делают поле заметнее.
-    */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        cx,
-        cy,
-        43 + pulse,
-        state.t * 1.5,
-        state.t * 1.5 + 2.2
-    );
-
-    ctx.strokeStyle =
-        'rgba(170,235,255,.8)';
-
-    ctx.lineWidth =
-        2;
-
-    ctx.stroke();
-
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
 
 function cityWidth(img,h){
 
@@ -3035,56 +1410,30 @@ function cityWidth(img,h){
     ){
 
         return Math.max(
-            W * .92,
-            h *
-            (
-                img.naturalWidth /
-                img.naturalHeight
-            )
+            W*.92,
+            h*(img.naturalWidth/img.naturalHeight)
         );
-
     }
 
-    return W * .92;
-
+    return W*.92;
 }
-
 
 function drawCities(groundY){
 
-    const h =
-        groundY + 6;
+    const h=groundY+6;
 
+    const widths=cityImgs.map(
+        img=>cityWidth(img,h)
+    );
 
-    const widths =
-        cityImgs.map(
-            img =>
-                cityWidth(
-                    img,
-                    h
-                )
-        );
+    const total=
+        widths.reduce((a,b)=>a+b,0)||W;
 
+    const scroll=
+        (state.dist*2.2)%total;
 
-    const total =
-        widths.reduce(
-            (a,b) => a+b,
-            0
-        ) || W;
-
-
-    const scroll =
-        (
-            state.dist * 2.2
-        ) % total;
-
-
-    let x =
-        -scroll;
-
-    let visibleCity =
-        state.city;
-
+    let x=-scroll;
+    let seen=state.city;
 
     for(
         let n=0;
@@ -3092,15 +1441,9 @@ function drawCities(groundY){
         n++
     ){
 
-        const i =
-            n % CITIES.length;
-
-        const w =
-            widths[i];
-
-        const img =
-            cityImgs[i];
-
+        const i=n%CITIES.length;
+        const w=widths[i];
+        const img=cityImgs[i];
 
         if(
             img &&
@@ -3115,123 +1458,60 @@ function drawCities(groundY){
                 Math.ceil(w)+1,
                 Math.ceil(h)
             );
-
         }
-
 
         if(
-            x <= W * .35 &&
-            x + w > W * .35
+            x<=W*.35 &&
+            x+w>W*.35
         ){
-
-            visibleCity =
-                i;
-
+            seen=i;
         }
 
+        x+=w;
 
-        x += w;
-
-
-        if(x > W + 5){
-            break;
-        }
-
+        if(x>W+5)break;
     }
 
-
-    if(
-        visibleCity >= 0
-    ){
-        toastCity(
-            visibleCity
-        );
+    if(seen>=0){
+        toastCity(seen);
     }
-
 }
 
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
 
 function drawBackdrop(){
 
-    const gy =
-        state.groundY;
+    const gy=state.groundY;
 
-
-    const gradient =
+    const gradient=
         ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            gy
+            0,0,0,gy
         );
 
+    gradient.addColorStop(0,'#3a2460');
+    gradient.addColorStop(1,'#c45a3a');
 
-    gradient.addColorStop(
-        0,
-        '#39245e'
-    );
-
-    gradient.addColorStop(
-        1,
-        '#c45a3a'
-    );
-
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        gy
-    );
-
+    ctx.fillStyle=gradient;
+    ctx.fillRect(0,0,W,gy);
 
     drawCities(gy);
 
+    const roadH=Math.floor((H-gy)*.46);
 
-    const roadH =
-        Math.floor(
-            (H - gy) * .46
-        );
+    ctx.fillStyle='#5b5b63';
+    ctx.fillRect(0,gy,W,roadH);
 
+    ctx.fillStyle='#4a4a52';
+    ctx.fillRect(0,gy,W,8);
 
-    ctx.fillStyle =
-        '#5b5b63';
+    const dash=34;
 
-    ctx.fillRect(
-        0,
-        gy,
-        W,
-        roadH
-    );
+    const shift=
+        (state.dist/.12)%(dash*2);
 
-
-    ctx.fillStyle =
-        '#4a4a52';
-
-    ctx.fillRect(
-        0,
-        gy,
-        W,
-        8
-    );
-
-
-    const dash =
-        34;
-
-    const shift =
-        (
-            state.dist / .12
-        ) %
-        (dash * 2);
-
-
-    ctx.fillStyle =
-        '#e6d36a';
-
+    ctx.fillStyle='#e6d36a';
 
     for(
         let x=-dash;
@@ -3241,37 +1521,27 @@ function drawBackdrop(){
 
         ctx.fillRect(
             x-shift,
-            gy + roadH*.45,
+            gy+roadH*.45,
             20,
             4
         );
-
     }
 
-
-    ctx.fillStyle =
-        '#7a5a3a';
+    ctx.fillStyle='#7a5a3a';
 
     ctx.fillRect(
         0,
-        gy + roadH,
+        gy+roadH,
         W,
-        H - gy - roadH
+        H-gy-roadH
     );
 
+    const tile=26;
 
-    ctx.fillStyle =
-        '#6a4a2e';
+    const sh=
+        (state.dist/.12)%tile;
 
-
-    const tile =
-        26;
-
-    const tileShift =
-        (
-            state.dist / .12
-        ) % tile;
-
+    ctx.fillStyle='#6a4a2e';
 
     for(
         let x=-tile;
@@ -3280,150 +1550,441 @@ function drawBackdrop(){
     ){
 
         ctx.fillRect(
-            x - tileShift,
-            gy + roadH + 10,
+            x-sh,
+            gy+roadH+10,
             12,
             4
         );
-
     }
-
 }
 
-
 /* =========================================================
-   BULLET
+   DRAW POOP
    ========================================================= */
 
-function shoot(){
+function drawPoop(o){
 
-    const baseX =
-        player.x +
-        player.w +
-        5;
+    const x=o.x+o.w/2;
+    const y=o.y+o.h;
 
-    const baseY =
-        player.y +
-        46;
+    ctx.save();
+    ctx.translate(x,y);
 
+    ctx.fillStyle='#5a2c10';
 
-    bullets.push({
+    ctx.beginPath();
+    ctx.ellipse(0,-10,20,12,0,0,Math.PI*2);
+    ctx.fill();
 
-        x:baseX,
+    ctx.beginPath();
+    ctx.ellipse(-4,-22,14,10,-.2,0,Math.PI*2);
+    ctx.fill();
 
-        y:baseY,
+    ctx.beginPath();
+    ctx.ellipse(2,-32,9,8,.2,0,Math.PI*2);
+    ctx.fill();
 
-        vx:720,
+    ctx.fillStyle='#fff';
 
-        vy:0,
+    ctx.beginPath();
+    ctx.arc(-6,-22,3,0,Math.PI*2);
+    ctx.arc(4,-20,2.4,0,Math.PI*2);
+    ctx.fill();
 
-        life:.65
+    ctx.fillStyle='#222';
 
-    });
+    ctx.beginPath();
+    ctx.arc(-6,-22,1.4,0,Math.PI*2);
+    ctx.arc(4,-20,1.2,0,Math.PI*2);
+    ctx.fill();
 
+    ctx.restore();
+}
 
-    boom(
-        baseX,
-        baseY,
-        '#ffe08a',
-        3
+/* =========================================================
+   DRAW DICK
+   ========================================================= */
+
+function drawDick(o){
+
+    const x=o.x+o.w/2;
+
+    /*
+        Визуально поднимаем его вместе с хитбоксом.
+    */
+
+    const y=
+        o.y+
+        o.h/2+
+        Math.sin(
+            state.t*6+o.wob
+        )*6;
+
+    ctx.save();
+
+    ctx.translate(x,y);
+
+    ctx.rotate(
+        -.15+
+        Math.sin(
+            state.t*4+o.wob
+        )*.12
     );
 
-}
+    ctx.fillStyle='#f0b48a';
 
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -22,
+        -8,
+        36,
+        16,
+        8
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle='#e08a8a';
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        16,
+        0,
+        11,
+        10,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle='#e0a07a';
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        -20,
+        6,
+        8,
+        7,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.ellipse(
+        -12,
+        8,
+        8,
+        7,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+}
 
 /* =========================================================
-   UPDATE BUFF HUD
+   DRAW SHIELD
    ========================================================= */
 
-function updateBuffHud(){
+function drawShield(o){
 
-    const buffs = [];
+    const x=o.x+o.w/2;
 
+    const y=
+        o.y+
+        o.h/2+
+        Math.sin(state.t*5)*4;
 
-    if(shieldT > 0){
+    ctx.save();
 
-        buffs.push(
-            'ЩИТ ' +
-            Math.ceil(
-                shieldT
-            ) +
-            'с'
-        );
+    ctx.translate(x,y);
 
-    }
+    ctx.fillStyle='#176dff';
 
+    ctx.beginPath();
 
-    if(gunT > 0){
+    ctx.moveTo(0,-18);
+    ctx.lineTo(15,-12);
+    ctx.lineTo(13,8);
+    ctx.lineTo(0,18);
+    ctx.lineTo(-13,8);
+    ctx.lineTo(-15,-12);
+    ctx.closePath();
 
-        buffs.push(
-            'АК ' +
-            Math.ceil(
-                gunT
-            ) +
-            'с'
-        );
+    ctx.fill();
 
-    }
+    ctx.strokeStyle='#bfe6ff';
+    ctx.lineWidth=3;
+    ctx.stroke();
 
+    ctx.fillStyle='#fff';
+    ctx.font='bold 13px sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
 
-    buffEl.textContent =
-        buffs.join(' · ');
+    ctx.fillText('S',0,1);
 
+    ctx.restore();
 }
-
 
 /* =========================================================
-   UPDATE PLAYER
+   DRAW AK PICKUP
    ========================================================= */
 
-function updatePlayer(dt){
+function drawAKPickup(o){
 
-    player.vy +=
-        2400 *
-        (
-            player.vy > 0
-            ? 1.75
-            : 1
-        ) *
-        dt;
+    const x=o.x+o.w/2;
 
+    const y=
+        o.y+
+        o.h/2+
+        Math.sin(state.t*5)*4;
 
-    player.y +=
-        player.vy *
-        dt;
+    ctx.save();
 
+    ctx.translate(x,y);
+    ctx.rotate(-.25);
 
-    const floor =
-        state.groundY -
-        player.h;
+    ctx.fillStyle='#33352c';
 
+    ctx.fillRect(
+        -22,
+        -4,
+        39,
+        8
+    );
 
-    if(
-        player.y >= floor
-    ){
+    ctx.fillStyle='#65421f';
 
-        player.y =
-            floor;
+    ctx.fillRect(
+        -7,
+        2,
+        9,
+        12
+    );
 
-        player.vy =
-            0;
+    ctx.fillStyle='#24251f';
 
-        player.onGround =
-            true;
+    ctx.fillRect(
+        13,
+        -7,
+        12,
+        4
+    );
 
-        player.jumpsUsed =
-            0;
+    ctx.fillStyle='#141510';
 
-    }else{
+    ctx.fillRect(
+        -19,
+        -8,
+        8,
+        4
+    );
 
-        player.onGround =
-            false;
-
-    }
-
+    ctx.restore();
 }
 
+/* =========================================================
+   PLAYER GUN
+   ========================================================= */
+
+function drawPlayerGun(){
+
+    /*
+        АК находится около правой руки.
+        При этом сам персонаж продолжает бежать.
+    */
+
+    const px=
+        player.x+
+        player.w*.63;
+
+    const py=
+        player.y+48;
+
+    ctx.save();
+
+    ctx.translate(px,py);
+
+    ctx.rotate(-.10);
+
+    ctx.fillStyle='#292b24';
+
+    ctx.fillRect(
+        0,
+        -4,
+        42,
+        8
+    );
+
+    ctx.fillStyle='#171812';
+
+    ctx.fillRect(
+        34,
+        -7,
+        12,
+        4
+    );
+
+    ctx.fillStyle='#63421f';
+
+    ctx.fillRect(
+        7,
+        2,
+        9,
+        13
+    );
+
+    ctx.fillStyle='#111';
+
+    ctx.fillRect(
+        -4,
+        -7,
+        12,
+        4
+    );
+
+    ctx.restore();
+}
+
+/* =========================================================
+   BULLETS
+   ========================================================= */
+
+function fireGun(){
+
+    const baseX=
+        player.x+
+        player.w+
+        8;
+
+    const baseY=
+        player.y+47;
+
+    /*
+        Небольшой веер пуль.
+    */
+
+    for(let k=-1;k<=1;k++){
+
+        const angle=k*.10;
+
+        bullets.push({
+
+            x:baseX,
+
+            y:baseY,
+
+            vx:700*Math.cos(angle),
+            vy:700*Math.sin(angle),
+
+            life:.65
+        });
+    }
+}
+
+/* =========================================================
+   GAME OVER
+   ========================================================= */
+
+function gameOver(type){
+
+    state.over=true;
+    state.running=false;
+
+    heroDoll.classList.remove('run');
+
+    const score=
+        Math.floor(state.dist);
+
+    if(score>best){
+
+        best=score;
+
+        localStorage.setItem(
+            BEST_KEY,
+            String(best)
+        );
+
+        renderBest();
+    }
+
+    shieldT=0;
+    gunT=0;
+
+    updateShieldVisual();
+
+    characterScreen.classList.remove('hidden');
+    difficultyScreen.classList.add('hidden');
+
+    overlay.querySelector('#characterScreen h1')
+        .textContent=
+        type==='dick'
+        ?'ЕСТЬ ПРОБИТИЕ'
+        :'ЭТО КОНЕЦ, ТЫ В ГОВНЕ';
+
+    overlay.querySelector('#characterScreen p')
+        .textContent=
+        'Ты продержался '+
+        score+
+        ' м.';
+
+    toDifficulty.disabled=true;
+
+    selectedDifficulty=null;
+
+    document
+        .querySelectorAll('.difficulty')
+        .forEach(b=>b.classList.remove('sel'));
+
+    startBtn.disabled=true;
+
+    overlay.style.display='flex';
+}
+
+/* =========================================================
+   UPDATE POWER-UP SCHEDULE
+   ========================================================= */
+
+function checkPowerupSchedule(){
+
+    /*
+        Если игрок прошёл 1500:
+        появляется АК.
+
+        Если прошёл 3000:
+        появляется ЩИТ.
+
+        Потом:
+        АК 4500
+        ЩИТ 6000
+        АК 7500
+        ЩИТ 9000
+        и т.д.
+    */
+
+    while(state.dist>=nextGunDistance){
+
+        spawnGun();
+
+        nextGunDistance+=3000;
+    }
+
+    while(state.dist>=nextShieldDistance){
+
+        spawnShield();
+
+        nextShieldDistance+=3000;
+    }
+}
 
 /* =========================================================
    UPDATE OBSTACLES
@@ -3431,286 +1992,151 @@ function updatePlayer(dt){
 
 function updateObstacles(dt){
 
+    const playerBox=getPlayerHitbox();
+
     for(
-        let i =
-            obstacles.length - 1;
-        i >= 0;
+        let i=obstacles.length-1;
+        i>=0;
         i--
     ){
 
-        const o =
-            obstacles[i];
+        const o=obstacles[i];
 
+        o.x-=state.speed*dt;
 
-        o.x -=
-            state.speed *
-            dt;
+        if(o.type==='dick'){
 
+            /*
+                Поднимаем препятствие выше дороги.
+            */
 
-        /*
-           Важно:
-           члены теперь значительно выше.
-        */
-
-        if(
-            o.type === 'dick'
-        ){
-
-            o.y =
-                state.groundY -
-                o.flyY -
+            o.y=
+                state.groundY-
+                o.flyY-
                 o.h;
 
         }else{
 
-            o.y =
-                state.groundY -
-                o.h -
+            o.y=
+                state.groundY-
+                o.h-
                 (
-                    o.type === 'poop'
-                    ? 0
-                    : 12
+                    o.type==='shield' ||
+                    o.type==='ak'
+                    ?18
+                    :0
                 );
-
         }
 
+        /* ---------------------------------------------
+           BULLETS VS OBSTACLES
+           --------------------------------------------- */
 
-        const pBox =
-            getPlayerHitbox();
+        let destroyed=false;
 
-        const oBox =
-            getObstacleHitbox(o);
-
-
-        /*
-           ПУЛИ
-        */
-
-        let destroyed =
-            false;
-
-
-        if(
-            gunT > 0 &&
-            o.type !== 'shield' &&
-            o.type !== 'ak'
+        for(
+            let b=bullets.length-1;
+            b>=0;
+            b--
         ){
 
-            for(
-                let b =
-                    bullets.length - 1;
-                b >= 0;
-                b--
-            ){
+            const bullet=bullets[b];
 
-                const bullet =
-                    bullets[b];
-
-
-                const bulletBox = {
-
-                    x:
-                        bullet.x,
-
-                    y:
-                        bullet.y,
-
-                    w:10,
-
-                    h:4
-
-                };
-
-
-                if(
-                    hit(
-                        bulletBox,
-                        oBox
-                    )
-                ){
-
-                    boom(
-                        o.x +
-                        o.w / 2,
-
-                        o.y,
-
-                        '#ffe08a',
-                        12
-                    );
-
-
-                    bullets.splice(
-                        b,
-                        1
-                    );
-
-
-                    destroyed =
-                        true;
-
-                    break;
-
-                }
-
-            }
-
-        }
-
-
-        if(destroyed){
-
-            obstacles.splice(
-                i,
-                1
-            );
-
-            continue;
-
-        }
-
-
-        /*
-           ПОДБОР АК
-        */
-
-        if(
-            o.type === 'ak' &&
-            hit(
-                pBox,
-                oBox
-            )
-        ){
-
-            gunT =
-                15;
-
-            fireAcc =
-                0;
-
-            heroEl.classList.add(
-                'has-gun'
-            );
-
-
-            boom(
-                o.x,
-                o.y,
-                '#9fef6a',
-                15
-            );
-
-
-            obstacles.splice(
-                i,
-                1
-            );
-
-            continue;
-
-        }
-
-
-        /*
-           ПОДБОР ЩИТА
-        */
-
-        if(
-            o.type === 'shield' &&
-            hit(
-                pBox,
-                oBox
-            )
-        ){
-
-            shieldT =
-                10;
-
-
-            boom(
-                o.x,
-                o.y,
-                '#39bfff',
-                18
-            );
-
-
-            obstacles.splice(
-                i,
-                1
-            );
-
-            continue;
-
-        }
-
-
-        /*
-           ОБЫЧНОЕ СТОЛКНОВЕНИЕ
-        */
-
-        if(
-            o.type !== 'ak' &&
-            o.type !== 'shield' &&
-            hit(
-                pBox,
-                oBox
-            )
-        ){
+            const bulletBox={
+                x:bullet.x,
+                y:bullet.y,
+                w:10,
+                h:4
+            };
 
             if(
-                shieldT > 0
+                o.type!=='shield' &&
+                o.type!=='ak' &&
+                hit(bulletBox,o)
             ){
 
                 boom(
-                    o.x +
-                    o.w / 2,
-
+                    o.x+o.w/2,
                     o.y,
-
-                    '#8eeaff',
-                    18
+                    '#ffe08a'
                 );
 
+                bullets.splice(b,1);
 
-                obstacles.splice(
-                    i,
-                    1
+                destroyed=true;
+
+                break;
+            }
+        }
+
+        if(destroyed){
+
+            obstacles.splice(i,1);
+            continue;
+        }
+
+        /* ---------------------------------------------
+           PLAYER VS OBJECT
+           --------------------------------------------- */
+
+        if(hit(playerBox,o)){
+
+            if(o.type==='shield'){
+
+                shieldT=10;
+
+                boom(
+                    o.x+o.w/2,
+                    o.y,
+                    '#4db8ff'
                 );
+
+                obstacles.splice(i,1);
+
+                updateShieldVisual();
 
                 continue;
-
             }
 
+            if(o.type==='ak'){
 
-            gameOver(
-                o.type
-            );
+                gunT=10;
+                fireAcc=0;
 
+                boom(
+                    o.x+o.w/2,
+                    o.y,
+                    '#9fff70'
+                );
+
+                obstacles.splice(i,1);
+
+                continue;
+            }
+
+            if(shieldT>0){
+
+                boom(
+                    o.x+o.w/2,
+                    o.y,
+                    '#8ddcff'
+                );
+
+                obstacles.splice(i,1);
+
+                continue;
+            }
+
+            gameOver(o.type);
             return;
-
         }
 
+        if(o.x+o.w<-60){
 
-        /*
-           УДАЛЕНИЕ ЗА ЭКРАНОМ
-        */
-
-        if(
-            o.x + o.w < -80
-        ){
-
-            obstacles.splice(
-                i,
-                1
-            );
-
+            obstacles.splice(i,1);
         }
-
     }
-
 }
-
 
 /* =========================================================
    UPDATE BULLETS
@@ -3719,44 +2145,29 @@ function updateObstacles(dt){
 function updateBullets(dt){
 
     for(
-        let i =
-            bullets.length - 1;
-        i >= 0;
+        let i=bullets.length-1;
+        i>=0;
         i--
     ){
 
-        const b =
-            bullets[i];
+        const b=bullets[i];
 
+        b.x+=b.vx*dt;
+        b.y+=b.vy*dt;
 
-        b.x +=
-            b.vx *
-            dt;
-
-        b.y +=
-            b.vy *
-            dt;
-
-        b.life -=
-            dt;
-
+        b.life-=dt;
 
         if(
-            b.life <= 0 ||
-            b.x > W + 30
+            b.life<=0 ||
+            b.x>W+30 ||
+            b.y<-30 ||
+            b.y>H+30
         ){
 
-            bullets.splice(
-                i,
-                1
-            );
-
+            bullets.splice(i,1);
         }
-
     }
-
 }
-
 
 /* =========================================================
    UPDATE PARTICLES
@@ -3765,123 +2176,26 @@ function updateBullets(dt){
 function updateParticles(dt){
 
     for(
-        let i =
-            particles.length - 1;
-        i >= 0;
+        let i=particles.length-1;
+        i>=0;
         i--
     ){
 
-        const p =
-            particles[i];
+        const p=particles[i];
 
+        p.life-=dt;
 
-        p.life -=
-            dt;
+        p.x+=p.vx*dt;
+        p.y+=p.vy*dt;
 
-        p.x +=
-            p.vx *
-            dt;
+        p.vy+=420*dt;
 
-        p.y +=
-            p.vy *
-            dt;
+        if(p.life<=0){
 
-        p.vy +=
-            400 *
-            dt;
-
-
-        if(
-            p.life <= 0
-        ){
-
-            particles.splice(
-                i,
-                1
-            );
-
+            particles.splice(i,1);
         }
-
     }
-
 }
-
-
-/* =========================================================
-   GAME OVER
-   ========================================================= */
-
-function gameOver(kind){
-
-    if(
-        state.over
-    ){
-        return;
-    }
-
-
-    state.over =
-        true;
-
-    state.running =
-        false;
-
-
-    heroEl.classList.remove(
-        'has-gun'
-    );
-
-
-    const score =
-        Math.floor(
-            state.dist
-        );
-
-
-    if(
-        score > best
-    ){
-
-        best =
-            score;
-
-        localStorage.setItem(
-            BEST_KEY,
-            String(best)
-        );
-
-        renderBest();
-
-    }
-
-
-    titleScreen.classList.remove(
-        'hide'
-    );
-
-    pickScreen.classList.remove(
-        'show'
-    );
-
-
-    menuTitle.textContent =
-        kind === 'dick'
-        ? 'Есть пробитие'
-        : 'Это конец, ты в говне';
-
-
-    menuText.textContent =
-        'Ты продержался ' +
-        score +
-        ' м · ' +
-        difficulty.name;
-
-
-    overlay.style.display =
-        'flex';
-
-}
-
 
 /* =========================================================
    DRAW BULLETS
@@ -3889,24 +2203,18 @@ function gameOver(kind){
 
 function drawBullets(){
 
-    for(
-        const b of bullets
-    ){
+    ctx.fillStyle='#ffe08a';
 
-        ctx.fillStyle =
-            '#ffe08a';
+    for(const b of bullets){
 
         ctx.fillRect(
             b.x,
             b.y,
-            11,
+            10,
             3
         );
-
     }
-
 }
-
 
 /* =========================================================
    DRAW PARTICLES
@@ -3914,18 +2222,12 @@ function drawBullets(){
 
 function drawParticles(){
 
-    for(
-        const p of particles
-    ){
+    for(const p of particles){
 
-        ctx.globalAlpha =
-            Math.max(
-                0,
-                p.life * 2
-            );
+        ctx.globalAlpha=
+            Math.max(0,p.life*2);
 
-        ctx.fillStyle =
-            p.color;
+        ctx.fillStyle=p.color;
 
         ctx.fillRect(
             p.x,
@@ -3933,399 +2235,285 @@ function drawParticles(){
             5,
             5
         );
-
     }
 
-    ctx.globalAlpha =
-        1;
-
+    ctx.globalAlpha=1;
 }
 
-
 /* =========================================================
-   DOM PLAYER
+   RENDER HUD
    ========================================================= */
 
-function updateHeroDom(){
+function updateHUD(){
 
-    heroEl.style.left =
-        player.x + 'px';
+    scoreEl.textContent=
+        Math.floor(state.dist)+' м';
 
-    heroEl.style.top =
-        player.y + 'px';
+    const parts=[];
 
+    if(shieldT>0){
 
-    heroShadow.style.left =
-        (
-            player.x +
-            player.w / 2 -
-            32
-        ) + 'px';
+        parts.push(
+            'ЩИТ '+
+            Math.ceil(shieldT)+
+            'с'
+        );
+    }
 
-    heroShadow.style.top =
-        (
-            state.groundY -
-            5
-        ) + 'px';
+    if(gunT>0){
 
+        parts.push(
+            'АК '+
+            Math.ceil(gunT)+
+            'с'
+        );
+    }
 
-    dollEl.classList.toggle(
+    buffEl.textContent=
+        parts.join(' · ');
+}
+
+/* =========================================================
+   GAME LOOP
+   ========================================================= */
+
+let last=performance.now();
+
+function loop(now){
+
+    const dt=
+        Math.min(
+            .033,
+            Math.max(
+                0,
+                (now-last)/1000
+            )
+        );
+
+    last=now;
+
+    state.groundY=
+        Math.floor(H*.70);
+
+    if(
+        !state.running ||
+        state.over
+    ){
+
+        player.y=
+            state.groundY-
+            player.h;
+
+    }else{
+
+        state.t+=dt;
+
+        /* ---------------------------------------------
+           SPEED ACCELERATION
+           --------------------------------------------- */
+
+        const diff=
+            DIFFICULTIES[state.difficulty];
+
+        state.speed=
+            Math.min(
+                diff.maxSpeed,
+                state.speed+
+                diff.acceleration*dt
+            );
+
+        /*
+            Дистанция зависит от скорости.
+            Поэтому ускорение реально ощущается.
+        */
+
+        state.dist+=
+            state.speed*
+            dt*
+            .12;
+
+        /* ---------------------------------------------
+           BUFF TIMERS
+           --------------------------------------------- */
+
+        shieldT=
+            Math.max(
+                0,
+                shieldT-dt
+            );
+
+        gunT=
+            Math.max(
+                0,
+                gunT-dt
+            );
+
+        updateShieldVisual();
+
+        /* ---------------------------------------------
+           PLAYER
+           --------------------------------------------- */
+
+        player.vy+=
+            2400*
+            (
+                player.vy>0
+                ?1.65
+                :1
+            )*
+            dt;
+
+        player.y+=player.vy*dt;
+
+        if(
+            player.y>=
+            state.groundY-
+            player.h
+        ){
+
+            player.y=
+                state.groundY-
+                player.h;
+
+            player.vy=0;
+            player.onGround=true;
+            player.jumpsUsed=0;
+
+        }else{
+
+            player.onGround=false;
+        }
+
+        /* ---------------------------------------------
+           GUN FIRE
+           --------------------------------------------- */
+
+        if(gunT>0){
+
+            fireAcc+=dt;
+
+            if(fireAcc>=.12){
+
+                fireAcc=0;
+                fireGun();
+            }
+        }
+
+        /* ---------------------------------------------
+           NORMAL OBSTACLES
+           --------------------------------------------- */
+
+        obstacleTimer-=dt;
+
+        if(obstacleTimer<=0){
+
+            spawnObstacle();
+
+            /*
+                Чем выше сложность, тем чаще постепенно
+                могут появляться обычные препятствия,
+                но старт игры всё равно остаётся спокойным.
+            */
+
+            const difficultyFactor=
+                state.difficulty==='easy'
+                ?1
+                :state.difficulty==='normal'
+                ?.90
+                :.82;
+
+            const speedFactor=
+                Math.max(
+                    .55,
+                    1-
+                    (
+                        state.speed-
+                        diff.startSpeed
+                    )/
+                    1300
+                );
+
+            obstacleTimer=
+                (
+                    .95+
+                    Math.random()*.65
+                )*
+                difficultyFactor*
+                speedFactor;
+        }
+
+        /* ---------------------------------------------
+           POWER-UP DISTANCE SYSTEM
+           --------------------------------------------- */
+
+        checkPowerupSchedule();
+
+        /* ---------------------------------------------
+           UPDATE OBJECTS
+           --------------------------------------------- */
+
+        updateObstacles(dt);
+        updateBullets(dt);
+    }
+
+    updateParticles(dt);
+    updateHUD();
+
+    /* =====================================================
+       DRAW
+       ===================================================== */
+
+    drawBackdrop();
+
+    for(const o of obstacles){
+
+        if(o.type==='poop'){
+            drawPoop(o);
+        }
+        else if(o.type==='dick'){
+            drawDick(o);
+        }
+        else if(o.type==='shield'){
+            drawShield(o);
+        }
+        else if(o.type==='ak'){
+            drawAKPickup(o);
+        }
+    }
+
+    drawBullets();
+    drawParticles();
+
+    if(
+        gunT>0 &&
+        state.running
+    ){
+        drawPlayerGun();
+    }
+
+    /* =====================================================
+       PLAYER DOM
+       ===================================================== */
+
+    heroEl.style.left=
+        player.x+'px';
+
+    heroEl.style.top=
+        player.y+'px';
+
+    heroDoll.classList.toggle(
         'run',
         state.running &&
         !state.over &&
         player.onGround
     );
 
-
-    /*
-       В воздухе слегка наклоняем
-       персонажа — движение выглядит
-       живее.
-    */
-
-    const tilt =
-        player.onGround
-        ? 0
-        : Math.max(
-            -7,
-            Math.min(
-                7,
-                player.vy * .008
-            )
-        );
-
-    heroEl.style.transform =
-        `rotate(${tilt}deg)`;
-
-
-    /*
-       АК видна только пока активна.
-    */
-
-    heroEl.classList.toggle(
-        'has-gun',
-        gunT > 0
-    );
-
+    requestAnimationFrame(loop);
 }
-
-
-/* =========================================================
-   MAIN LOOP
-   ========================================================= */
-
-let last =
-    performance.now();
-
-
-function loop(now){
-
-    const dt =
-        Math.min(
-            .033,
-            Math.max(
-                0,
-                (now - last) / 1000
-            )
-        );
-
-
-    last =
-        now;
-
-
-    state.groundY =
-        Math.floor(
-            H * .70
-        );
-
-
-    /*
-       GAME UPDATE
-    */
-
-    if(
-        state.running &&
-        !state.over
-    ){
-
-        state.t +=
-            dt;
-
-
-        /*
-           ГЛАВНОЕ УСКОРЕНИЕ.
-
-           Скорость постоянно растёт,
-           но не бесконечно.
-        */
-
-        state.speed =
-            Math.min(
-                difficulty.maxSpeed,
-
-                state.speed +
-                difficulty.acceleration *
-                dt
-            );
-
-
-        /*
-           Дистанция.
-        */
-
-        state.dist +=
-            state.speed *
-            dt *
-            .12;
-
-
-        scoreEl.textContent =
-            Math.floor(
-                state.dist
-            ) +
-            ' м';
-
-
-        /*
-           БУФФЕРЫ
-        */
-
-        shieldT =
-            Math.max(
-                0,
-                shieldT - dt
-            );
-
-        gunT =
-            Math.max(
-                0,
-                gunT - dt
-            );
-
-
-        if(
-            gunT <= 0
-        ){
-
-            heroEl.classList.remove(
-                'has-gun'
-            );
-
-        }
-
-
-        /*
-           АВТОСТРЕЛЬБА
-        */
-
-        if(
-            gunT > 0
-        ){
-
-            fireAcc +=
-                dt;
-
-
-            if(
-                fireAcc >= .11
-            ){
-
-                fireAcc =
-                    0;
-
-                shoot();
-
-            }
-
-        }
-
-
-        /*
-           ПРЫЖОК / ГРАВИТАЦИЯ
-        */
-
-        updatePlayer(dt);
-
-
-        /*
-           ОБЫЧНЫЕ ПРЕПЯТСТВИЯ
-        */
-
-        spawnTimer -=
-            dt;
-
-
-        if(
-            spawnTimer <= 0
-        ){
-
-            spawnObstacle();
-
-
-            const difficultyFactor =
-                Math.min(
-                    .35,
-                    (
-                        state.speed -
-                        difficulty.startSpeed
-                    ) /
-                    1500
-                );
-
-
-            spawnTimer =
-                difficulty.spawnMin +
-                Math.random() *
-                (
-                    difficulty.spawnMax -
-                    difficulty.spawnMin
-                ) -
-                difficultyFactor;
-
-
-            spawnTimer =
-                Math.max(
-                    .78,
-                    spawnTimer
-                );
-
-        }
-
-
-        /*
-           ПРЕДМЕТЫ ПО ДИСТАНЦИИ.
-
-           1500 AK
-           3000 SHIELD
-           4500 AK
-           6000 SHIELD
-           ...
-        */
-
-        if(
-            state.dist >=
-            state.nextPowerDistance
-        ){
-
-            spawnPowerAtDistance();
-
-        }
-
-
-        updateObstacles(dt);
-
-        updateBullets(dt);
-
-        updateParticles(dt);
-
-
-        updateBuffHud();
-
-    }else{
-
-        /*
-           Даже в меню персонаж стоит
-           на земле.
-        */
-
-        player.y =
-            state.groundY -
-            player.h;
-
-    }
-
-
-    /*
-       BACKGROUND
-    */
-
-    drawBackdrop();
-
-
-    /*
-       FORCE FIELD РИСУЕТСЯ ДО ПЕРСОНАЖА
-    */
-
-    drawShieldField();
-
-
-    /*
-       OBJECTS
-    */
-
-    for(
-        const o of obstacles
-    ){
-
-        if(
-            o.type === 'poop'
-        ){
-
-            drawPoop(o);
-
-        }else if(
-            o.type === 'dick'
-        ){
-
-            drawDick(o);
-
-        }else if(
-            o.type === 'shield'
-        ){
-
-            drawShieldIcon(o);
-
-        }else if(
-            o.type === 'ak'
-        ){
-
-            drawAkIcon(o);
-
-        }
-
-    }
-
-
-    drawBullets();
-
-    drawParticles();
-
-
-    updateHeroDom();
-
-
-    requestAnimationFrame(
-        loop
-    );
-
-}
-
-
-requestAnimationFrame(
-    loop
-);
-
-
-/* =========================================================
-   INITIAL STATE
-   ========================================================= */
 
 applySkin();
 
-state.groundY =
-    Math.floor(
-        H * .70
-    );
-
-player.y =
-    state.groundY -
-    player.h;
-
-difficultyHud.textContent =
-    difficulty.name;
-
-checkReady();
+requestAnimationFrame(loop);
 
 })();
 </script>
