@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<title>FUCKRUNNER</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>FUCKRUNNER DEBUG</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -13,7 +14,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    touch-action:manipulation
+    touch-action:manipulation;
 }
 
 html,body{
@@ -22,171 +23,54 @@ html,body{
     overflow:hidden;
     background:#1a1020;
     font-family:ui-monospace,Menlo,Consolas,monospace;
-    user-select:none
+    user-select:none;
 }
 
 #wrap{
     position:relative;
     width:100%;
-    height:100%
+    height:100%;
 }
 
 canvas{
+    position:absolute;
+    inset:0;
     display:block;
     width:100%;
     height:100%;
     background:#3a2460;
-    image-rendering:pixelated
+    image-rendering:pixelated;
 }
 
-#hud{
+/* =========================
+   PLAYER
+   ========================= */
+
+#hero{
     position:absolute;
-    top:10px;
-    left:10px;
-    right:10px;
-    display:flex;
-    justify-content:space-between;
-    color:#fff;
-    font-weight:800;
-    font-size:15px;
-    text-shadow:0 2px 0 #000;
+    left:90px;
+    top:0;
+
+    width:54px;
+    height:96px;
+
     pointer-events:none;
-    z-index:4
-}
-
-#buff{
-    color:#9fef6a;
-    font-size:12px;
-    margin-top:4px
-}
-
-#cityTag{
-    position:absolute;
-    top:42px;
-    left:50%;
-    transform:translateX(-50%);
-    color:#ffe08a;
-    font-weight:800;
-    font-size:13px;
-    text-shadow:0 2px 0 #000;
-    pointer-events:none;
-    z-index:4;
-    opacity:0;
-    transition:opacity .3s
-}
-
-#overlay{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    background:rgba(8,4,14,.86);
-    color:#fff;
-    text-align:center;
-    padding:16px;
-    z-index:6;
-    overflow:auto
-}
-
-#overlay h1{
-    font-size:26px;
-    margin-bottom:8px;
-    color:#ff4d6d;
-    text-shadow:3px 3px 0 #3a0010
-}
-
-#overlay p{
-    opacity:.92;
-    margin:6px 0 16px;
-    max-width:340px;
-    line-height:1.35
-}
-
-button.main{
-    appearance:none;
-    border:3px solid #fff;
-    background:#ff4d6d;
-    color:#fff;
-    font-weight:800;
-    font-size:17px;
-    font-family:inherit;
-    padding:12px 24px;
-    cursor:pointer
-}
-
-button.main:disabled{
-    opacity:.4
-}
-
-.hint{
-    font-size:12px;
-    opacity:.7;
-    margin-top:12px
-}
-
-#screen-pick{
-    display:none;
-    width:min(560px,96vw)
-}
-
-#screen-pick.show{
-    display:block
-}
-
-#screen-title.hide{
-    display:none
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin:12px 0 16px
-}
-
-.card{
-    background:#241428;
-    border:3px solid #5a3a50;
-    color:#fff;
-    cursor:pointer;
-    padding:8px 4px 6px;
-    font-family:inherit;
-    min-height:150px
-}
-
-.card .nm{
-    font-size:12px;
-    font-weight:800;
-    margin-bottom:4px;
-    color:#ffe08a
-}
-
-.card.sel{
-    border-color:#ff4d6d;
-    box-shadow:0 0 0 3px rgba(255,77,109,.35)
-}
-
-.stage{
-    position:relative;
-    height:110px;
-    overflow:hidden
+    z-index:3;
 }
 
 .doll{
     position:absolute;
-    left:50%;
-    bottom:4px;
+    left:0;
+    top:0;
+
     width:54px;
     height:96px;
-    margin-left:-27px;
-    pointer-events:none
+
+    pointer-events:none;
 }
 
 .doll.skin-labuba{
     width:72px;
-    margin-left:-36px
 }
 
 .doll .cap{
@@ -197,7 +81,7 @@ button.main:disabled{
     height:16px;
     background:#111;
     border-radius:8px 8px 2px 2px;
-    z-index:3
+    z-index:3;
 }
 
 .doll .cap:after{
@@ -208,7 +92,7 @@ button.main:disabled{
     width:18px;
     height:6px;
     background:#111;
-    border-radius:0 6px 6px 0
+    border-radius:0 6px 6px 0;
 }
 
 .doll .tag{
@@ -219,7 +103,7 @@ button.main:disabled{
     color:#eee;
     font:800 7px/1 sans-serif;
     text-align:center;
-    z-index:4
+    z-index:4;
 }
 
 .doll .head{
@@ -229,7 +113,7 @@ button.main:disabled{
     width:26px;
     height:26px;
     background:#f0b48a;
-    border-radius:50%
+    border-radius:50%;
 }
 
 .doll .eye{
@@ -238,11 +122,16 @@ button.main:disabled{
     width:4px;
     height:4px;
     background:#222;
-    border-radius:50%
+    border-radius:50%;
 }
 
-.doll .eye.l{left:20px}
-.doll .eye.r{left:30px}
+.doll .eye.l{
+    left:20px;
+}
+
+.doll .eye.r{
+    left:30px;
+}
 
 .doll .shirt{
     position:absolute;
@@ -251,7 +140,7 @@ button.main:disabled{
     width:42px;
     height:38px;
     background:#2ea44f;
-    border-radius:8px 8px 4px 4px
+    border-radius:8px 8px 4px 4px;
 }
 
 .doll .collar{
@@ -261,12 +150,12 @@ button.main:disabled{
     width:42px;
     height:8px;
     background:#217a3a;
-    border-radius:8px 8px 0 0
+    border-radius:8px 8px 0 0;
 }
 
 .doll .hair,
 .doll .chain{
-    display:none
+    display:none;
 }
 
 .doll .arm{
@@ -276,11 +165,16 @@ button.main:disabled{
     height:24px;
     background:#e0a07a;
     border-radius:5px;
-    transform-origin:50% 0
+    transform-origin:50% 0;
 }
 
-.doll .arm.l{left:0}
-.doll .arm.r{right:0}
+.doll .arm.l{
+    left:0;
+}
+
+.doll .arm.r{
+    right:0;
+}
 
 .doll .leg{
     position:absolute;
@@ -289,37 +183,43 @@ button.main:disabled{
     height:26px;
     background:#3a2a22;
     border-radius:5px;
-    transform-origin:50% 0
+    transform-origin:50% 0;
 }
 
-.doll .leg.l{left:14px}
-.doll .leg.r{right:14px}
+.doll .leg.l{
+    left:14px;
+}
 
-.doll.run .arm,
-.doll.run .leg{
-    animation:arms .32s linear infinite
+.doll .leg.r{
+    right:14px;
+}
+
+.doll.run .arm{
+    animation:arms .32s linear infinite;
 }
 
 .doll.run .leg{
-    animation-name:legs
+    animation:legs .32s linear infinite;
 }
 
 .doll.run .arm.l,
 .doll.run .leg.r{
-    animation-direction:reverse
+    animation-direction:reverse;
 }
+
+/* BUMBLE */
 
 .doll.skin-bumble .head,
 .doll.skin-bumble .arm{
-    background:#6b3a22
+    background:#6b3a22;
 }
 
 .doll.skin-bumble .shirt{
-    background:#111
+    background:#111;
 }
 
 .doll.skin-bumble .collar{
-    background:#c9a227
+    background:#c9a227;
 }
 
 .doll.skin-bumble .chain{
@@ -332,45 +232,54 @@ button.main:disabled{
     border:3px solid #efc44a;
     border-top:0;
     border-radius:0 0 14px 14px;
-    z-index:5
+    z-index:5;
 }
 
 .doll.skin-bumble .cap,
 .doll.skin-bumble .cap:after{
-    background:#c9a227
+    background:#c9a227;
 }
 
 .doll.skin-bumble .tag{
-    color:#111
+    color:#111;
 }
+
+/* LABUBA */
 
 .doll.skin-labuba .head{
     left:22px;
     width:30px;
-    height:28px
+    height:28px;
 }
 
-.doll.skin-labuba .eye.l{left:28px}
-.doll.skin-labuba .eye.r{left:42px}
+.doll.skin-labuba .eye.l{
+    left:28px;
+}
+
+.doll.skin-labuba .eye.r{
+    left:42px;
+}
 
 .doll.skin-labuba .shirt{
     left:4px;
     width:64px;
     height:42px;
     background:#c45a2a;
-    border-radius:16px
+    border-radius:16px;
 }
 
 .doll.skin-labuba .collar{
     left:4px;
     width:64px;
-    background:#8a3a18
+    background:#8a3a18;
 }
 
 .doll.skin-labuba .cap,
 .doll.skin-labuba .tag{
-    left:16px
+    left:16px;
 }
+
+/* GIRL */
 
 .doll.skin-girl .hair{
     display:block;
@@ -381,78 +290,257 @@ button.main:disabled{
     height:28px;
     background:#f2d36b;
     border-radius:16px 16px 4px 4px;
-    z-index:1
+    z-index:1;
 }
 
 .doll.skin-girl .cap,
 .doll.skin-girl .tag,
 .doll.skin-girl .collar{
-    display:none
+    display:none;
 }
 
 .doll.skin-girl .shirt{
     background:#ff7ab0;
     border-radius:10px 10px 18px 18px;
-    height:42px
+    height:42px;
 }
 
 .doll.skin-girl .head,
 .doll.skin-girl .arm{
-    background:#f7c9a8
-}
-
-#hero{
-    position:absolute;
-    left:90px;
-    width:54px;
-    height:96px;
-    pointer-events:none;
-    z-index:3
-}
-
-#hero.shielded{
-    filter:drop-shadow(0 0 8px #4df)
-}
-
-#hero.armed .arm.r{
-    display:none
-}
-
-@keyframes legs{
-    0%{transform:rotate(28deg)}
-    50%{transform:rotate(-28deg)}
-    100%{transform:rotate(28deg)}
-}
-
-@keyframes arms{
-    0%{transform:rotate(-24deg)}
-    50%{transform:rotate(24deg)}
-    100%{transform:rotate(-24deg)}
+    background:#f7c9a8;
 }
 
 /* =========================
-   DEBUG
+   HUD
    ========================= */
 
-#debugInfo{
+#hud{
     position:absolute;
+    top:10px;
+    left:10px;
+    right:10px;
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#fff;
+    font-weight:800;
+    font-size:15px;
+    text-shadow:0 2px 0 #000;
+
+    pointer-events:none;
+    z-index:10;
+}
+
+#buff{
+    color:#9fef6a;
+    font-size:12px;
+    margin-top:4px;
+}
+
+#cityTag{
+    position:absolute;
+    top:42px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:#ffe08a;
+    font-weight:800;
+    font-size:13px;
+    text-shadow:0 2px 0 #000;
+
+    pointer-events:none;
+    z-index:10;
+
+    opacity:0;
+    transition:opacity .3s;
+}
+
+/* =========================
+   DEBUG PANEL
+   ========================= */
+
+#debugPanel{
+    position:absolute;
+
     left:8px;
     bottom:8px;
-    z-index:10;
-    color:#fff;
-    background:rgba(0,0,0,.75);
+
+    z-index:100;
+
+    min-width:210px;
+
+    padding:8px;
+
+    background:rgba(0,0,0,.85);
+
     border:2px solid #fff;
-    padding:6px 8px;
-    font:11px/1.4 monospace;
+
+    color:#fff;
+
+    font:11px/1.45 monospace;
+
     pointer-events:none;
+
     white-space:pre;
 }
 
-.debug-player{
+.debug-title{
+    color:#fff;
+    font-weight:bold;
+}
+
+.debug-red{
+    color:#ff3333;
+}
+
+.debug-blue{
+    color:#33aaff;
+}
+
+.debug-green{
+    color:#33ff66;
+}
+
+/* =========================
+   OVERLAY
+   ========================= */
+
+#overlay{
     position:absolute;
-    border:2px solid red;
-    pointer-events:none;
-    z-index:20;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(8,4,14,.86);
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:16px;
+
+    z-index:50;
+}
+
+#overlay h1{
+    font-size:26px;
+    margin-bottom:8px;
+    color:#ff4d6d;
+    text-shadow:3px 3px 0 #3a0010;
+}
+
+#overlay p{
+    opacity:.92;
+    margin:6px 0 16px;
+    max-width:340px;
+    line-height:1.35;
+}
+
+button.main{
+    appearance:none;
+    border:3px solid #fff;
+    background:#ff4d6d;
+    color:#fff;
+    font-weight:800;
+    font-size:17px;
+    font-family:inherit;
+    padding:12px 24px;
+    cursor:pointer;
+}
+
+button.main:disabled{
+    opacity:.4;
+}
+
+.hint{
+    font-size:12px;
+    opacity:.7;
+    margin-top:12px;
+}
+
+#screen-pick{
+    display:none;
+    width:min(560px,96vw);
+}
+
+#screen-pick.show{
+    display:block;
+}
+
+#screen-title.hide{
+    display:none;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:12px 0 16px;
+}
+
+.card{
+    background:#241428;
+    border:3px solid #5a3a50;
+    color:#fff;
+    cursor:pointer;
+    padding:8px 4px 6px;
+    font-family:inherit;
+    min-height:150px;
+}
+
+.card .nm{
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:4px;
+    color:#ffe08a;
+}
+
+.card.sel{
+    border-color:#ff4d6d;
+    box-shadow:0 0 0 3px rgba(255,77,109,.35);
+}
+
+.stage{
+    position:relative;
+    height:110px;
+    overflow:hidden;
+}
+
+/* =========================
+   ANIMATION
+   ========================= */
+
+@keyframes legs{
+    0%{
+        transform:rotate(28deg);
+    }
+
+    50%{
+        transform:rotate(-28deg);
+    }
+
+    100%{
+        transform:rotate(28deg);
+    }
+}
+
+@keyframes arms{
+    0%{
+        transform:rotate(-24deg);
+    }
+
+    50%{
+        transform:rotate(24deg);
+    }
+
+    100%{
+        transform:rotate(-24deg);
+    }
 }
 
 </style>
@@ -462,146 +550,200 @@ button.main:disabled{
 
 <div id="wrap">
 
-<canvas id="c"></canvas>
+    <canvas id="c"></canvas>
 
-<div id="hero" class="doll idle skin-vega">
-    <div class="hair"></div>
-    <div class="cap"></div>
-    <div class="tag">ВЕГА</div>
-    <div class="head"></div>
-    <div class="eye l"></div>
-    <div class="eye r"></div>
-    <div class="arm l"></div>
-    <div class="arm r"></div>
-    <div class="shirt"></div>
-    <div class="collar"></div>
-    <div class="chain"></div>
-    <div class="leg l"></div>
-    <div class="leg r"></div>
-</div>
+    <!-- =========================
+         PLAYER
+         ========================= -->
 
-<div id="hud">
-    <div>
-        <div id="score">0 м</div>
-        <div id="buff"></div>
-    </div>
-    <div id="best">лучший счет 0</div>
-</div>
+    <div id="hero" class="skin-vega">
 
-<div id="cityTag"></div>
+        <div class="doll skin-vega">
 
-<div id="debugInfo">DEBUG</div>
+            <div class="hair"></div>
 
-<div id="overlay">
+            <div class="cap"></div>
 
-    <div id="screen-title">
-        <h1>FUCKRUNNER</h1>
-        <p>Обычный работяга живёт свою обычную жизнь.</p>
-        <button class="main" id="pickBtn">ВЫБЕРИ БОЙЦА</button>
-        <div class="hint">
-            тап — прыжок, второй тап в воздухе — прыжок по выше
+            <div class="tag">ВЕГА</div>
+
+            <div class="head"></div>
+
+            <div class="eye l"></div>
+            <div class="eye r"></div>
+
+            <div class="arm l"></div>
+            <div class="arm r"></div>
+
+            <div class="shirt"></div>
+
+            <div class="collar"></div>
+
+            <div class="chain"></div>
+
+            <div class="leg l"></div>
+            <div class="leg r"></div>
+
         </div>
+
     </div>
 
-    <div id="screen-pick">
-        <h1>ВЫБЕРИ БОЙЦА</h1>
 
-        <div class="grid" id="grid"></div>
+    <!-- =========================
+         HUD
+         ========================= -->
 
-        <button class="main" id="start" disabled>
-            ПОГНАЛИ
-        </button>
+    <div id="hud">
+
+        <div>
+            <div id="score">0 м</div>
+            <div id="buff"></div>
+        </div>
+
+        <div id="best">
+            лучший счет 0
+        </div>
+
+    </div>
+
+    <div id="cityTag"></div>
+
+
+    <!-- =========================
+         DEBUG PANEL
+         ========================= -->
+
+    <div id="debugPanel">
+        <div class="debug-title">HITBOX DEBUG</div>
+        <div class="debug-red">■ RED  = PLAYER HITBOX</div>
+        <div class="debug-blue">■ BLUE = HERO DOM BOX</div>
+        <div class="debug-green">■ GREEN = OBSTACLE HITBOX</div>
+        <br>
+        загрузка...
+    </div>
+
+
+    <!-- =========================
+         MENU
+         ========================= -->
+
+    <div id="overlay">
+
+        <div id="screen-title">
+
+            <h1>FUCKRUNNER</h1>
+
+            <p>
+                Обычный работяга живёт свою обычную жизнь.
+            </p>
+
+            <button
+                class="main"
+                id="pickBtn"
+            >
+                ВЫБЕРИ БОЙЦА
+            </button>
+
+            <div class="hint">
+                тап — прыжок, второй тап в воздухе — прыжок повыше
+            </div>
+
+        </div>
+
+
+        <div id="screen-pick">
+
+            <h1>ВЫБЕРИ БОЙЦА</h1>
+
+            <div
+                class="grid"
+                id="grid"
+            ></div>
+
+            <button
+                class="main"
+                id="start"
+                disabled
+            >
+                ПОГНАЛИ
+            </button>
+
+        </div>
+
     </div>
 
 </div>
 
-</div>
 
 <script>
 (()=>{
 
-const tg=window.Telegram&&window.Telegram.WebApp;
+/* =========================================================
+   TELEGRAM
+   ========================================================= */
+
+const tg =
+    window.Telegram &&
+    window.Telegram.WebApp;
 
 if(tg){
+
     tg.ready();
     tg.expand();
 
     try{
+
         tg.setHeaderColor('#2a1630');
         tg.setBackgroundColor('#1a1020');
+
     }catch(e){}
+
 }
 
-const canvas=document.getElementById('c');
-const ctx=canvas.getContext('2d');
 
-const overlay=document.getElementById('overlay');
-const titleScr=document.getElementById('screen-title');
-const pickScr=document.getElementById('screen-pick');
+/* =========================================================
+   DOM
+   ========================================================= */
 
-const startBtn=document.getElementById('start');
-const scoreEl=document.getElementById('score');
-const bestEl=document.getElementById('best');
-const buffEl=document.getElementById('buff');
-const cityTag=document.getElementById('cityTag');
-const heroEl=document.getElementById('hero');
-const debugInfo=document.getElementById('debugInfo');
+const canvas =
+    document.getElementById('c');
 
-const CITIES=[
-    {name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},
-    {name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},
-    {name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},
-    {name:'КАЗАНЬ',src:'../bg_kzn.jpg'},
-    {name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'},
-    {name:'САРАТОВ',src:'../bg_sar.jpg'},
-    {name:'САМАРА',src:'../bg_sam.jpg'}
-];
+const ctx =
+    canvas.getContext('2d');
 
-const cityImgs=CITIES.map(c=>{
-    const im=new Image();
-    im.src=c.src;
-    return im;
-});
+const overlay =
+    document.getElementById('overlay');
 
-const FIGHTERS=[
-    {id:'vega',name:'Вегамэн',tag:'ВЕГА'},
-    {id:'bumble',name:'Бамбл Бизи',tag:'BEE'},
-    {id:'labuba',name:'Лабуба',tag:'ЛАБ'},
-    {id:'girl',name:'Вагина реалистик',tag:''}
-];
+const titleScr =
+    document.getElementById('screen-title');
 
-const grid=document.getElementById('grid');
+const pickScr =
+    document.getElementById('screen-pick');
 
-FIGHTERS.forEach(f=>{
+const startBtn =
+    document.getElementById('start');
 
-    const b=document.createElement('button');
+const scoreEl =
+    document.getElementById('score');
 
-    b.className='card';
-    b.dataset.id=f.id;
+const bestEl =
+    document.getElementById('best');
 
-    b.innerHTML=`
-        <div class="nm">${f.name}</div>
-        <div class="stage">
-            <div class="doll skin-${f.id}">
-                <div class="hair"></div>
-                <div class="cap"></div>
-                <div class="tag">${f.tag}</div>
-                <div class="head"></div>
-                <div class="eye l"></div>
-                <div class="eye r"></div>
-                <div class="arm l"></div>
-                <div class="arm r"></div>
-                <div class="shirt"></div>
-                <div class="collar"></div>
-                <div class="chain"></div>
-                <div class="leg l"></div>
-                <div class="leg r"></div>
-            </div>
-        </div>
-    `;
+const buffEl =
+    document.getElementById('buff');
 
-    grid.appendChild(b);
-});
+const cityTag =
+    document.getElementById('cityTag');
+
+const heroEl =
+    document.getElementById('hero');
+
+const debugPanel =
+    document.getElementById('debugPanel');
+
+
+/* =========================================================
+   CANVAS SIZE
+   ========================================================= */
 
 let W=0;
 let H=0;
@@ -609,84 +751,278 @@ let dpr=1;
 
 function resize(){
 
-    dpr=Math.min(devicePixelRatio||1,2);
+    dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
-    W=innerWidth;
-    H=innerHeight;
+    W=window.innerWidth;
+    H=window.innerHeight;
 
-    canvas.width=Math.floor(W*dpr);
-    canvas.height=Math.floor(H*dpr);
+    canvas.width =
+        Math.floor(W*dpr);
 
-    canvas.style.width=W+'px';
-    canvas.style.height=H+'px';
+    canvas.height =
+        Math.floor(H*dpr);
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    canvas.style.width =
+        W+'px';
+
+    canvas.style.height =
+        H+'px';
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
     ctx.imageSmoothingEnabled=false;
 }
 
-addEventListener('resize',resize);
-resize();
-
-const BEST_KEY='fuckrunner_ekb_best';
-
-let best=parseInt(
-    localStorage.getItem(BEST_KEY)||'0',
-    10
+window.addEventListener(
+    'resize',
+    resize
 );
 
-function renderBest(){
-    bestEl.textContent='лучший счет '+best;
-}
+resize();
 
-renderBest();
 
-let skin='vega';
+/* =========================================================
+   CITIES
+   ========================================================= */
 
-document.getElementById('pickBtn').onclick=()=>{
-    titleScr.classList.add('hide');
-    pickScr.classList.add('show');
-};
+const CITIES=[
+    {
+        name:'ЕКАТЕРИНБУРГ',
+        src:'../bg_far.jpg'
+    },
+    {
+        name:'ТОЛЬЯТТИ',
+        src:'../bg_tlt.jpg'
+    },
+    {
+        name:'УЛЬЯНОВСК',
+        src:'../bg_uln.jpg'
+    },
+    {
+        name:'КАЗАНЬ',
+        src:'../bg_kzn.jpg'
+    },
+    {
+        name:'ЙОШКАР-ОЛА',
+        src:'../bg_yosh.jpg'
+    },
+    {
+        name:'САРАТОВ',
+        src:'../bg_sar.jpg'
+    },
+    {
+        name:'САМАРА',
+        src:'../bg_sam.jpg'
+    }
+];
 
-document.querySelectorAll('.card').forEach(card=>{
+const cityImgs =
+    CITIES.map(city=>{
 
-    card.onclick=()=>{
+        const img =
+            new Image();
 
-        document.querySelectorAll('.card').forEach(c=>{
-            c.classList.remove('sel');
+        img.src=city.src;
 
-            const d=c.querySelector('.doll');
+        return img;
 
-            if(d){
-                d.classList.remove('run');
-            }
-        });
+    });
 
-        card.classList.add('sel');
 
-        card.querySelector('.doll').classList.add('run');
+/* =========================================================
+   FIGHTERS
+   ========================================================= */
 
-        skin=card.dataset.id;
+const FIGHTERS=[
+    {
+        id:'vega',
+        name:'Вегамэн',
+        tag:'ВЕГА'
+    },
+    {
+        id:'bumble',
+        name:'Бамбл Бизи',
+        tag:'BEE'
+    },
+    {
+        id:'labuba',
+        name:'Лабуба',
+        tag:'ЛАБ'
+    },
+    {
+        id:'girl',
+        name:'Вагина реалистик',
+        tag:''
+    }
+];
 
-        startBtn.disabled=false;
+const grid =
+    document.getElementById('grid');
 
-        applySkin();
-    };
+
+FIGHTERS.forEach(f=>{
+
+    const button =
+        document.createElement('button');
+
+    button.className='card';
+
+    button.dataset.id=f.id;
+
+    button.innerHTML=`
+
+        <div class="nm">
+            ${f.name}
+        </div>
+
+        <div class="stage">
+
+            <div class="doll skin-${f.id}">
+
+                <div class="hair"></div>
+
+                <div class="cap"></div>
+
+                <div class="tag">
+                    ${f.tag}
+                </div>
+
+                <div class="head"></div>
+
+                <div class="eye l"></div>
+                <div class="eye r"></div>
+
+                <div class="arm l"></div>
+                <div class="arm r"></div>
+
+                <div class="shirt"></div>
+
+                <div class="collar"></div>
+
+                <div class="chain"></div>
+
+                <div class="leg l"></div>
+                <div class="leg r"></div>
+
+            </div>
+
+        </div>
+    `;
+
+    grid.appendChild(button);
 
 });
 
+
+/* =========================================================
+   GAME STATE
+   ========================================================= */
+
+const state={
+
+    running:false,
+
+    over:false,
+
+    t:0,
+
+    speed:280,
+
+    dist:0,
+
+    gravity:2400,
+
+    groundY:0,
+
+    city:-1
+
+};
+
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+/*
+    ВАЖНО:
+
+    #hero = 54x96
+
+    Поэтому игровой объект тоже 54x96.
+
+    RED BOX будет строиться именно
+    из этих координат.
+*/
+
+const player={
+
+    x:90,
+
+    y:0,
+
+    vy:0,
+
+    w:54,
+
+    h:96,
+
+    onGround:true,
+
+    jumpsUsed:0
+
+};
+
+
+/* =========================================================
+   OBJECTS
+   ========================================================= */
+
+const obstacles=[];
+const bits=[];
+const bullets=[];
+
+let spawnTimer=.7;
+
+let shieldT=0;
+let gunT=0;
+
+let fireAcc=0;
+
+let powerTimer=45;
+
+
+/* =========================================================
+   SKIN
+   ========================================================= */
+
+let skin='vega';
+
 function applySkin(){
 
-    heroEl.classList.remove(
-        'skin-vega',
-        'skin-bumble',
-        'skin-labuba',
-        'skin-girl'
-    );
+    heroEl.className=
+        'skin-'+skin;
 
-    heroEl.classList.add('skin-'+skin);
+    const doll =
+        heroEl.querySelector('.doll');
 
-    heroEl.querySelector('.tag').textContent=
+    doll.className =
+        'doll skin-'+skin;
+
+    const tag =
+        heroEl.querySelector('.tag');
+
+    tag.textContent =
         skin==='vega'
         ?'ВЕГА'
         :skin==='bumble'
@@ -695,44 +1031,100 @@ function applySkin(){
         ?'ЛАБ'
         :'';
 
-    player.w=skin==='labuba'?72:54;
+    player.w =
+        skin==='labuba'
+        ?72
+        :54;
 
 }
 
-const state={
-    running:false,
-    over:false,
-    t:0,
-    speed:280,
-    dist:0,
-    gravity:2400,
-    groundY:0,
-    city:0
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+document
+.getElementById('pickBtn')
+.onclick=()=>{
+
+    titleScr.classList.add('hide');
+
+    pickScr.classList.add('show');
+
 };
 
-const player={
-    x:90,
-    y:0,
-    vy:0,
 
-    /* ВАЖНО:
-       Теперь hitbox соответствует высоте #hero */
-    w:54,
-    h:96,
+document
+.querySelectorAll('.card')
+.forEach(card=>{
 
-    onGround:true,
-    jumpsUsed:0
-};
+    card.onclick=()=>{
 
-const obstacles=[];
-const bits=[];
-const bullets=[];
+        document
+        .querySelectorAll('.card')
+        .forEach(c=>{
 
-let spawnTimer=0;
-let shieldT=0;
-let gunT=0;
-let fireAcc=0;
-let powerTimer=45;
+            c.classList.remove('sel');
+
+            const doll =
+                c.querySelector('.doll');
+
+            if(doll){
+
+                doll.classList.remove(
+                    'run'
+                );
+
+            }
+
+        });
+
+        card.classList.add('sel');
+
+        card
+        .querySelector('.doll')
+        .classList.add('run');
+
+        skin =
+            card.dataset.id;
+
+        startBtn.disabled=false;
+
+        applySkin();
+
+    };
+
+});
+
+
+/* =========================================================
+   BEST SCORE
+   ========================================================= */
+
+const BEST_KEY =
+    'fuckrunner_ekb_best';
+
+let best =
+    parseInt(
+        localStorage.getItem(
+            BEST_KEY
+        ) || '0',
+        10
+    );
+
+function renderBest(){
+
+    bestEl.textContent =
+        'лучший счет '+best;
+
+}
+
+renderBest();
+
+
+/* =========================================================
+   CITY
+   ========================================================= */
 
 function toastCity(i){
 
@@ -740,20 +1132,35 @@ function toastCity(i){
 
     state.city=i;
 
-    cityTag.textContent=CITIES[i].name;
+    cityTag.textContent =
+        CITIES[i].name;
+
     cityTag.style.opacity='1';
 
-    clearTimeout(toastCity._t);
+    clearTimeout(
+        toastCity._t
+    );
 
-    toastCity._t=setTimeout(()=>{
-        cityTag.style.opacity='0';
-    },1600);
+    toastCity._t =
+        setTimeout(
+            ()=>{
+                cityTag.style.opacity='0';
+            },
+            1600
+        );
+
 }
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 function reset(){
 
     state.running=true;
     state.over=false;
+
     state.t=0;
     state.speed=280;
     state.dist=0;
@@ -771,6 +1178,7 @@ function reset(){
 
     shieldT=0;
     gunT=0;
+
     fireAcc=0;
     powerTimer=45;
 
@@ -779,23 +1187,13 @@ function reset(){
     overlay.style.display='none';
 
     toastCity(0);
+
 }
 
-function boom(x,y,col){
 
-    for(let i=0;i<9;i++){
-
-        bits.push({
-            x,
-            y,
-            vx:(Math.random()-.5)*240,
-            vy:-70-Math.random()*160,
-            life:.4,
-            col
-        });
-
-    }
-}
+/* =========================================================
+   JUMP
+   ========================================================= */
 
 function jump(){
 
@@ -803,43 +1201,68 @@ function jump(){
         !state.running ||
         state.over ||
         player.jumpsUsed>=2
-    )return;
+    ){
+        return;
+    }
 
-    player.vy=
+    player.vy =
         player.jumpsUsed===0
         ?-820
         :-1160;
 
     player.onGround=false;
+
     player.jumpsUsed++;
+
 }
 
-addEventListener('keydown',e=>{
 
-    if(
-        e.code==='Space' ||
-        e.code==='ArrowUp'
-    ){
+/* =========================================================
+   INPUT
+   ========================================================= */
 
-        e.preventDefault();
+window.addEventListener(
+    'keydown',
+    e=>{
+
+        if(
+            e.code==='Space' ||
+            e.code==='ArrowUp'
+        ){
+
+            e.preventDefault();
+
+            if(state.running){
+                jump();
+            }
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    'pointerdown',
+    e=>{
+
+        if(
+            e.target.closest('#overlay')
+        ){
+            return;
+        }
 
         if(state.running){
             jump();
         }
 
     }
+);
 
-});
 
-addEventListener('pointerdown',e=>{
-
-    if(e.target.closest('#overlay'))return;
-
-    if(state.running){
-        jump();
-    }
-
-});
+/* =========================================================
+   MUSIC
+   ========================================================= */
 
 const TRACKS=[
     'ushet.mp3',
@@ -854,30 +1277,43 @@ let lastTrack=-1;
 let musicOn=false;
 let skipGuard=0;
 
-const music=new Audio();
+const music =
+    new Audio();
+
 music.volume=.55;
 
 function playRandom(){
 
-    let i=Math.floor(
-        Math.random()*TRACKS.length
-    );
+    let i =
+        Math.floor(
+            Math.random()*
+            TRACKS.length
+        );
 
     if(
         TRACKS.length>1 &&
         i===lastTrack
     ){
-        i=(i+1)%TRACKS.length;
+
+        i=(i+1)%
+            TRACKS.length;
+
     }
 
     lastTrack=i;
 
-    music.src=TRACKS[i];
+    music.src=
+        TRACKS[i];
 
     music
         .play()
-        .then(()=>skipGuard=0)
+        .then(
+            ()=>{
+                skipGuard=0;
+            }
+        )
         .catch(()=>{});
+
 }
 
 music.addEventListener(
@@ -888,10 +1324,20 @@ music.addEventListener(
 music.addEventListener(
     'error',
     ()=>{
-        if(skipGuard++>8)return;
+
+        if(skipGuard++>8){
+            return;
+        }
+
         playRandom();
+
     }
 );
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 startBtn.onclick=e=>{
 
@@ -900,78 +1346,502 @@ startBtn.onclick=e=>{
     reset();
 
     if(!musicOn){
+
         musicOn=true;
+
         playRandom();
+
     }
 
 };
+
+
+/* =========================================================
+   SPAWN
+   ========================================================= */
 
 function spawn(){
 
     if(Math.random()<.55){
 
         obstacles.push({
+
             type:'poop',
+
             x:W+40,
+
             y:0,
+
             w:46,
+
             h:38
+
         });
 
     }else{
 
         obstacles.push({
+
             type:'dick',
+
             x:W+40,
+
             y:0,
-            flyY:70+Math.random()*90,
+
+            flyY:
+                70+
+                Math.random()*90,
+
             w:52,
+
             h:22,
-            wob:Math.random()*6.28
+
+            wob:
+                Math.random()*
+                6.28
+
         });
 
     }
 
 }
+
 
 function spawnPower(){
 
     if(Math.random()<.5){
 
         obstacles.push({
+
             type:'shield',
+
             x:W+40,
+
             y:0,
+
             w:36,
+
             h:36
+
         });
 
     }else{
 
         obstacles.push({
+
             type:'ak',
+
             x:W+40,
+
             y:0,
+
             w:40,
+
             h:22
+
         });
 
     }
 
 }
 
-const hit=(a,b)=>
-    a.x<b.x+b.w &&
-    a.x+a.w>b.x &&
-    a.y<b.y+b.h &&
-    a.y+a.h>b.y;
+
+/* =========================================================
+   HIT TEST
+   ========================================================= */
+
+function hit(a,b){
+
+    return (
+
+        a.x <
+        b.x+b.w &&
+
+        a.x+a.w >
+        b.x &&
+
+        a.y <
+        b.y+b.h &&
+
+        a.y+a.h >
+        b.y
+
+    );
+
+}
+
+
+/* =========================================================
+   HITBOX FUNCTIONS
+   ========================================================= */
+
+/*
+    RED:
+    Игровой hitbox игрока.
+
+    Сейчас специально совпадает
+    с player.w / player.h.
+*/
+
+function getPlayerHitbox(){
+
+    return {
+
+        x:player.x,
+
+        y:player.y,
+
+        w:player.w,
+
+        h:player.h
+
+    };
+
+}
+
+
+/*
+    GREEN:
+    Игровой hitbox препятствия.
+*/
+
+function getObstacleHitbox(o){
+
+    return {
+
+        x:o.x,
+
+        y:o.y,
+
+        w:o.w,
+
+        h:o.h
+
+    };
+
+}
+
+
+/*
+    BLUE:
+    Реальные координаты DOM #hero.
+
+    getBoundingClientRect()
+    показывает фактическое положение
+    элемента на экране.
+
+    Это очень важно для диагностики.
+*/
+
+function getHeroDomBox(){
+
+    const r =
+        heroEl.getBoundingClientRect();
+
+    return {
+
+        x:r.left,
+
+        y:r.top,
+
+        w:r.width,
+
+        h:r.height
+
+    };
+
+}
+
+
+/* =========================================================
+   DEBUG DRAW
+   ========================================================= */
+
+function drawDebug(){
+
+    /*
+        RED
+        ================================
+        Игровой hitbox.
+    */
+
+    const red =
+        getPlayerHitbox();
+
+    ctx.save();
+
+    ctx.strokeStyle='#ff0000';
+
+    ctx.lineWidth=3;
+
+    ctx.strokeRect(
+
+        red.x,
+        red.y,
+        red.w,
+        red.h
+
+    );
+
+
+    /*
+        BLUE
+        ================================
+        Фактический DOM #hero.
+    */
+
+    const blue =
+        getHeroDomBox();
+
+    ctx.strokeStyle='#00aaff';
+
+    ctx.lineWidth=3;
+
+    ctx.strokeRect(
+
+        blue.x,
+        blue.y,
+        blue.w,
+        blue.h
+
+    );
+
+
+    /*
+        GREEN
+        ================================
+        Hitbox препятствий.
+    */
+
+    for(
+        const obstacle
+        of obstacles
+    ){
+
+        const green =
+            getObstacleHitbox(
+                obstacle
+            );
+
+        ctx.strokeStyle=
+            '#00ff00';
+
+        ctx.lineWidth=3;
+
+        ctx.strokeRect(
+
+            green.x,
+            green.y,
+            green.w,
+            green.h
+
+        );
+
+    }
+
+
+    /*
+        Центр RED
+    */
+
+    ctx.fillStyle='#ff0000';
+
+    ctx.fillRect(
+
+        red.x+
+        red.w/2-
+        3,
+
+        red.y+
+        red.h/2-
+        3,
+
+        6,
+        6
+
+    );
+
+
+    /*
+        Центр BLUE
+    */
+
+    ctx.fillStyle='#00aaff';
+
+    ctx.fillRect(
+
+        blue.x+
+        blue.w/2-
+        3,
+
+        blue.y+
+        blue.h/2-
+        3,
+
+        6,
+        6
+
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   DEBUG PANEL
+   ========================================================= */
+
+function updateDebug(){
+
+    const red =
+        getPlayerHitbox();
+
+    const blue =
+        getHeroDomBox();
+
+    let nearest=null;
+    let nearestDistance=Infinity;
+
+    for(
+        const o
+        of obstacles
+    ){
+
+        const distance =
+            Math.abs(
+                o.x -
+                player.x
+            );
+
+        if(
+            distance<
+            nearestDistance
+        ){
+
+            nearest=o;
+
+            nearestDistance=
+                distance;
+
+        }
+
+    }
+
+
+    let text='';
+
+    text +=
+        'PLAYER\n';
+
+    text +=
+        'RED  x: '+
+        red.x.toFixed(1)+
+        ' y: '+
+        red.y.toFixed(1)+
+        ' w: '+
+        red.w.toFixed(1)+
+        ' h: '+
+        red.h.toFixed(1)+
+        '\n';
+
+    text +=
+        'BLUE x: '+
+        blue.x.toFixed(1)+
+        ' y: '+
+        blue.y.toFixed(1)+
+        ' w: '+
+        blue.w.toFixed(1)+
+        ' h: '+
+        blue.h.toFixed(1)+
+        '\n';
+
+    text +=
+        'RED-BLUE DX: '+
+        (
+            red.x-blue.x
+        ).toFixed(1)+
+        ' px\n';
+
+    text +=
+        'RED-BLUE DY: '+
+        (
+            red.y-blue.y
+        ).toFixed(1)+
+        ' px\n';
+
+    text +=
+        '\nOBSTACLES: '+
+        obstacles.length+
+        '\n';
+
+    if(nearest){
+
+        const green =
+            getObstacleHitbox(
+                nearest
+            );
+
+        text +=
+            '\nNEAREST GREEN\n';
+
+        text +=
+            'type: '+
+            nearest.type+
+            '\n';
+
+        text +=
+            'x: '+
+            green.x.toFixed(1)+
+            '\n';
+
+        text +=
+            'y: '+
+            green.y.toFixed(1)+
+            '\n';
+
+        text +=
+            'w: '+
+            green.w+
+            '\n';
+
+        text +=
+            'h: '+
+            green.h+
+            '\n';
+
+    }
+
+    debugPanel.innerHTML=
+        '<div class="debug-title">HITBOX DEBUG</div>'+
+        '<div class="debug-red">■ RED = PLAYER HITBOX</div>'+
+        '<div class="debug-blue">■ BLUE = HERO DOM BOX</div>'+
+        '<div class="debug-green">■ GREEN = OBSTACLE HITBOX</div>'+
+        '<br>'+
+        text
+        .replace(
+            /\n/g,
+            '<br>'
+        );
+
+}
+
+
+/* =========================================================
+   GAME OVER
+   ========================================================= */
 
 function gameOver(kind){
 
     state.over=true;
+
     state.running=false;
 
-    const score=Math.floor(state.dist);
+    const score =
+        Math.floor(
+            state.dist
+        );
 
     if(score>best){
 
@@ -983,25 +1853,80 @@ function gameOver(kind){
         );
 
         renderBest();
+
     }
 
-    titleScr.classList.remove('hide');
-    pickScr.classList.remove('show');
+    titleScr.classList.remove(
+        'hide'
+    );
 
-    overlay.querySelector(
+    pickScr.classList.remove(
+        'show'
+    );
+
+    overlay
+    .querySelector(
         '#screen-title h1'
-    ).textContent=
+    )
+    .textContent =
         kind==='dick'
         ?'Есть пробитие'
         :'Это конец, ты в говне';
 
-    overlay.querySelector(
+    overlay
+    .querySelector(
         '#screen-title p'
-    ).textContent=
-        'Обычная жизнь оборвалась на '+score+' м.';
+    )
+    .textContent =
+        'Обычная жизнь оборвалась на '+
+        score+
+        ' м.';
 
     overlay.style.display='flex';
+
 }
+
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+function boom(x,y,col){
+
+    for(
+        let i=0;
+        i<9;
+        i++
+    ){
+
+        bits.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                (Math.random()-.5)*
+                240,
+
+            vy:
+                -70-
+                Math.random()*160,
+
+            life:.4,
+
+            col:col
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
 
 function cityWidth(img,h){
 
@@ -1012,22 +1937,37 @@ function cityWidth(img,h){
     ){
 
         return Math.max(
+
             W*.92,
-            h*(img.naturalWidth/img.naturalHeight)
+
+            h*
+            (
+                img.naturalWidth/
+                img.naturalHeight
+            )
+
         );
 
     }
 
     return W*.92;
+
 }
+
 
 function drawCities(gy){
 
-    const h=gy+6;
+    const h=
+        gy+6;
 
-    const widths=cityImgs.map(
-        im=>cityWidth(im,h)
-    );
+    const widths=
+        cityImgs.map(
+            im=>
+                cityWidth(
+                    im,
+                    h
+                )
+        );
 
     const total=
         widths.reduce(
@@ -1036,11 +1976,14 @@ function drawCities(gy){
         )||W;
 
     const scroll=
-        (state.dist*2.2)%total;
+        (
+            state.dist*2.2
+        )%total;
 
     let x=-scroll;
 
-    let seen=state.city;
+    let seen=
+        state.city;
 
     for(
         let n=0;
@@ -1048,22 +1991,33 @@ function drawCities(gy){
         n++
     ){
 
-        const i=n%CITIES.length;
-        const w=widths[i];
-        const im=cityImgs[i];
+        const i=
+            n%CITIES.length;
+
+        const w=
+            widths[i];
+
+        const img=
+            cityImgs[i];
 
         if(
-            im &&
-            im.complete &&
-            im.naturalWidth
+            img &&
+            img.complete &&
+            img.naturalWidth
         ){
 
             ctx.drawImage(
-                im,
+
+                img,
+
                 Math.floor(x),
+
                 0,
+
                 Math.ceil(w)+1,
+
                 Math.ceil(h)
+
             );
 
         }
@@ -1072,39 +2026,49 @@ function drawCities(gy){
             x<=W*.35 &&
             x+w>W*.35
         ){
+
             seen=i;
+
         }
 
         x+=w;
 
-        if(x>W+4)break;
+        if(x>W+4){
+            break;
+        }
+
     }
 
     toastCity(seen);
+
 }
+
 
 function drawBackdrop(){
 
-    const gy=state.groundY;
+    const gy=
+        state.groundY;
 
-    const g=ctx.createLinearGradient(
-        0,
-        0,
-        0,
-        gy
-    );
+    const gradient=
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            gy
+        );
 
-    g.addColorStop(
+    gradient.addColorStop(
         0,
         '#3a2460'
     );
 
-    g.addColorStop(
+    gradient.addColorStop(
         1,
         '#c45a3a'
     );
 
-    ctx.fillStyle=g;
+    ctx.fillStyle=
+        gradient;
 
     ctx.fillRect(
         0,
@@ -1120,7 +2084,8 @@ function drawBackdrop(){
             (H-gy)*.46
         );
 
-    ctx.fillStyle='#5b5b63';
+    ctx.fillStyle=
+        '#5b5b63';
 
     ctx.fillRect(
         0,
@@ -1129,7 +2094,8 @@ function drawBackdrop(){
         roadH
     );
 
-    ctx.fillStyle='#4a4a52';
+    ctx.fillStyle=
+        '#4a4a52';
 
     ctx.fillRect(
         0,
@@ -1141,10 +2107,13 @@ function drawBackdrop(){
     const dash=34;
 
     const shift=
-        (state.dist/0.12)%
+        (
+            state.dist/.12
+        )%
         (dash*2);
 
-    ctx.fillStyle='#e6d36a';
+    ctx.fillStyle=
+        '#e6d36a';
 
     for(
         let x=-dash;
@@ -1161,7 +2130,8 @@ function drawBackdrop(){
 
     }
 
-    ctx.fillStyle='#7a5a3a';
+    ctx.fillStyle=
+        '#7a5a3a';
 
     ctx.fillRect(
         0,
@@ -1170,12 +2140,15 @@ function drawBackdrop(){
         H-gy-roadH
     );
 
-    ctx.fillStyle='#6a4a2e';
+    ctx.fillStyle=
+        '#6a4a2e';
 
     const tile=26;
 
     const sh=
-        (state.dist/0.12)%tile;
+        (
+            state.dist/.12
+        )%tile;
 
     for(
         let x=-tile;
@@ -1194,10 +2167,20 @@ function drawBackdrop(){
 
 }
 
+
+/* =========================================================
+   OBSTACLE DRAW
+   ========================================================= */
+
 function drawPoop(o){
 
-    const x=o.x+o.w/2;
-    const y=o.y+o.h;
+    const x=
+        o.x+
+        o.w/2;
+
+    const y=
+        o.y+
+        o.h;
 
     ctx.save();
 
@@ -1295,11 +2278,15 @@ function drawPoop(o){
     ctx.fill();
 
     ctx.restore();
+
 }
+
 
 function drawDick(o,t){
 
-    const x=o.x+o.w/2;
+    const x=
+        o.x+
+        o.w/2;
 
     const y=
         o.y+
@@ -1381,11 +2368,15 @@ function drawDick(o,t){
     ctx.fill();
 
     ctx.restore();
+
 }
+
 
 function drawShieldIcon(o){
 
-    const x=o.x+o.w/2;
+    const x=
+        o.x+
+        o.w/2;
 
     const y=
         o.y+
@@ -1416,14 +2407,18 @@ function drawShieldIcon(o){
     ctx.fill();
 
     ctx.strokeStyle='#bfe6ff';
+
     ctx.lineWidth=3;
 
     ctx.stroke();
 
     ctx.fillStyle='#fff';
 
-    ctx.font='bold 13px sans-serif';
+    ctx.font=
+        'bold 13px sans-serif';
+
     ctx.textAlign='center';
+
     ctx.textBaseline='middle';
 
     ctx.fillText(
@@ -1433,11 +2428,15 @@ function drawShieldIcon(o){
     );
 
     ctx.restore();
+
 }
+
 
 function drawAkIcon(o){
 
-    const x=o.x+o.w/2;
+    const x=
+        o.x+
+        o.w/2;
 
     const y=
         o.y+
@@ -1483,7 +2482,13 @@ function drawAkIcon(o){
     );
 
     ctx.restore();
+
 }
+
+
+/* =========================================================
+   GUN
+   ========================================================= */
 
 function drawGun(){
 
@@ -1531,127 +2536,17 @@ function drawGun(){
     );
 
     ctx.restore();
+
 }
 
 
-/* ========================================
-   DEBUG HITBOXES
-   ======================================== */
+/* =========================================================
+   GAME LOOP
+   ========================================================= */
 
-function getPlayerHitbox(){
+let last=
+    performance.now();
 
-    /*
-       Сейчас специально оставляем
-       почти полный hitbox, чтобы увидеть,
-       где именно проблема.
-
-       Красная рамка = физический hitbox.
-    */
-
-    return {
-        x:player.x+1,
-        y:player.y+1,
-        w:player.w-1,
-        h:player.h-1
-    };
-}
-
-function getObstacleHitbox(o){
-
-    return {
-        x:o.x+1,
-        y:o.y+1,
-        w:o.w-1,
-        h:o.h-1
-    };
-}
-
-function drawDebugHitboxes(){
-
-    const pBox=getPlayerHitbox();
-
-    /*
-       RED = PLAYER
-    */
-
-    ctx.save();
-
-    ctx.strokeStyle='#ff0000';
-    ctx.lineWidth=2;
-
-    ctx.strokeRect(
-        pBox.x,
-        pBox.y,
-        pBox.w,
-        pBox.h
-    );
-
-    /*
-       Центр hitbox игрока
-    */
-
-    ctx.fillStyle='#ff0000';
-
-    ctx.fillRect(
-        pBox.x+pBox.w/2-2,
-        pBox.y+pBox.h/2-2,
-        4,
-        4
-    );
-
-    /*
-       GREEN = OBSTACLES
-    */
-
-    for(const o of obstacles){
-
-        const box=getObstacleHitbox(o);
-
-        ctx.strokeStyle='#00ff00';
-
-        ctx.strokeRect(
-            box.x,
-            box.y,
-            box.w,
-            box.h
-        );
-
-        ctx.fillStyle='#00ff00';
-
-        ctx.fillRect(
-            box.x+box.w/2-2,
-            box.y+box.h/2-2,
-            4,
-            4
-        );
-    }
-
-    ctx.restore();
-}
-
-function updateDebugInfo(){
-
-    const pBox=getPlayerHitbox();
-
-    let text=
-        'DEBUG HITBOX\n'+
-        'PLAYER\n'+
-        'x: '+pBox.x.toFixed(1)+'\n'+
-        'y: '+pBox.y.toFixed(1)+'\n'+
-        'w: '+pBox.w.toFixed(1)+'\n'+
-        'h: '+pBox.h.toFixed(1)+'\n'+
-        '\n'+
-        'TEXTURE\n'+
-        'w: '+player.w+'\n'+
-        'h: 96\n'+
-        '\n'+
-        'OBSTACLES: '+obstacles.length;
-
-    debugInfo.textContent=text;
-}
-
-
-let last=performance.now();
 
 function loop(now){
 
@@ -1664,14 +2559,27 @@ function loop(now){
     last=now;
 
     state.groundY=
-        Math.floor(H*.70);
+        Math.floor(
+            H*.70
+        );
+
+
+    /* =====================================================
+       PLAYER POSITION
+       ===================================================== */
 
     if(player.onGround){
 
         player.y=
             state.groundY-
             player.h;
+
     }
+
+
+    /* =====================================================
+       GAME
+       ===================================================== */
 
     if(
         state.running &&
@@ -1680,7 +2588,8 @@ function loop(now){
 
         state.t+=dt;
 
-        state.speed+=dt*8;
+        state.speed+=
+            dt*8;
 
         state.dist+=
             state.speed*
@@ -1688,8 +2597,11 @@ function loop(now){
             .12;
 
         scoreEl.textContent=
-            Math.floor(state.dist)+
+            Math.floor(
+                state.dist
+            )+
             ' м';
+
 
         shieldT=
             Math.max(
@@ -1703,13 +2615,16 @@ function loop(now){
                 gunT-dt
             );
 
+
         const parts=[];
 
         if(shieldT>0){
 
             parts.push(
                 'ЩИТ '+
-                Math.ceil(shieldT)+
+                Math.ceil(
+                    shieldT
+                )+
                 'с'
             );
 
@@ -1719,7 +2634,9 @@ function loop(now){
 
             parts.push(
                 'АК '+
-                Math.ceil(gunT)+
+                Math.ceil(
+                    gunT
+                )+
                 'с'
             );
 
@@ -1729,22 +2646,28 @@ function loop(now){
             parts.join(' · ');
 
 
-        /* =========================
-           PLAYER PHYSICS
-           ========================= */
+        /* ================================================
+           GRAVITY
+           ================================================ */
 
         player.vy+=
             state.gravity*
-            (player.vy>0?2:1)*
+            (
+                player.vy>0
+                ?2
+                :1
+            )*
             dt;
 
         player.y+=
             player.vy*
             dt;
 
+
         if(
             player.y>=
-            state.groundY-player.h
+            state.groundY-
+            player.h
         ){
 
             player.y=
@@ -1752,14 +2675,17 @@ function loop(now){
                 player.h;
 
             player.vy=0;
+
             player.onGround=true;
+
             player.jumpsUsed=0;
+
         }
 
 
-        /* =========================
+        /* ================================================
            GUN
-           ========================= */
+           ================================================ */
 
         if(gunT>0){
 
@@ -1772,16 +2698,38 @@ function loop(now){
                 const baseY=
                     player.y+46;
 
-                for(let k=-2;k<=2;k++){
+                for(
+                    let k=-2;
+                    k<=2;
+                    k++
+                ){
 
-                    const ang=k*.16;
+                    const ang=
+                        k*.16;
 
                     bullets.push({
-                        x:player.x+player.w+8,
+
+                        x:
+                            player.x+
+                            player.w+
+                            8,
+
                         y:baseY,
-                        vx:620*Math.cos(ang),
-                        vy:620*Math.sin(ang),
+
+                        vx:
+                            620*
+                            Math.cos(
+                                ang
+                            ),
+
+                        vy:
+                            620*
+                            Math.sin(
+                                ang
+                            ),
+
                         life:.55
+
                     });
 
                 }
@@ -1791,9 +2739,9 @@ function loop(now){
         }
 
 
-        /* =========================
+        /* ================================================
            SPAWN
-           ========================= */
+           ================================================ */
 
         spawnTimer-=dt;
 
@@ -1808,7 +2756,9 @@ function loop(now){
                     .35,
                     state.speed/1600
                 );
+
         }
+
 
         powerTimer-=dt;
 
@@ -1817,28 +2767,36 @@ function loop(now){
             spawnPower();
 
             powerTimer=45;
+
         }
 
 
-        /* =========================
-           COLLISIONS
-           ========================= */
+        /* ================================================
+           COLLISION
+           ================================================ */
 
-        const pBox=getPlayerHitbox();
+        const pBox=
+            getPlayerHitbox();
+
 
         for(
-            let i=obstacles.length-1;
+            let i=
+                obstacles.length-1;
             i>=0;
             i--
         ){
 
-            const o=obstacles[i];
+            const o=
+                obstacles[i];
 
             o.x-=
                 state.speed*
                 dt;
 
-            if(o.type==='dick'){
+
+            if(
+                o.type==='dick'
+            ){
 
                 o.y=
                     state.groundY-
@@ -1859,36 +2817,55 @@ function loop(now){
 
             }
 
+
             const oBox=
                 getObstacleHitbox(o);
+
+
+            /* ============================================
+               BULLETS
+               ============================================ */
 
             let shot=false;
 
             for(
-                let b=bullets.length-1;
+                let b=
+                    bullets.length-1;
                 b>=0;
                 b--
             ){
 
-                const bu=bullets[b];
+                const bullet=
+                    bullets[b];
+
+                const bulletBox={
+
+                    x:bullet.x,
+
+                    y:bullet.y,
+
+                    w:8,
+
+                    h:4
+
+                };
+
 
                 if(
                     o.type!=='shield' &&
                     o.type!=='ak' &&
                     hit(
-                        {
-                            x:bu.x,
-                            y:bu.y,
-                            w:8,
-                            h:4
-                        },
+                        bulletBox,
                         oBox
                     )
                 ){
 
                     boom(
-                        o.x+o.w/2,
+                        o.x+
+                        o.w/2,
+
                         o.y,
+
                         '#ffe08a'
                     );
 
@@ -1900,9 +2877,11 @@ function loop(now){
                     shot=true;
 
                     break;
+
                 }
 
             }
+
 
             if(shot){
 
@@ -1912,12 +2891,24 @@ function loop(now){
                 );
 
                 continue;
+
             }
 
 
-            if(hit(pBox,oBox)){
+            /* ============================================
+               PLAYER VS OBSTACLE
+               ============================================ */
 
-                if(o.type==='shield'){
+            if(
+                hit(
+                    pBox,
+                    oBox
+                )
+            ){
+
+                if(
+                    o.type==='shield'
+                ){
 
                     shieldT=15;
 
@@ -1933,9 +2924,13 @@ function loop(now){
                     );
 
                     continue;
+
                 }
 
-                if(o.type==='ak'){
+
+                if(
+                    o.type==='ak'
+                ){
 
                     gunT=15;
 
@@ -1951,13 +2946,18 @@ function loop(now){
                     );
 
                     continue;
+
                 }
+
 
                 if(shieldT>0){
 
                     boom(
-                        o.x+o.w/2,
+                        o.x+
+                        o.w/2,
+
                         o.y,
+
                         '#fff'
                     );
 
@@ -1967,42 +2967,57 @@ function loop(now){
                     );
 
                     continue;
+
                 }
+
 
                 gameOver(
                     o.type
                 );
+
             }
 
+
             if(
-                o.x+o.w<-40
+                o.x+
+                o.w<
+                -40
             ){
 
                 obstacles.splice(
                     i,
                     1
                 );
+
             }
 
         }
 
 
-        /* =========================
-           BULLETS
-           ========================= */
+        /* ================================================
+           BULLETS UPDATE
+           ================================================ */
 
         for(
-            let i=bullets.length-1;
+            let i=
+                bullets.length-1;
             i>=0;
             i--
         ){
 
-            const b=bullets[i];
+            const b=
+                bullets[i];
 
-            b.x+=b.vx*dt;
-            b.y+=b.vy*dt;
+            b.x+=
+                b.vx*
+                dt;
+
+            b.y+=
+                b.vy*
+                dt;
 
             b.life-=dt;
+
 
             if(
                 b.life<=0 ||
@@ -2013,6 +3028,7 @@ function loop(now){
                     i,
                     1
                 );
+
             }
 
         }
@@ -2022,27 +3038,38 @@ function loop(now){
         player.y=
             state.groundY-
             player.h;
+
     }
 
 
-    /* =========================
+    /* =====================================================
        PARTICLES
-       ========================= */
+       ===================================================== */
 
     for(
-        let i=bits.length-1;
+        let i=
+            bits.length-1;
         i>=0;
         i--
     ){
 
-        const p=bits[i];
+        const p=
+            bits[i];
 
         p.life-=dt;
 
-        p.x+=p.vx*dt;
-        p.y+=p.vy*dt;
+        p.x+=
+            p.vx*
+            dt;
 
-        p.vy+=400*dt;
+        p.y+=
+            p.vy*
+            dt;
+
+        p.vy+=
+            400*
+            dt;
+
 
         if(p.life<=0){
 
@@ -2050,37 +3077,69 @@ function loop(now){
                 i,
                 1
             );
+
         }
 
     }
 
 
-    /* =========================
-       DRAW
-       ========================= */
+    /* =====================================================
+       DRAW BACKGROUND
+       ===================================================== */
 
     drawBackdrop();
 
-    for(const o of obstacles){
 
-        if(o.type==='poop'){
+    /* =====================================================
+       DRAW OBSTACLES
+       ===================================================== */
+
+    for(
+        const o
+        of obstacles
+    ){
+
+        if(
+            o.type==='poop'
+        ){
+
             drawPoop(o);
 
-        }else if(o.type==='dick'){
-            drawDick(o,state.t);
+        }else if(
+            o.type==='dick'
+        ){
 
-        }else if(o.type==='shield'){
+            drawDick(
+                o,
+                state.t
+            );
+
+        }else if(
+            o.type==='shield'
+        ){
+
             drawShieldIcon(o);
 
         }else{
+
             drawAkIcon(o);
+
         }
 
     }
 
-    for(const b of bullets){
 
-        ctx.fillStyle='#ffe08a';
+    /* =====================================================
+       DRAW BULLETS
+       ===================================================== */
+
+    for(
+        const b
+        of bullets
+    ){
+
+        ctx.fillStyle=
+            '#ffe08a';
 
         ctx.fillRect(
             b.x,
@@ -2088,9 +3147,18 @@ function loop(now){
             10,
             3
         );
+
     }
 
-    for(const p of bits){
+
+    /* =====================================================
+       PARTICLES
+       ===================================================== */
+
+    for(
+        const p
+        of bits
+    ){
 
         ctx.globalAlpha=
             Math.max(
@@ -2098,7 +3166,8 @@ function loop(now){
                 p.life*2
             );
 
-        ctx.fillStyle=p.col;
+        ctx.fillStyle=
+            p.col;
 
         ctx.fillRect(
             p.x,
@@ -2108,52 +3177,60 @@ function loop(now){
         );
 
         ctx.globalAlpha=1;
+
     }
 
+
+    /* =====================================================
+       GUN
+       ===================================================== */
 
     if(
         gunT>0 &&
         state.running
     ){
+
         drawGun();
+
     }
 
 
-    /* ==================================
-       DEBUG — РИСУЕМ ПОСЛЕ ВСЕГО
-       ================================== */
+    /* =====================================================
+       DEBUG
+       ===================================================== */
 
-    drawDebugHitboxes();
-    updateDebugInfo();
+    /*
+        ВАЖНО:
+        debug рисуется ПОСЛЕ всех объектов,
+        поэтому рамки всегда видны.
+    */
+
+    drawDebug();
+
+    updateDebug();
 
 
-    /* =========================
-       HERO DOM
-       ========================= */
+    /* =====================================================
+       DOM HERO
+       ===================================================== */
 
-    heroEl.classList.toggle(
-        'run',
-        state.running &&
-        !state.over &&
-        player.onGround
-    );
+    const heroDoll =
+        heroEl.querySelector(
+            '.doll'
+        );
 
-    heroEl.classList.toggle(
-        'idle',
-        !state.running ||
-        state.over
-    );
 
-    heroEl.classList.toggle(
-        'shielded',
-        shieldT>0
-    );
+    if(heroDoll){
 
-    heroEl.classList.toggle(
-        'armed',
-        gunT>0 &&
-        state.running
-    );
+        heroDoll.classList.toggle(
+            'run',
+            state.running &&
+            !state.over &&
+            player.onGround
+        );
+
+    }
+
 
     heroEl.style.left=
         player.x+'px';
@@ -2162,10 +3239,16 @@ function loop(now){
         player.y+'px';
 
 
-    requestAnimationFrame(loop);
+    requestAnimationFrame(
+        loop
+    );
+
 }
 
-requestAnimationFrame(loop);
+
+requestAnimationFrame(
+    loop
+);
 
 })();
 </script>
