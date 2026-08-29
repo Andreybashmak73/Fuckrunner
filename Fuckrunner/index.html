@@ -22,26 +22,41 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
+
     background:#1a1020;
-    font-family:ui-monospace,Menlo,Consolas,monospace;
+
+    font-family:
+        ui-monospace,
+        Menlo,
+        Consolas,
+        monospace;
+
     user-select:none;
 }
 
 #wrap{
     position:relative;
+
     width:100%;
     height:100%;
+
+    overflow:hidden;
 }
 
 canvas{
     position:absolute;
     inset:0;
-    display:block;
+
     width:100%;
     height:100%;
+
+    display:block;
+
     background:#3a2460;
+
     image-rendering:pixelated;
 }
+
 
 /* =========================================================
    PLAYER
@@ -49,6 +64,7 @@ canvas{
 
 #hero{
     position:absolute;
+
     left:90px;
     top:0;
 
@@ -56,15 +72,13 @@ canvas{
     height:96px;
 
     pointer-events:none;
-    z-index:3;
-}
 
-#hero.skin-labuba{
-    width:72px;
+    z-index:3;
 }
 
 .doll{
     position:absolute;
+
     left:0;
     top:0;
 
@@ -80,53 +94,81 @@ canvas{
 
 .doll .cap{
     position:absolute;
+
     left:8px;
     top:0;
+
     width:38px;
     height:16px;
+
     background:#111;
-    border-radius:8px 8px 2px 2px;
+
+    border-radius:
+        8px 8px 2px 2px;
+
     z-index:3;
 }
 
 .doll .cap:after{
-    content:'';
+    content:"";
+
     position:absolute;
+
     right:-8px;
     bottom:2px;
+
     width:18px;
     height:6px;
+
     background:#111;
-    border-radius:0 6px 6px 0;
+
+    border-radius:
+        0 6px 6px 0;
 }
 
 .doll .tag{
     position:absolute;
+
     left:8px;
     top:3px;
+
     width:38px;
+
     color:#eee;
-    font:800 7px/1 sans-serif;
+
+    font:
+        800 7px/1
+        sans-serif;
+
     text-align:center;
+
     z-index:4;
 }
 
 .doll .head{
     position:absolute;
+
     left:14px;
     top:10px;
+
     width:26px;
     height:26px;
+
     background:#f0b48a;
+
     border-radius:50%;
 }
 
 .doll .eye{
     position:absolute;
+
     top:18px;
+
     width:4px;
     height:4px;
+
     background:#222;
+
     border-radius:50%;
 }
 
@@ -140,22 +182,32 @@ canvas{
 
 .doll .shirt{
     position:absolute;
+
     left:6px;
     top:32px;
+
     width:42px;
     height:38px;
+
     background:#2ea44f;
-    border-radius:8px 8px 4px 4px;
+
+    border-radius:
+        8px 8px 4px 4px;
 }
 
 .doll .collar{
     position:absolute;
+
     left:6px;
     top:32px;
+
     width:42px;
     height:8px;
+
     background:#217a3a;
-    border-radius:8px 8px 0 0;
+
+    border-radius:
+        8px 8px 0 0;
 }
 
 .doll .hair,
@@ -165,11 +217,16 @@ canvas{
 
 .doll .arm{
     position:absolute;
+
     top:36px;
+
     width:10px;
     height:24px;
+
     background:#e0a07a;
+
     border-radius:5px;
+
     transform-origin:50% 0;
 }
 
@@ -183,11 +240,16 @@ canvas{
 
 .doll .leg{
     position:absolute;
+
     bottom:0;
+
     width:10px;
     height:26px;
+
     background:#3a2a22;
+
     border-radius:5px;
+
     transform-origin:50% 0;
 }
 
@@ -200,11 +262,13 @@ canvas{
 }
 
 .doll.run .arm{
-    animation:arms .32s linear infinite;
+    animation:
+        arms .32s linear infinite;
 }
 
 .doll.run .leg{
-    animation:legs .32s linear infinite;
+    animation:
+        legs .32s linear infinite;
 }
 
 .doll.run .arm.l,
@@ -212,9 +276,8 @@ canvas{
     animation-direction:reverse;
 }
 
-/* =========================================================
-   BUMBLE
-   ========================================================= */
+
+/* BUMBLE */
 
 .doll.skin-bumble .head,
 .doll.skin-bumble .arm{
@@ -231,14 +294,23 @@ canvas{
 
 .doll.skin-bumble .chain{
     display:block;
+
     position:absolute;
+
     left:14px;
     top:40px;
+
     width:26px;
     height:14px;
-    border:3px solid #efc44a;
+
+    border:
+        3px solid #efc44a;
+
     border-top:0;
-    border-radius:0 0 14px 14px;
+
+    border-radius:
+        0 0 14px 14px;
+
     z-index:5;
 }
 
@@ -251,12 +323,12 @@ canvas{
     color:#111;
 }
 
-/* =========================================================
-   LABUBA
-   ========================================================= */
+
+/* LABUBA */
 
 .doll.skin-labuba .head{
     left:22px;
+
     width:30px;
     height:28px;
 }
@@ -271,15 +343,20 @@ canvas{
 
 .doll.skin-labuba .shirt{
     left:4px;
+
     width:64px;
     height:42px;
+
     background:#c45a2a;
+
     border-radius:16px;
 }
 
 .doll.skin-labuba .collar{
     left:4px;
+
     width:64px;
+
     background:#8a3a18;
 }
 
@@ -288,19 +365,25 @@ canvas{
     left:16px;
 }
 
-/* =========================================================
-   GIRL
-   ========================================================= */
+
+/* GIRL */
 
 .doll.skin-girl .hair{
     display:block;
+
     position:absolute;
+
     left:10px;
     top:6px;
+
     width:34px;
     height:28px;
+
     background:#f2d36b;
-    border-radius:16px 16px 4px 4px;
+
+    border-radius:
+        16px 16px 4px 4px;
+
     z-index:1;
 }
 
@@ -312,7 +395,10 @@ canvas{
 
 .doll.skin-girl .shirt{
     background:#ff7ab0;
-    border-radius:10px 10px 18px 18px;
+
+    border-radius:
+        10px 10px 18px 18px;
+
     height:42px;
 }
 
@@ -321,12 +407,14 @@ canvas{
     background:#f7c9a8;
 }
 
+
 /* =========================================================
    HUD
    ========================================================= */
 
 #hud{
     position:absolute;
+
     top:10px;
     left:10px;
     right:10px;
@@ -335,39 +423,72 @@ canvas{
     justify-content:space-between;
 
     color:#fff;
-    font-weight:800;
+
     font-size:15px;
-    text-shadow:0 2px 0 #000;
+    font-weight:800;
+
+    text-shadow:
+        0 2px 0 #000;
 
     pointer-events:none;
+
     z-index:10;
 }
 
 #buff{
-    color:#9fef6a;
-    font-size:12px;
     margin-top:4px;
-    min-height:14px;
+
+    color:#9fef6a;
+
+    font-size:12px;
+}
+
+#difficultyHud{
+    position:absolute;
+
+    top:42px;
+    left:10px;
+
+    color:#ffe08a;
+
+    font-size:10px;
+    font-weight:800;
+
+    text-shadow:
+        0 2px 0 #000;
+
+    pointer-events:none;
+
+    z-index:10;
 }
 
 #cityTag{
     position:absolute;
+
     top:42px;
     left:50%;
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
     color:#ffe08a;
-    font-weight:800;
+
     font-size:13px;
-    text-shadow:0 2px 0 #000;
+    font-weight:800;
+
+    text-shadow:
+        0 2px 0 #000;
 
     pointer-events:none;
+
     z-index:10;
 
     opacity:0;
-    transition:opacity .3s;
+
+    transition:
+        opacity .3s;
 }
+
 
 /* =========================================================
    OVERLAY
@@ -375,16 +496,21 @@ canvas{
 
 #overlay{
     position:absolute;
+
     inset:0;
 
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
     justify-content:center;
 
-    background:rgba(8,4,14,.86);
+    background:
+        rgba(8,4,14,.88);
 
     color:#fff;
+
     text-align:center;
 
     padding:16px;
@@ -393,44 +519,76 @@ canvas{
 }
 
 #overlay h1{
-    font-size:26px;
     margin-bottom:8px;
+
     color:#ff4d6d;
-    text-shadow:3px 3px 0 #3a0010;
+
+    font-size:26px;
+
+    text-shadow:
+        3px 3px 0 #3a0010;
 }
 
 #overlay p{
-    opacity:.92;
-    margin:6px 0 16px;
-    max-width:340px;
+    max-width:360px;
+
+    margin:
+        6px 0 16px;
+
     line-height:1.35;
+
+    opacity:.92;
 }
 
 button.main{
     appearance:none;
-    border:3px solid #fff;
+
+    border:
+        3px solid #fff;
+
     background:#ff4d6d;
+
     color:#fff;
-    font-weight:800;
-    font-size:17px;
+
     font-family:inherit;
-    padding:12px 24px;
+
+    font-size:17px;
+    font-weight:800;
+
+    padding:
+        12px 24px;
+
     cursor:pointer;
 }
 
 button.main:disabled{
     opacity:.4;
+
+    cursor:default;
 }
 
 .hint{
-    font-size:12px;
-    opacity:.7;
     margin-top:12px;
+
+    font-size:12px;
+
+    opacity:.7;
 }
+
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
 
 #screen-pick{
     display:none;
-    width:min(560px,96vw);
+
+    width:
+        min(560px,96vw);
+
+    max-height:94vh;
+
+    overflow:auto;
 }
 
 #screen-pick.show{
@@ -441,46 +599,153 @@ button.main:disabled{
     display:none;
 }
 
+
+/* =========================================================
+   FIGHTERS
+   ========================================================= */
+
 .grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap:10px;
-    margin:12px 0 16px;
+
+    margin:
+        12px 0 14px;
 }
 
 .card{
+    min-height:140px;
+
+    padding:
+        8px 4px 6px;
+
     background:#241428;
-    border:3px solid #5a3a50;
+
+    border:
+        3px solid #5a3a50;
+
     color:#fff;
-    cursor:pointer;
-    padding:8px 4px 6px;
+
     font-family:inherit;
-    min-height:150px;
+
+    cursor:pointer;
 }
 
 .card .nm{
+    margin-bottom:4px;
+
+    color:#ffe08a;
+
     font-size:12px;
     font-weight:800;
-    margin-bottom:4px;
-    color:#ffe08a;
 }
 
 .card.sel{
     border-color:#ff4d6d;
-    box-shadow:0 0 0 3px rgba(255,77,109,.35);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,77,109,.35);
 }
 
 .stage{
     position:relative;
-    height:110px;
+
+    height:105px;
+
     overflow:hidden;
 }
+
+
+/* =========================================================
+   DIFFICULTY
+   ========================================================= */
+
+.difficulty-title{
+    margin:
+        2px 0 8px;
+
+    color:#ffe08a;
+
+    font-size:15px;
+    font-weight:900;
+
+    text-shadow:
+        2px 2px 0 #000;
+}
+
+.difficulty-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr;
+
+    gap:7px;
+
+    margin-bottom:12px;
+}
+
+.difficulty-card{
+    appearance:none;
+
+    width:100%;
+
+    padding:
+        9px 11px;
+
+    background:#241428;
+
+    border:
+        3px solid #5a3a50;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    text-align:left;
+
+    cursor:pointer;
+}
+
+.difficulty-card.selected{
+    border-color:#ff4d6d;
+
+    background:#32172d;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,77,109,.25);
+}
+
+.difficulty-name{
+    color:#ffe08a;
+
+    font-size:13px;
+    font-weight:900;
+
+    margin-bottom:3px;
+}
+
+.difficulty-desc{
+    color:#fff;
+
+    font-size:10px;
+
+    line-height:1.3;
+
+    opacity:.72;
+}
+
 
 /* =========================================================
    ANIMATION
    ========================================================= */
 
 @keyframes legs{
+
     0%{
         transform:rotate(28deg);
     }
@@ -492,9 +757,11 @@ button.main:disabled{
     100%{
         transform:rotate(28deg);
     }
+
 }
 
 @keyframes arms{
+
     0%{
         transform:rotate(-24deg);
     }
@@ -506,6 +773,49 @@ button.main:disabled{
     100%{
         transform:rotate(-24deg);
     }
+
+}
+
+@media(max-height:700px){
+
+    #overlay{
+        padding:8px;
+    }
+
+    #overlay h1{
+        font-size:21px;
+    }
+
+    .grid{
+        gap:6px;
+
+        margin:
+            7px 0 8px;
+    }
+
+    .card{
+        min-height:105px;
+    }
+
+    .stage{
+        height:78px;
+    }
+
+    .difficulty-grid{
+        gap:5px;
+
+        margin-bottom:8px;
+    }
+
+    .difficulty-card{
+        padding:
+            6px 9px;
+    }
+
+    .difficulty-desc{
+        display:none;
+    }
+
 }
 </style>
 </head>
@@ -514,92 +824,189 @@ button.main:disabled{
 
 <div id="wrap">
 
-    <canvas id="c"></canvas>
+<canvas id="c"></canvas>
 
-    <!-- PLAYER -->
-    <div id="hero" class="skin-vega">
 
-        <div class="doll skin-vega">
+<!-- PLAYER -->
 
-            <div class="hair"></div>
-            <div class="cap"></div>
-            <div class="tag">ВЕГА</div>
+<div id="hero">
 
-            <div class="head"></div>
+    <div class="doll skin-vega">
 
-            <div class="eye l"></div>
-            <div class="eye r"></div>
+        <div class="hair"></div>
 
-            <div class="arm l"></div>
-            <div class="arm r"></div>
+        <div class="cap"></div>
 
-            <div class="shirt"></div>
-            <div class="collar"></div>
-            <div class="chain"></div>
+        <div class="tag">ВЕГА</div>
 
-            <div class="leg l"></div>
-            <div class="leg r"></div>
+        <div class="head"></div>
 
-        </div>
+        <div class="eye l"></div>
+        <div class="eye r"></div>
 
-    </div>
+        <div class="arm l"></div>
+        <div class="arm r"></div>
 
-    <!-- HUD -->
-    <div id="hud">
+        <div class="shirt"></div>
 
-        <div>
-            <div id="score">0 м</div>
-            <div id="buff"></div>
-        </div>
+        <div class="collar"></div>
 
-        <div id="best">
-            лучший счет 0
-        </div>
+        <div class="chain"></div>
 
-    </div>
-
-    <div id="cityTag"></div>
-
-    <!-- MENU -->
-    <div id="overlay">
-
-        <div id="screen-title">
-
-            <h1>FUCKRUNNER</h1>
-
-            <p>
-                Обычный работяга живёт свою обычную жизнь.
-            </p>
-
-            <button class="main" id="pickBtn">
-                ВЫБЕРИ БОЙЦА
-            </button>
-
-            <div class="hint">
-                тап — прыжок, второй тап в воздухе — прыжок повыше
-            </div>
-
-        </div>
-
-        <div id="screen-pick">
-
-            <h1>ВЫБЕРИ БОЙЦА</h1>
-
-            <div class="grid" id="grid"></div>
-
-            <button class="main" id="start" disabled>
-                ПОГНАЛИ
-            </button>
-
-        </div>
+        <div class="leg l"></div>
+        <div class="leg r"></div>
 
     </div>
 
 </div>
 
+
+<!-- HUD -->
+
+<div id="hud">
+
+    <div>
+
+        <div id="score">
+            0 м
+        </div>
+
+        <div id="buff"></div>
+
+    </div>
+
+    <div id="best">
+        лучший счет 0
+    </div>
+
+</div>
+
+<div id="difficultyHud"></div>
+
+<div id="cityTag"></div>
+
+
+<!-- MENU -->
+
+<div id="overlay">
+
+    <div id="screen-title">
+
+        <h1>FUCKRUNNER</h1>
+
+        <p>
+            Обычный работяга живёт свою
+            обычную жизнь.
+        </p>
+
+        <button
+            class="main"
+            id="pickBtn"
+        >
+            ВЫБЕРИ БОЙЦА
+        </button>
+
+        <div class="hint">
+            тап — прыжок<br>
+            второй тап в воздухе —
+            прыжок повыше
+        </div>
+
+    </div>
+
+
+    <div id="screen-pick">
+
+        <h1>ВЫБЕРИ БОЙЦА</h1>
+
+        <div
+            class="grid"
+            id="grid"
+        ></div>
+
+
+        <div class="difficulty-title">
+            ВЫБОР СЛОЖНОСТИ
+        </div>
+
+        <div
+            class="difficulty-grid"
+            id="difficultyGrid"
+        >
+
+            <button
+                class="difficulty-card selected"
+                data-difficulty="easy"
+            >
+
+                <div class="difficulty-name">
+                    Сосунок ебаный
+                </div>
+
+                <div class="difficulty-desc">
+                    Медленно.
+                    Препятствий мало.
+                    Для спокойного прохождения.
+                </div>
+
+            </button>
+
+
+            <button
+                class="difficulty-card"
+                data-difficulty="normal"
+            >
+
+                <div class="difficulty-name">
+                    Обычный работяга с завода
+                </div>
+
+                <div class="difficulty-desc">
+                    Нормальная скорость.
+                    Нормальное количество говна.
+                </div>
+
+            </button>
+
+
+            <button
+                class="difficulty-card"
+                data-difficulty="hard"
+            >
+
+                <div class="difficulty-name">
+                    Киборг убийца
+                </div>
+
+                <div class="difficulty-desc">
+                    Быстро.
+                    Препятствий много.
+                    Ошибся — умер.
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <button
+            class="main"
+            id="start"
+            disabled
+        >
+            ПОГНАЛИ
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
 (()=>{
-'use strict';
+
+"use strict";
+
 
 /* =========================================================
    TELEGRAM
@@ -615,8 +1022,10 @@ if(tg){
     tg.expand();
 
     try{
+
         tg.setHeaderColor('#2a1630');
         tg.setBackgroundColor('#1a1020');
+
     }catch(e){}
 
 }
@@ -635,13 +1044,16 @@ const ctx =
 const overlay =
     document.getElementById('overlay');
 
-const titleScr =
+const titleScreen =
     document.getElementById('screen-title');
 
-const pickScr =
+const pickScreen =
     document.getElementById('screen-pick');
 
-const startBtn =
+const pickButton =
+    document.getElementById('pickBtn');
+
+const startButton =
     document.getElementById('start');
 
 const scoreEl =
@@ -653,14 +1065,104 @@ const bestEl =
 const buffEl =
     document.getElementById('buff');
 
+const difficultyHud =
+    document.getElementById('difficultyHud');
+
 const cityTag =
     document.getElementById('cityTag');
 
 const heroEl =
     document.getElementById('hero');
 
-const grid =
+const heroDoll =
+    heroEl.querySelector('.doll');
+
+const fighterGrid =
     document.getElementById('grid');
+
+const difficultyGrid =
+    document.getElementById('difficultyGrid');
+
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
+
+const CONFIG={
+
+    playerX:90,
+
+    playerWidth:54,
+    playerHeight:96,
+
+    labubaWidth:72,
+
+    gravity:2400,
+
+    firstJump:-820,
+    secondJump:-1160,
+
+    distanceMultiplier:.12,
+
+    powerupDistance:3000,
+
+    shieldDuration:10,
+
+    gunDuration:15,
+
+    gunFireRate:.09,
+
+    bulletSpeed:620,
+
+    maxSpeed:900,
+
+    difficulties:{
+
+        easy:{
+
+            name:'Сосунок ебаный',
+
+            startSpeed:240,
+
+            acceleration:4.5,
+
+            spawnMin:1.35,
+
+            spawnMax:1.95
+
+        },
+
+        normal:{
+
+            name:'Обычный работяга с завода',
+
+            startSpeed:280,
+
+            acceleration:7,
+
+            spawnMin:.95,
+
+            spawnMax:1.55
+
+        },
+
+        hard:{
+
+            name:'Киборг убийца',
+
+            startSpeed:330,
+
+            acceleration:10,
+
+            spawnMin:.65,
+
+            spawnMax:1.05
+
+        }
+
+    }
+
+};
 
 
 /* =========================================================
@@ -674,7 +1176,7 @@ let dpr=1;
 function resize(){
 
     dpr=Math.min(
-        window.devicePixelRatio || 1,
+        window.devicePixelRatio||1,
         2
     );
 
@@ -703,6 +1205,7 @@ function resize(){
     );
 
     ctx.imageSmoothingEnabled=false;
+
 }
 
 window.addEventListener(
@@ -718,45 +1221,55 @@ resize();
    ========================================================= */
 
 const CITIES=[
+
     {
         name:'ЕКАТЕРИНБУРГ',
         src:'../bg_far.jpg'
     },
+
     {
         name:'ТОЛЬЯТТИ',
         src:'../bg_tlt.jpg'
     },
+
     {
         name:'УЛЬЯНОВСК',
         src:'../bg_uln.jpg'
     },
+
     {
         name:'КАЗАНЬ',
         src:'../bg_kzn.jpg'
     },
+
     {
         name:'ЙОШКАР-ОЛА',
         src:'../bg_yosh.jpg'
     },
+
     {
         name:'САРАТОВ',
         src:'../bg_sar.jpg'
     },
+
     {
         name:'САМАРА',
         src:'../bg_sam.jpg'
     }
+
 ];
 
-const cityImgs=CITIES.map(city=>{
+const cityImages=
+    CITIES.map(city=>{
 
-    const img=new Image();
+        const img=
+            new Image();
 
-    img.src=city.src;
+        img.src=city.src;
 
-    return img;
+        return img;
 
-});
+    });
 
 
 /* =========================================================
@@ -764,140 +1277,116 @@ const cityImgs=CITIES.map(city=>{
    ========================================================= */
 
 const FIGHTERS=[
+
     {
         id:'vega',
         name:'Вегамэн',
         tag:'ВЕГА'
     },
+
     {
         id:'bumble',
         name:'Бамбл Бизи',
         tag:'BEE'
     },
+
     {
         id:'labuba',
         name:'Лабуба',
         tag:'ЛАБ'
     },
+
     {
         id:'girl',
         name:'Вагина реалистик',
         tag:''
     }
+
 ];
 
-FIGHTERS.forEach(f=>{
 
-    const button=
-        document.createElement('button');
+FIGHTERS.forEach(
+    fighter=>{
 
-    button.className='card';
-    button.dataset.id=f.id;
+        const button=
+            document.createElement('button');
 
-    button.innerHTML=`
+        button.className='card';
 
-        <div class="nm">
-            ${f.name}
-        </div>
+        button.dataset.id=
+            fighter.id;
 
-        <div class="stage">
+        button.innerHTML=`
 
-            <div class="doll skin-${f.id}">
-
-                <div class="hair"></div>
-                <div class="cap"></div>
-
-                <div class="tag">
-                    ${f.tag}
-                </div>
-
-                <div class="head"></div>
-
-                <div class="eye l"></div>
-                <div class="eye r"></div>
-
-                <div class="arm l"></div>
-                <div class="arm r"></div>
-
-                <div class="shirt"></div>
-                <div class="collar"></div>
-                <div class="chain"></div>
-
-                <div class="leg l"></div>
-                <div class="leg r"></div>
-
+            <div class="nm">
+                ${fighter.name}
             </div>
 
-        </div>
-    `;
+            <div class="stage">
 
-    grid.appendChild(button);
+                <div
+                    class="doll skin-${fighter.id}"
+                >
 
-});
+                    <div class="hair"></div>
 
+                    <div class="cap"></div>
 
-/* =========================================================
-   GAME CONFIG
-   ========================================================= */
+                    <div class="tag">
+                        ${fighter.tag}
+                    </div>
 
-const CONFIG={
+                    <div class="head"></div>
 
-    playerX:90,
+                    <div class="eye l"></div>
+                    <div class="eye r"></div>
 
-    playerWidth:54,
-    playerHeight:96,
+                    <div class="arm l"></div>
+                    <div class="arm r"></div>
 
-    labubaWidth:72,
+                    <div class="shirt"></div>
 
-    gravity:2400,
+                    <div class="collar"></div>
 
-    jumpFirst:-820,
-    jumpSecond:-1160,
+                    <div class="chain"></div>
 
-    startSpeed:280,
-    maxSpeed:900,
-    acceleration:8,
+                    <div class="leg l"></div>
+                    <div class="leg r"></div>
 
-    distanceMultiplier:.12,
+                </div>
 
-    powerupDistance:3000,
+            </div>
+        `;
 
-    shieldDuration:10,
+        fighterGrid.appendChild(
+            button
+        );
 
-    gunDuration:15,
-
-    gunFireRate:.09,
-
-    bulletSpeed:620,
-
-    obstacleMinSpawn:.65,
-    obstacleMaxSpawn:1.45
-
-};
+    }
+);
 
 
 /* =========================================================
-   STATE
+   GAME STATE
    ========================================================= */
 
 const state={
 
     running:false,
+
     over:false,
 
     t:0,
 
-    speed:CONFIG.startSpeed,
-    dist:0,
+    speed:280,
+
+    distance:0,
 
     groundY:0,
 
     city:-1,
 
-    nextPowerDistance:
-        CONFIG.powerupDistance,
-
-    nextPowerType:0
+    difficulty:'easy'
 
 };
 
@@ -930,138 +1419,88 @@ const player={
    ========================================================= */
 
 const obstacles=[];
-const particles=[];
 const bullets=[];
+const particles=[];
 
 
 /* =========================================================
    POWERUPS
    ========================================================= */
 
-let shieldT=0;
-let gunT=0;
+let shieldTimer=0;
+let gunTimer=0;
 
-let fireAcc=0;
+let fireAccumulator=0;
 
-
-/*
-    Усиления идут строго по дистанции.
-
-    3000 м -> ЩИТ
-    6000 м -> АК
-    9000 м -> ЩИТ
-    12000 м -> АК
-    и т.д.
-
-    Благодаря этому оба предмета
-    гарантированно появляются.
-*/
-
-function spawnPowerup(){
-
-    const type=
-        state.nextPowerType===0
-        ?'shield'
-        :'ak';
-
-    state.nextPowerType=
-        state.nextPowerType===0
-        ?1
-        :0;
-
-    obstacles.push({
-
-        type,
-
-        x:W+80,
-
-        y:0,
-
-        w:
-            type==='shield'
-            ?44
-            :52,
-
-        h:
-            type==='shield'
-            ?44
-            :28,
-
-        phase:
-            Math.random()*
-            Math.PI*2
-
-    });
-
-}
+let nextPowerDistance=
+    CONFIG.powerupDistance;
 
 
 /* =========================================================
-   SKIN
+   SELECTION
    ========================================================= */
 
-let skin='vega';
+let selectedSkin='vega';
+
+let selectedDifficulty='easy';
+
+
+/* =========================================================
+   BEST
+   ========================================================= */
+
+const BEST_KEY=
+    'fuckrunner_best';
+
+let best=parseInt(
+    localStorage.getItem(BEST_KEY)||'0',
+    10
+);
+
+bestEl.textContent=
+    'лучший счет '+best;
+
+
+/* =========================================================
+   APPLY SKIN
+   ========================================================= */
 
 function applySkin(){
 
     heroEl.className=
-        'skin-'+skin;
+        '';
 
-    const doll=
-        heroEl.querySelector('.doll');
+    heroEl.classList.add(
+        'skin-'+selectedSkin
+    );
 
-    if(doll){
+    heroDoll.className=
+        'doll skin-'+
+        selectedSkin;
 
-        doll.className=
-            'doll skin-'+skin;
+    const fighter=
+        FIGHTERS.find(
+            f=>f.id===selectedSkin
+        );
 
-    }
-
-    const tag=
-        heroEl.querySelector('.tag');
-
-    if(tag){
-
-        tag.textContent=
-            skin==='vega'
-            ?'ВЕГА'
-            :skin==='bumble'
-            ?'BEE'
-            :skin==='labuba'
-            ?'ЛАБ'
-            :'';
-
-    }
+    heroDoll
+        .querySelector('.tag')
+        .textContent=
+        fighter?.tag||'';
 
     player.w=
-        skin==='labuba'
+        selectedSkin==='labuba'
         ?CONFIG.labubaWidth
         :CONFIG.playerWidth;
-
-    player.h=
-        CONFIG.playerHeight;
 
 }
 
 
 /* =========================================================
-   MENU
+   FIGHTER SELECTION
    ========================================================= */
 
-document
-.getElementById('pickBtn')
-.addEventListener(
-    'click',
-    ()=>{
-
-        titleScr.classList.add('hide');
-        pickScr.classList.add('show');
-
-    }
-);
-
-
-grid
+fighterGrid
 .querySelectorAll('.card')
 .forEach(card=>{
 
@@ -1069,36 +1508,27 @@ grid
         'click',
         ()=>{
 
-            grid
+            fighterGrid
             .querySelectorAll('.card')
             .forEach(c=>{
-
                 c.classList.remove('sel');
 
-                const doll=
-                    c.querySelector('.doll');
-
-                if(doll){
-                    doll.classList.remove('run');
-                }
-
+                c.querySelector('.doll')
+                    ?.classList.remove('run');
             });
 
             card.classList.add('sel');
 
-            const doll=
-                card.querySelector('.doll');
+            card
+                .querySelector('.doll')
+                ?.classList.add('run');
 
-            if(doll){
-                doll.classList.add('run');
-            }
-
-            skin=
+            selectedSkin=
                 card.dataset.id;
 
-            startBtn.disabled=false;
-
             applySkin();
+
+            startButton.disabled=false;
 
         }
     );
@@ -1107,50 +1537,77 @@ grid
 
 
 /* =========================================================
-   BEST SCORE
+   DIFFICULTY SELECTION
    ========================================================= */
 
-const BEST_KEY=
-    'fuckrunner_ekb_best';
+difficultyGrid
+.querySelectorAll('.difficulty-card')
+.forEach(card=>{
 
-let best=
-    parseInt(
-        localStorage.getItem(BEST_KEY) || '0',
-        10
+    card.addEventListener(
+        'click',
+        ()=>{
+
+            difficultyGrid
+            .querySelectorAll('.difficulty-card')
+            .forEach(c=>{
+                c.classList.remove(
+                    'selected'
+                );
+            });
+
+            card.classList.add(
+                'selected'
+            );
+
+            selectedDifficulty=
+                card.dataset.difficulty;
+
+        }
     );
 
-function renderBest(){
+});
 
-    bestEl.textContent=
-        'лучший счет '+best;
 
-}
+/* =========================================================
+   MENU
+   ========================================================= */
 
-renderBest();
+pickButton.onclick=()=>{
+
+    titleScreen.classList.add(
+        'hide'
+    );
+
+    pickScreen.classList.add(
+        'show'
+    );
+
+};
 
 
 /* =========================================================
    CITY
    ========================================================= */
 
-function toastCity(i){
+function showCity(index){
 
-    if(i<0 || i===state.city){
+    if(index===state.city){
         return;
     }
 
-    state.city=i;
+    state.city=index;
 
     cityTag.textContent=
-        CITIES[i].name;
+        CITIES[index].name;
 
     cityTag.style.opacity='1';
 
     clearTimeout(
-        toastCity.timer
+        showCity.timer
     );
 
-    toastCity.timer=
+    showCity.timer=
         setTimeout(
             ()=>{
                 cityTag.style.opacity='0';
@@ -1165,7 +1622,12 @@ function toastCity(i){
    RESET
    ========================================================= */
 
-function reset(){
+function resetGame(){
+
+    const difficulty=
+        CONFIG.difficulties[
+            selectedDifficulty
+        ];
 
     state.running=true;
     state.over=false;
@@ -1173,42 +1635,68 @@ function reset(){
     state.t=0;
 
     state.speed=
-        CONFIG.startSpeed;
+        difficulty.startSpeed;
 
-    state.dist=0;
+    state.distance=0;
 
     state.city=-1;
 
-    state.nextPowerDistance=
-        CONFIG.powerupDistance;
-
-    state.nextPowerType=0;
+    state.difficulty=
+        selectedDifficulty;
 
     obstacles.length=0;
-    particles.length=0;
     bullets.length=0;
+    particles.length=0;
 
-    spawnTimer=.7;
+    shieldTimer=0;
+    gunTimer=0;
 
-    shieldT=0;
-    gunT=0;
+    fireAccumulator=0;
 
-    fireAcc=0;
+    nextPowerDistance=
+        CONFIG.powerupDistance;
+
+    player.x=
+        CONFIG.playerX;
 
     player.vy=0;
+
     player.onGround=true;
+
     player.jumpsUsed=0;
 
     applySkin();
 
     scoreEl.textContent='0 м';
+
     buffEl.textContent='';
+
+    difficultyHud.textContent=
+        difficulty.name;
 
     overlay.style.display='none';
 
-    toastCity(0);
+    showCity(0);
 
 }
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+startButton.onclick=e=>{
+
+    e.stopPropagation();
+
+    resetGame();
+
+    if(!musicStarted){
+        musicStarted=true;
+        playRandomTrack();
+    }
+
+};
 
 
 /* =========================================================
@@ -1219,16 +1707,19 @@ function jump(){
 
     if(
         !state.running ||
-        state.over ||
-        player.jumpsUsed>=2
+        state.over
     ){
+        return;
+    }
+
+    if(player.jumpsUsed>=2){
         return;
     }
 
     player.vy=
         player.jumpsUsed===0
-        ?CONFIG.jumpFirst
-        :CONFIG.jumpSecond;
+        ?CONFIG.firstJump
+        :CONFIG.secondJump;
 
     player.onGround=false;
 
@@ -1243,18 +1734,16 @@ function jump(){
 
 window.addEventListener(
     'keydown',
-    e=>{
+    event=>{
 
         if(
-            e.code==='Space' ||
-            e.code==='ArrowUp'
+            event.code==='Space' ||
+            event.code==='ArrowUp'
         ){
 
-            e.preventDefault();
+            event.preventDefault();
 
-            if(state.running){
-                jump();
-            }
+            jump();
 
         }
 
@@ -1264,15 +1753,15 @@ window.addEventListener(
 
 window.addEventListener(
     'pointerdown',
-    e=>{
+    event=>{
 
-        if(e.target.closest('#overlay')){
+        if(
+            event.target.closest('#overlay')
+        ){
             return;
         }
 
-        if(state.running){
-            jump();
-        }
+        jump();
 
     }
 );
@@ -1283,29 +1772,27 @@ window.addEventListener(
    ========================================================= */
 
 const TRACKS=[
+
     'ushet.mp3',
     '../bogi.mp3',
     '../gorod.mp3',
     '../Chto.mp3',
     '../Police.mp3',
     '../Big.mp3'
+
 ];
 
+let musicStarted=false;
 let lastTrack=-1;
-let musicOn=false;
-let skipGuard=0;
 
-const music=new Audio();
+const music=
+    new Audio();
 
 music.volume=.55;
 
-function playRandom(){
+function playRandomTrack(){
 
-    if(!TRACKS.length){
-        return;
-    }
-
-    let i=
+    let index=
         Math.floor(
             Math.random()*
             TRACKS.length
@@ -1313,78 +1800,41 @@ function playRandom(){
 
     if(
         TRACKS.length>1 &&
-        i===lastTrack
+        index===lastTrack
     ){
 
-        i=
-            (i+1)%
+        index=
+            (index+1)%
             TRACKS.length;
 
     }
 
-    lastTrack=i;
+    lastTrack=index;
 
-    music.src=TRACKS[i];
+    music.src=
+        TRACKS[index];
 
-    music
-    .play()
-    .then(()=>{
-        skipGuard=0;
-    })
-    .catch(()=>{});
+    music.play()
+        .catch(()=>{});
 
 }
 
 music.addEventListener(
     'ended',
-    playRandom
-);
-
-music.addEventListener(
-    'error',
-    ()=>{
-
-        if(skipGuard++>8){
-            return;
-        }
-
-        playRandom();
-
-    }
+    playRandomTrack
 );
 
 
 /* =========================================================
-   START
+   SPAWN NORMAL OBSTACLE
    ========================================================= */
-
-startBtn.addEventListener(
-    'click',
-    e=>{
-
-        e.stopPropagation();
-
-        reset();
-
-        if(!musicOn){
-
-            musicOn=true;
-
-            playRandom();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   OBSTACLE SPAWN
-   ========================================================= */
-
-let spawnTimer=.7;
 
 function spawnObstacle(){
+
+    /*
+        Примерно 55% наземных
+        препятствий и 45% воздушных.
+    */
 
     if(Math.random()<.55){
 
@@ -1392,7 +1842,7 @@ function spawnObstacle(){
 
             type:'poop',
 
-            x:W+60,
+            x:W+50,
 
             y:0,
 
@@ -1408,13 +1858,18 @@ function spawnObstacle(){
 
             type:'dick',
 
-            x:W+60,
+            x:W+50,
 
             y:0,
 
+            /*
+                Было 70-160.
+                Теперь значительно выше.
+            */
+
             flyY:
-                70+
-                Math.random()*90,
+                125+
+                Math.random()*95,
 
             w:52,
 
@@ -1432,40 +1887,136 @@ function spawnObstacle(){
 
 
 /* =========================================================
+   SPAWN POWERUP
+   ========================================================= */
+
+function spawnPowerup(){
+
+    /*
+        Power-up чередуются:
+
+        3000 м  — щит
+        6000 м  — АК
+        9000 м  — щит
+        12000 м — АК
+
+        Это делает появление
+        предсказуемым и честным.
+    */
+
+    const isShield=
+        Math.floor(
+            nextPowerDistance/
+            CONFIG.powerupDistance
+        )%2===1;
+
+    obstacles.push({
+
+        type:
+            isShield
+            ?'shield'
+            :'ak',
+
+        x:W+60,
+
+        y:0,
+
+        w:
+            isShield
+            ?42
+            :48,
+
+        h:
+            isShield
+            ?42
+            :26
+
+    });
+
+}
+
+
+/* =========================================================
    HITBOX
    ========================================================= */
 
 function getPlayerHitbox(){
 
+    /*
+        Хитбокс немного уже визуального
+        персонажа, чтобы управление
+        оставалось честным.
+    */
+
     return {
 
-        x:player.x,
+        x:
+            player.x+5,
 
-        y:player.y,
+        y:
+            player.y+5,
 
-        w:player.w,
+        w:
+            player.w-10,
 
-        h:player.h
+        h:
+            player.h-8
 
     };
 
 }
 
+
 function getObstacleHitbox(o){
+
+    /*
+        Power-up имеет полный хитбокс.
+
+        У препятствий небольшой
+        запас по краям убран.
+    */
+
+    if(
+        o.type==='poop'
+    ){
+
+        return {
+
+            x:o.x+5,
+            y:o.y+4,
+            w:o.w-10,
+            h:o.h-4
+
+        };
+
+    }
+
+    if(
+        o.type==='dick'
+    ){
+
+        return {
+
+            x:o.x+4,
+            y:o.y+3,
+            w:o.w-8,
+            h:o.h-6
+
+        };
+
+    }
 
     return {
 
         x:o.x,
-
         y:o.y,
-
         w:o.w,
-
         h:o.h
 
     };
 
 }
+
 
 function hit(a,b){
 
@@ -1489,65 +2040,18 @@ function hit(a,b){
 
 
 /* =========================================================
-   GAME OVER
-   ========================================================= */
-
-function gameOver(kind){
-
-    state.over=true;
-    state.running=false;
-
-    const score=
-        Math.floor(state.dist);
-
-    if(score>best){
-
-        best=score;
-
-        localStorage.setItem(
-            BEST_KEY,
-            String(best)
-        );
-
-        renderBest();
-
-    }
-
-    titleScr.classList.remove('hide');
-    pickScr.classList.remove('show');
-
-    overlay
-    .querySelector(
-        '#screen-title h1'
-    )
-    .textContent=
-        kind==='dick'
-        ?'Есть пробитие'
-        :'Это конец, ты в говне';
-
-    overlay
-    .querySelector(
-        '#screen-title p'
-    )
-    .textContent=
-        'Обычная жизнь оборвалась на '+
-        score+
-        ' м.';
-
-    overlay.style.display='flex';
-
-}
-
-
-/* =========================================================
    PARTICLES
    ========================================================= */
 
-function boom(x,y,col,count=12){
+function explode(
+    x,
+    y,
+    color
+){
 
     for(
         let i=0;
-        i<count;
+        i<12;
         i++
     ){
 
@@ -1561,16 +2065,12 @@ function boom(x,y,col,count=12){
                 260,
 
             vy:
-                -80-
+                -70-
                 Math.random()*190,
 
-            life:
-                .35+
-                Math.random()*.25,
+            life:.45,
 
-            maxLife:.6,
-
-            col
+            color
 
         });
 
@@ -1583,22 +2083,25 @@ function boom(x,y,col,count=12){
    BACKGROUND
    ========================================================= */
 
-function cityWidth(img,h){
+function cityWidth(
+    image,
+    height
+){
 
     if(
-        img &&
-        img.complete &&
-        img.naturalWidth
+        image &&
+        image.complete &&
+        image.naturalWidth
     ){
 
         return Math.max(
 
             W*.92,
 
-            h*
+            height*
             (
-                img.naturalWidth/
-                img.naturalHeight
+                image.naturalWidth/
+                image.naturalHeight
             )
 
         );
@@ -1610,14 +2113,18 @@ function cityWidth(img,h){
 }
 
 
-function drawCities(gy){
+function drawCities(groundY){
 
-    const h=gy+6;
+    const height=
+        groundY+6;
 
     const widths=
-        cityImgs.map(
-            im=>
-                cityWidth(im,h)
+        cityImages.map(
+            image=>
+                cityWidth(
+                    image,
+                    height
+                )
         );
 
     const total=
@@ -1627,11 +2134,14 @@ function drawCities(gy){
         )||W;
 
     const scroll=
-        (state.dist*2.2)%
-        total;
+        (
+            state.distance*2.2
+        )%total;
 
     let x=-scroll;
-    let seen=-1;
+
+    let visibleCity=
+        state.city;
 
     for(
         let n=0;
@@ -1639,30 +2149,32 @@ function drawCities(gy){
         n++
     ){
 
-        const i=
+        const index=
             n%CITIES.length;
 
-        const w=
-            widths[i];
+        const width=
+            widths[index];
 
-        const img=
-            cityImgs[i];
+        const image=
+            cityImages[index];
 
         if(
-            img &&
-            img.complete &&
-            img.naturalWidth
+            image &&
+            image.complete &&
+            image.naturalWidth
         ){
 
             ctx.drawImage(
 
-                img,
+                image,
 
                 Math.floor(x),
+
                 0,
 
-                Math.ceil(w)+1,
-                Math.ceil(h)
+                Math.ceil(width)+1,
+
+                Math.ceil(height)
 
             );
 
@@ -1670,31 +2182,31 @@ function drawCities(gy){
 
         if(
             x<=W*.35 &&
-            x+w>W*.35
+            x+width>W*.35
         ){
 
-            seen=i;
+            visibleCity=index;
 
         }
 
-        x+=w;
+        x+=width;
 
-        if(x>W+4){
+        if(x>W+5){
             break;
         }
 
     }
 
-    if(seen>=0){
-        toastCity(seen);
+    if(visibleCity>=0){
+        showCity(visibleCity);
     }
 
 }
 
 
-function drawBackdrop(){
+function drawBackground(){
 
-    const gy=
+    const groundY=
         state.groundY;
 
     const gradient=
@@ -1702,7 +2214,7 @@ function drawBackdrop(){
             0,
             0,
             0,
-            gy
+            groundY
         );
 
     gradient.addColorStop(
@@ -1721,38 +2233,42 @@ function drawBackdrop(){
         0,
         0,
         W,
-        gy
+        groundY
     );
 
-    drawCities(gy);
+    drawCities(groundY);
 
-    const roadH=
+
+    const roadHeight=
         Math.floor(
-            (H-gy)*.46
+            (H-groundY)*.46
         );
 
     ctx.fillStyle='#5b5b63';
 
     ctx.fillRect(
         0,
-        gy,
+        groundY,
         W,
-        roadH
+        roadHeight
     );
 
     ctx.fillStyle='#4a4a52';
 
     ctx.fillRect(
         0,
-        gy,
+        groundY,
         W,
         8
     );
 
+
     const dash=34;
 
     const shift=
-        (state.dist/.12)%
+        (
+            state.distance/.12
+        )%
         (dash*2);
 
     ctx.fillStyle='#e6d36a';
@@ -1765,29 +2281,33 @@ function drawBackdrop(){
 
         ctx.fillRect(
             x-shift,
-            gy+roadH*.45,
+            groundY+
+                roadHeight*.45,
             20,
             4
         );
 
     }
 
+
     ctx.fillStyle='#7a5a3a';
 
     ctx.fillRect(
         0,
-        gy+roadH,
+        groundY+roadHeight,
         W,
-        H-gy-roadH
+        H-groundY-roadHeight
     );
+
 
     ctx.fillStyle='#6a4a2e';
 
     const tile=26;
 
-    const sh=
-        (state.dist/.12)%
-        tile;
+    const tileShift=
+        (
+            state.distance/.12
+        )%tile;
 
     for(
         let x=-tile;
@@ -1796,8 +2316,10 @@ function drawBackdrop(){
     ){
 
         ctx.fillRect(
-            x-sh,
-            gy+roadH+10,
+            x-tileShift,
+            groundY+
+                roadHeight+
+                10,
             12,
             4
         );
@@ -1808,7 +2330,7 @@ function drawBackdrop(){
 
 
 /* =========================================================
-   OBSTACLE DRAWING
+   DRAW POOP
    ========================================================= */
 
 function drawPoop(o){
@@ -1823,16 +2345,22 @@ function drawPoop(o){
 
     ctx.save();
 
-    ctx.translate(x,y);
+    ctx.translate(
+        x,
+        y
+    );
 
     ctx.fillStyle='#5a2c10';
 
     ctx.beginPath();
 
     ctx.ellipse(
-        0,-10,
-        20,12,
-        0,0,
+        0,
+        -10,
+        20,
+        12,
+        0,
+        0,
         Math.PI*2
     );
 
@@ -1841,9 +2369,12 @@ function drawPoop(o){
     ctx.beginPath();
 
     ctx.ellipse(
-        -4,-22,
-        14,10,
-        -.2,0,
+        -4,
+        -22,
+        14,
+        10,
+        -.2,
+        0,
         Math.PI*2
     );
 
@@ -1852,9 +2383,12 @@ function drawPoop(o){
     ctx.beginPath();
 
     ctx.ellipse(
-        2,-32,
-        9,8,
-        .2,0,
+        2,
+        -32,
+        9,
+        8,
+        .2,
+        0,
         Math.PI*2
     );
 
@@ -1865,14 +2399,18 @@ function drawPoop(o){
     ctx.beginPath();
 
     ctx.arc(
-        -6,-22,
-        3,0,
+        -6,
+        -22,
+        3,
+        0,
         Math.PI*2
     );
 
     ctx.arc(
-        4,-20,
-        2.4,0,
+        4,
+        -20,
+        2.4,
+        0,
         Math.PI*2
     );
 
@@ -1883,14 +2421,18 @@ function drawPoop(o){
     ctx.beginPath();
 
     ctx.arc(
-        -6,-22,
-        1.4,0,
+        -6,
+        -22,
+        1.4,
+        0,
         Math.PI*2
     );
 
     ctx.arc(
-        4,-20,
-        1.2,0,
+        4,
+        -20,
+        1.2,
+        0,
         Math.PI*2
     );
 
@@ -1901,28 +2443,43 @@ function drawPoop(o){
 }
 
 
-function drawDick(o){
+/* =========================================================
+   DRAW DICK
+   ========================================================= */
+
+function drawDick(
+    o,
+    time
+){
 
     const x=
         o.x+
         o.w/2;
 
+    /*
+        Визуально поднимаем его
+        вместе с hitbox.
+    */
+
     const y=
         o.y+
         o.h/2+
         Math.sin(
-            state.t*6+
+            time*5+
             o.wob
         )*6;
 
     ctx.save();
 
-    ctx.translate(x,y);
+    ctx.translate(
+        x,
+        y
+    );
 
     ctx.rotate(
         -.15+
         Math.sin(
-            state.t*4+
+            time*4+
             o.wob
         )*.12
     );
@@ -1989,82 +2546,104 @@ function drawDick(o){
 
 
 /* =========================================================
-   SHIELD DRAW
+   DRAW SHIELD
    ========================================================= */
 
-function drawShieldIcon(o){
+function drawShield(
+    o
+){
 
-    const cx=
+    const x=
         o.x+
         o.w/2;
 
-    const cy=
+    const y=
         o.y+
         o.h/2+
         Math.sin(
-            state.t*5+
-            o.phase
-        )*5;
-
-    const pulse=
-        1+
-        Math.sin(
-            state.t*7+
-            o.phase
-        )*.08;
+            state.t*5
+        )*4;
 
     ctx.save();
 
-    ctx.translate(cx,cy);
-    ctx.scale(pulse,pulse);
+    ctx.translate(
+        x,
+        y
+    );
 
     /*
-        Внешнее свечение.
+        Светящийся круг.
     */
 
-    ctx.shadowColor='#27a7ff';
-    ctx.shadowBlur=14;
+    ctx.globalAlpha=.18;
 
-    ctx.fillStyle='#176cff';
+    ctx.fillStyle='#4db8ff';
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-21);
-    ctx.lineTo(17,-14);
-    ctx.lineTo(15,5);
-    ctx.quadraticCurveTo(
-        0,22,
-        -15,5
+    ctx.arc(
+        0,
+        0,
+        23,
+        0,
+        Math.PI*2
     );
-    ctx.lineTo(-17,-14);
+
+    ctx.fill();
+
+    ctx.globalAlpha=1;
+
+    ctx.fillStyle='#1c6cff';
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,-19
+    );
+
+    ctx.lineTo(
+        15,-11
+    );
+
+    ctx.lineTo(
+        12,8
+    );
+
+    ctx.lineTo(
+        0,19
+    );
+
+    ctx.lineTo(
+        -12,8
+    );
+
+    ctx.lineTo(
+        -15,-11
+    );
+
     ctx.closePath();
 
     ctx.fill();
 
-    ctx.shadowBlur=0;
+    ctx.strokeStyle='#bfe6ff';
 
-    ctx.strokeStyle='#bfeaff';
     ctx.lineWidth=3;
 
     ctx.stroke();
-
-    /*
-        Центральная молния.
-    */
 
     ctx.fillStyle='#fff';
 
-    ctx.beginPath();
+    ctx.font=
+        'bold 13px sans-serif';
 
-    ctx.moveTo(3,-12);
-    ctx.lineTo(-7,2);
-    ctx.lineTo(0,2);
-    ctx.lineTo(-3,13);
-    ctx.lineTo(8,-3);
-    ctx.lineTo(1,-3);
-    ctx.closePath();
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
 
-    ctx.fill();
+    ctx.fillText(
+        'S',
+        0,
+        1
+    );
 
     ctx.restore();
 
@@ -2072,100 +2651,84 @@ function drawShieldIcon(o){
 
 
 /* =========================================================
-   AK DRAW
+   DRAW AK
    ========================================================= */
 
-function drawAkIcon(o){
+function drawAK(
+    o
+){
 
-    const cx=
+    const x=
         o.x+
         o.w/2;
 
-    const cy=
+    const y=
         o.y+
         o.h/2+
         Math.sin(
-            state.t*5+
-            o.phase
-        )*5;
+            state.t*5
+        )*4;
 
     ctx.save();
 
-    ctx.translate(cx,cy);
+    ctx.translate(
+        x,
+        y
+    );
 
-    ctx.rotate(-.22);
-
-    ctx.shadowColor='#9fef6a';
-    ctx.shadowBlur=12;
+    ctx.rotate(-.25);
 
     /*
-        Приклад.
+        Светящаяся подложка.
     */
 
-    ctx.fillStyle='#26261f';
+    ctx.globalAlpha=.16;
+
+    ctx.fillStyle='#9fef6a';
+
+    ctx.fillRect(
+        -27,
+        -17,
+        54,
+        34
+    );
+
+    ctx.globalAlpha=1;
+
+    ctx.fillStyle='#303028';
 
     ctx.fillRect(
         -20,
-        -5,
+        -4,
         38,
-        9
+        8
     );
-
-    /*
-        Ствол.
-    */
-
-    ctx.fillStyle='#151512';
-
-    ctx.fillRect(
-        17,
-        -7,
-        15,
-        4
-    );
-
-    /*
-        Магазин.
-    */
 
     ctx.fillStyle='#6b4a28';
 
-    ctx.beginPath();
-
-    ctx.moveTo(-5,3);
-    ctx.lineTo(4,5);
-    ctx.lineTo(0,17);
-    ctx.lineTo(-8,14);
-    ctx.closePath();
-
-    ctx.fill();
-
-    /*
-        Приклад.
-    */
-
-    ctx.fillStyle='#5a3a20';
-
     ctx.fillRect(
-        -28,
-        -3,
-        10,
-        7
-    );
-
-    /*
-        Металлическая часть.
-    */
-
-    ctx.shadowBlur=0;
-
-    ctx.fillStyle='#b8b89a';
-
-    ctx.fillRect(
-        4,
         -7,
-        7,
-        3
+        2,
+        9,
+        12
+    );
+
+    ctx.fillStyle='#191914';
+
+    ctx.fillRect(
+        17,
+        -6,
+        10,
+        4
+    );
+
+    ctx.fillStyle='#9fef6a';
+
+    ctx.fillRect(
+        -20,
+        -7,
+        8,
+        2
     );
 
     ctx.restore();
@@ -2174,97 +2737,25 @@ function drawAkIcon(o){
 
 
 /* =========================================================
-   ACTIVE SHIELD AURA
-   ========================================================= */
-
-function drawShieldAura(){
-
-    if(shieldT<=0){
-        return;
-    }
-
-    const cx=
-        player.x+
-        player.w/2;
-
-    const cy=
-        player.y+
-        player.h/2;
-
-    const pulse=
-        1+
-        Math.sin(state.t*8)*.035;
-
-    ctx.save();
-
-    ctx.translate(cx,cy);
-    ctx.scale(pulse,pulse);
-
-    ctx.globalAlpha=
-        .18+
-        Math.sin(state.t*8)*.04;
-
-    ctx.fillStyle='#35bfff';
-
-    ctx.shadowColor='#35bfff';
-    ctx.shadowBlur=24;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        Math.max(
-            player.w,
-            player.h
-        )*.68,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.globalAlpha=.8;
-
-    ctx.strokeStyle='#9beaff';
-    ctx.lineWidth=3;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        Math.max(
-            player.w,
-            player.h
-        )*.68,
-        0,
-        Math.PI*2
-    );
-
-    ctx.stroke();
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   GUN
+   DRAW PLAYER GUN
    ========================================================= */
 
 function drawGun(){
 
-    const px=
+    const x=
         player.x+
         player.w*.55;
 
-    const py=
+    const y=
         player.y+44;
 
     ctx.save();
 
-    ctx.translate(px,py);
+    ctx.translate(
+        x,
+        y
+    );
+
     ctx.rotate(-.12);
 
     ctx.fillStyle='#2c2c26';
@@ -2300,625 +2791,464 @@ function drawGun(){
 
 
 /* =========================================================
-   UPDATE POWERUP POSITION
+   SHOOT
    ========================================================= */
 
-function updateObjectPosition(o){
+function shoot(){
 
-    if(o.type==='dick'){
+    const baseY=
+        player.y+46;
 
-        o.y=
-            state.groundY-
-            o.flyY-
-            o.h;
+    /*
+        Три пули веером.
+    */
 
-        return;
-
-    }
-
-    if(
-        o.type==='shield' ||
-        o.type==='ak'
+    for(
+        let i=-1;
+        i<=1;
+        i++
     ){
 
-        /*
-            Предметы находятся чуть выше дороги,
-            поэтому их полностью видно.
-        */
+        const angle=
+            i*.13;
 
-        o.y=
-            state.groundY-
-            o.h-
-            14;
+        bullets.push({
 
-        return;
+            x:
+                player.x+
+                player.w+
+                8,
+
+            y:baseY,
+
+            vx:
+                CONFIG.bulletSpeed*
+                Math.cos(angle),
+
+            vy:
+                CONFIG.bulletSpeed*
+                Math.sin(angle),
+
+            life:.65
+
+        });
 
     }
-
-    o.y=
-        state.groundY-
-        o.h;
 
 }
 
 
 /* =========================================================
-   BUFF HUD
+   UPDATE POWER HUD
    ========================================================= */
 
-function updateBuffHud(){
+function updateBuff(){
 
-    const parts=[];
+    const buffs=[];
 
-    if(shieldT>0){
+    if(shieldTimer>0){
 
-        parts.push(
+        buffs.push(
             '🛡 ЩИТ '+
-            Math.ceil(shieldT)+
+            Math.ceil(
+                shieldTimer
+            )+
             'с'
         );
 
     }
 
-    if(gunT>0){
+    if(gunTimer>0){
 
-        parts.push(
+        buffs.push(
             '🔫 АК '+
-            Math.ceil(gunT)+
+            Math.ceil(
+                gunTimer
+            )+
             'с'
         );
 
     }
 
     buffEl.textContent=
-        parts.join(' · ');
+        buffs.join(' · ');
 
 }
 
 
 /* =========================================================
-   GAME LOOP
+   COLLECT POWERUP
    ========================================================= */
 
-let last=
-    performance.now();
+function collectPowerup(
+    obstacle
+){
 
+    if(
+        obstacle.type==='shield'
+    ){
 
-function loop(now){
+        shieldTimer=
+            CONFIG.shieldDuration;
 
-    const dt=
-        Math.min(
-            .033,
-            Math.max(
-                0,
-                (now-last)/1000
-            )
+        explode(
+            obstacle.x+
+                obstacle.w/2,
+            obstacle.y+
+                obstacle.h/2,
+            '#4db8ff'
         );
-
-    last=now;
-
-    state.groundY=
-        Math.floor(H*.70);
-
-
-    /* =====================================================
-       PLAYER BASE POSITION
-       ===================================================== */
-
-    if(player.onGround){
-
-        player.y=
-            state.groundY-
-            player.h;
 
     }
 
-
-    /* =====================================================
-       GAME UPDATE
-       ===================================================== */
-
     if(
-        state.running &&
-        !state.over
+        obstacle.type==='ak'
     ){
 
-        state.t+=dt;
+        gunTimer=
+            CONFIG.gunDuration;
 
-        state.speed=
-            Math.min(
-                CONFIG.maxSpeed,
-                state.speed+
-                CONFIG.acceleration*dt
-            );
+        fireAccumulator=0;
 
-        state.dist+=
-            state.speed*
-            dt*
-            CONFIG.distanceMultiplier;
+        explode(
+            obstacle.x+
+                obstacle.w/2,
+            obstacle.y+
+                obstacle.h/2,
+            '#9fef6a'
+        );
 
-        scoreEl.textContent=
-            Math.floor(state.dist)+
-            ' м';
+    }
 
-
-        /* ================================================
-           BUFF TIMERS
-           ================================================ */
-
-        shieldT=
-            Math.max(
-                0,
-                shieldT-dt
-            );
-
-        gunT=
-            Math.max(
-                0,
-                gunT-dt
-            );
-
-        updateBuffHud();
+}
 
 
-        /* ================================================
-           GRAVITY
-           ================================================ */
+/* =========================================================
+   GAME OVER
+   ========================================================= */
 
-        player.vy+=
-            CONFIG.gravity*
-            (
-                player.vy>0
-                ?2
-                :1
-            )*
-            dt;
+function gameOver(
+    type
+){
 
-        player.y+=
-            player.vy*
-            dt;
+    state.running=false;
+    state.over=true;
 
+    const score=
+        Math.floor(
+            state.distance
+        );
 
-        if(
-            player.y>=
-            state.groundY-
-            player.h
-        ){
+    if(score>best){
 
-            player.y=
-                state.groundY-
-                player.h;
+        best=score;
 
-            player.vy=0;
+        localStorage.setItem(
+            BEST_KEY,
+            String(best)
+        );
 
-            player.onGround=true;
-            player.jumpsUsed=0;
+        bestEl.textContent=
+            'лучший счет '+best;
 
-        }
+    }
 
+    titleScreen.classList.remove(
+        'hide'
+    );
 
-        /* ================================================
-           GUN
-           ================================================ */
+    pickScreen.classList.remove(
+        'show'
+    );
 
-        if(gunT>0){
+    const title=
+        overlay.querySelector(
+            '#screen-title h1'
+        );
 
-            fireAcc+=dt;
+    const paragraph=
+        overlay.querySelector(
+            '#screen-title p'
+        );
 
-            if(
-                fireAcc>=
-                CONFIG.gunFireRate
-            ){
+    title.textContent=
+        type==='dick'
+        ?'ЕСТЬ ПРОБИТИЕ'
+        :'ЭТО КОНЕЦ, ТЫ В ГОВНЕ';
 
-                fireAcc=0;
+    paragraph.textContent=
+        'Обычная жизнь оборвалась на '+
+        score+
+        ' м.';
 
-                const baseY=
-                    player.y+46;
+    pickButton.textContent=
+        'ВЫБЕРИ БОЙЦА';
 
-                /*
-                    Три пули вместо пяти:
-                    стрельба остаётся заметной,
-                    но не превращается в сплошную стену.
-                */
+    overlay.style.display='flex';
 
-                for(
-                    let k=-1;
-                    k<=1;
-                    k++
-                ){
-
-                    const angle=
-                        k*.12;
-
-                    bullets.push({
-
-                        x:
-                            player.x+
-                            player.w+
-                            8,
-
-                        y:
-                            baseY,
-
-                        vx:
-                            CONFIG.bulletSpeed*
-                            Math.cos(angle),
-
-                        vy:
-                            CONFIG.bulletSpeed*
-                            Math.sin(angle),
-
-                        life:.7
-
-                    });
-
-                }
-
-            }
-
-        }else{
-
-            fireAcc=0;
-
-        }
+}
 
 
-        /* ================================================
-           NORMAL OBSTACLE SPAWN
-           ================================================ */
+/* =========================================================
+   UPDATE OBSTACLES
+   ========================================================= */
 
-        spawnTimer-=dt;
+function updateObstacles(
+    dt
+){
 
-        if(spawnTimer<=0){
-
-            spawnObstacle();
-
-            const difficulty=
-                Math.min(
-                    .35,
-                    state.speed/1600
-                );
-
-            spawnTimer=
-                CONFIG.obstacleMinSpawn+
-                Math.random()*
-                (
-                    CONFIG.obstacleMaxSpawn-
-                    CONFIG.obstacleMinSpawn
-                )-
-                difficulty;
-
-            spawnTimer=
-                Math.max(
-                    .45,
-                    spawnTimer
-                );
-
-        }
+    const playerBox=
+        getPlayerHitbox();
 
 
-        /* ================================================
-           POWERUP SPAWN
-           ================================================ */
+    for(
+        let i=
+            obstacles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const obstacle=
+            obstacles[i];
+
+        obstacle.x-=
+            state.speed*dt;
+
 
         /*
-            Главное исправление.
-
-            Предмет появляется не через 45 секунд,
-            а именно после прохождения очередных 3000 м.
+            Положение препятствий.
         */
 
         if(
-            state.dist>=
-            state.nextPowerDistance
+            obstacle.type==='dick'
         ){
 
-            spawnPowerup();
+            obstacle.y=
+                state.groundY-
+                obstacle.flyY-
+                obstacle.h;
 
-            state.nextPowerDistance+=
-                CONFIG.powerupDistance;
+        }else{
+
+            obstacle.y=
+                state.groundY-
+                obstacle.h-
+                (
+                    obstacle.type==='shield' ||
+                    obstacle.type==='ak'
+                    ?10
+                    :0
+                );
 
         }
 
 
-        /* ================================================
-           PLAYER BOX
-           ================================================ */
-
-        const pBox=
-            getPlayerHitbox();
+        const obstacleBox=
+            getObstacleHitbox(
+                obstacle
+            );
 
 
-        /* ================================================
-           OBJECTS
-           ================================================ */
+        /*
+            Пули.
+        */
 
-        for(
-            let i=
-                obstacles.length-1;
-            i>=0;
-            i--
+        let destroyed=false;
+
+        if(
+            obstacle.type!=='shield' &&
+            obstacle.type!=='ak'
         ){
 
-            const o=
-                obstacles[i];
-
-            o.x-=
-                state.speed*dt;
-
-            updateObjectPosition(o);
-
-
-            /* ============================================
-               BULLET COLLISIONS
-               ============================================ */
-
-            let destroyed=false;
-
-            if(
-                o.type!=='shield' &&
-                o.type!=='ak'
+            for(
+                let b=
+                    bullets.length-1;
+                b>=0;
+                b--
             ){
 
-                for(
-                    let b=
-                        bullets.length-1;
-                    b>=0;
-                    b--
-                ){
+                const bullet=
+                    bullets[b];
 
-                    const bullet=
-                        bullets[b];
+                const bulletBox={
 
-                    const bulletBox={
+                    x:bullet.x,
+                    y:bullet.y,
+                    w:10,
+                    h:4
 
-                        x:bullet.x,
-                        y:bullet.y,
-                        w:10,
-                        h:4
-
-                    };
-
-                    const oBox=
-                        getObstacleHitbox(o);
-
-                    if(
-                        hit(
-                            bulletBox,
-                            oBox
-                        )
-                    ){
-
-                        boom(
-                            o.x+
-                            o.w/2,
-
-                            o.y+
-                            o.h/2,
-
-                            '#ffe08a',
-                            10
-                        );
-
-                        bullets.splice(
-                            b,
-                            1
-                        );
-
-                        obstacles.splice(
-                            i,
-                            1
-                        );
-
-                        destroyed=true;
-
-                        break;
-
-                    }
-
-                }
-
-            }
-
-            if(destroyed){
-                continue;
-            }
-
-
-            /* ============================================
-               PLAYER COLLISION
-               ============================================ */
-
-            const oBox=
-                getObstacleHitbox(o);
-
-
-            if(
-                hit(
-                    pBox,
-                    oBox
-                )
-            ){
-
-                /* ========================================
-                   SHIELD PICKUP
-                   ======================================== */
+                };
 
                 if(
-                    o.type==='shield'
+                    hit(
+                        bulletBox,
+                        obstacleBox
+                    )
                 ){
 
-                    /*
-                        Ровно 10 секунд.
-                    */
-
-                    shieldT=
-                        CONFIG.shieldDuration;
-
-                    boom(
-                        o.x+
-                        o.w/2,
-
-                        o.y+
-                        o.h/2,
-
-                        '#35c8ff',
-                        18
+                    explode(
+                        obstacle.x+
+                            obstacle.w/2,
+                        obstacle.y,
+                        '#ffe08a'
                     );
 
-                    obstacles.splice(
-                        i,
+                    bullets.splice(
+                        b,
                         1
                     );
 
-                    continue;
+                    destroyed=true;
+
+                    break;
 
                 }
-
-
-                /* ========================================
-                   AK PICKUP
-                   ======================================== */
-
-                if(
-                    o.type==='ak'
-                ){
-
-                    gunT=
-                        CONFIG.gunDuration;
-
-                    fireAcc=0;
-
-                    boom(
-                        o.x+
-                        o.w/2,
-
-                        o.y+
-                        o.h/2,
-
-                        '#9fef6a',
-                        18
-                    );
-
-                    obstacles.splice(
-                        i,
-                        1
-                    );
-
-                    continue;
-
-                }
-
-
-                /* ========================================
-                   ACTIVE SHIELD
-                   ======================================== */
-
-                if(shieldT>0){
-
-                    boom(
-                        o.x+
-                        o.w/2,
-
-                        o.y+
-                        o.h/2,
-
-                        '#ffffff',
-                        14
-                    );
-
-                    obstacles.splice(
-                        i,
-                        1
-                    );
-
-                    continue;
-
-                }
-
-
-                /* ========================================
-                   DEATH
-                   ======================================== */
-
-                gameOver(o.type);
-
-                break;
 
             }
 
+        }
 
-            /* ============================================
-               OFF SCREEN
-               ============================================ */
+
+        if(destroyed){
+
+            obstacles.splice(
+                i,
+                1
+            );
+
+            continue;
+
+        }
+
+
+        /*
+            Игрок.
+        */
+
+        if(
+            hit(
+                playerBox,
+                obstacleBox
+            )
+        ){
 
             if(
-                o.x+
-                o.w<
-                -80
+                obstacle.type==='shield' ||
+                obstacle.type==='ak'
             ){
+
+                collectPowerup(
+                    obstacle
+                );
 
                 obstacles.splice(
                     i,
                     1
                 );
 
+                continue;
+
             }
 
-        }
 
+            if(shieldTimer>0){
 
-        /* ================================================
-           BULLETS UPDATE
-           ================================================ */
+                explode(
+                    obstacle.x+
+                        obstacle.w/2,
+                    obstacle.y,
+                    '#ffffff'
+                );
 
-        for(
-            let i=
-                bullets.length-1;
-            i>=0;
-            i--
-        ){
-
-            const b=
-                bullets[i];
-
-            b.x+=
-                b.vx*dt;
-
-            b.y+=
-                b.vy*dt;
-
-            b.life-=dt;
-
-
-            if(
-                b.life<=0 ||
-                b.x>W+40 ||
-                b.y<-40 ||
-                b.y>H+40
-            ){
-
-                bullets.splice(
+                obstacles.splice(
                     i,
                     1
                 );
 
+                continue;
+
             }
+
+
+            gameOver(
+                obstacle.type
+            );
+
+            continue;
 
         }
 
-    }else{
 
-        player.y=
-            state.groundY-
-            player.h;
+        if(
+            obstacle.x+
+            obstacle.w<
+            -60
+        ){
+
+            obstacles.splice(
+                i,
+                1
+            );
+
+        }
 
     }
 
+}
 
-    /* =====================================================
-       PARTICLES
-       ===================================================== */
+
+/* =========================================================
+   UPDATE BULLETS
+   ========================================================= */
+
+function updateBullets(
+    dt
+){
+
+    for(
+        let i=
+            bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        const bullet=
+            bullets[i];
+
+        bullet.x+=
+            bullet.vx*dt;
+
+        bullet.y+=
+            bullet.vy*dt;
+
+        bullet.life-=dt;
+
+        if(
+            bullet.life<=0 ||
+            bullet.x>W+30 ||
+            bullet.y<-30 ||
+            bullet.y>H+30
+        ){
+
+            bullets.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE PARTICLES
+   ========================================================= */
+
+function updateParticles(
+    dt
+){
 
     for(
         let i=
@@ -2939,8 +3269,7 @@ function loop(now){
             p.vy*dt;
 
         p.vy+=
-            400*dt;
-
+            420*dt;
 
         if(p.life<=0){
 
@@ -2953,91 +3282,351 @@ function loop(now){
 
     }
 
-
-    /* =====================================================
-       DRAW BACKGROUND
-       ===================================================== */
-
-    drawBackdrop();
+}
 
 
-    /* =====================================================
-       DRAW OBJECTS
-       ===================================================== */
+/* =========================================================
+   GAME LOOP
+   ========================================================= */
+
+let lastTime=
+    performance.now();
+
+
+function loop(now){
+
+    const dt=
+        Math.min(
+            .033,
+            Math.max(
+                0,
+                (now-lastTime)/1000
+            )
+        );
+
+    lastTime=now;
+
+
+    state.groundY=
+        Math.floor(
+            H*.70
+        );
+
+
+    if(
+        state.running &&
+        !state.over
+    ){
+
+        state.t+=dt;
+
+
+        /*
+            Скорость.
+        */
+
+        const difficulty=
+            CONFIG.difficulties[
+                state.difficulty
+            ];
+
+        state.speed=
+            Math.min(
+                CONFIG.maxSpeed,
+                state.speed+
+                difficulty.acceleration*
+                dt
+            );
+
+
+        /*
+            Дистанция.
+        */
+
+        state.distance+=
+            state.speed*
+            dt*
+            CONFIG.distanceMultiplier;
+
+        scoreEl.textContent=
+            Math.floor(
+                state.distance
+            )+
+            ' м';
+
+
+        /*
+            Power-up timers.
+        */
+
+        shieldTimer=
+            Math.max(
+                0,
+                shieldTimer-dt
+            );
+
+        gunTimer=
+            Math.max(
+                0,
+                gunTimer-dt
+            );
+
+        updateBuff();
+
+
+        /*
+            Следующий power-up.
+
+            Если игрок пересёк несколько
+            порогов за кадр, выдаём их
+            последовательно.
+        */
+
+        if(
+            state.distance>=
+            nextPowerDistance
+        ){
+
+            spawnPowerup();
+
+            nextPowerDistance+=
+                CONFIG.powerupDistance;
+
+        }
+
+
+        /*
+            Гравитация.
+        */
+
+        player.vy+=
+            CONFIG.gravity*
+            (
+                player.vy>0
+                ?2
+                :1
+            )*
+            dt;
+
+        player.y+=
+            player.vy*dt;
+
+
+        if(
+            player.y>=
+            state.groundY-
+            player.h
+        ){
+
+            player.y=
+                state.groundY-
+                player.h;
+
+            player.vy=0;
+
+            player.onGround=true;
+
+            player.jumpsUsed=0;
+
+        }
+
+
+        /*
+            Автоматическая стрельба.
+        */
+
+        if(gunTimer>0){
+
+            fireAccumulator+=dt;
+
+            while(
+                fireAccumulator>=
+                CONFIG.gunFireRate
+            ){
+
+                fireAccumulator-=
+                    CONFIG.gunFireRate;
+
+                shoot();
+
+            }
+
+        }else{
+
+            fireAccumulator=0;
+
+        }
+
+
+        /*
+            Spawn обычных препятствий.
+
+            Сложность влияет на интервал,
+            но минимальный интервал
+            ограничивает невозможные
+            комбинации.
+        */
+
+        if(
+            !loop.spawnTimer
+        ){
+
+            loop.spawnTimer=
+                difficulty.spawnMin+
+                Math.random()*
+                (
+                    difficulty.spawnMax-
+                    difficulty.spawnMin
+                );
+
+        }
+
+        loop.spawnTimer-=dt;
+
+        if(
+            loop.spawnTimer<=0
+        ){
+
+            spawnObstacle();
+
+            const speedProgress=
+                Math.min(
+                    .15,
+                    Math.max(
+                        0,
+                        (
+                            state.speed-
+                            difficulty.startSpeed
+                        )/3500
+                    )
+                );
+
+            loop.spawnTimer=
+                difficulty.spawnMin+
+                Math.random()*
+                (
+                    difficulty.spawnMax-
+                    difficulty.spawnMin
+                )-
+                speedProgress;
+
+            loop.spawnTimer=
+                Math.max(
+                    difficulty.spawnMin*.70,
+                    loop.spawnTimer
+                );
+
+        }
+
+
+        updateObstacles(dt);
+
+        updateBullets(dt);
+
+    }else{
+
+        player.y=
+            state.groundY-
+            player.h;
+
+    }
+
+
+    updateParticles(dt);
+
+
+    /*
+        DRAW
+    */
+
+    drawBackground();
+
 
     for(
-        const o
+        const obstacle
         of obstacles
     ){
 
-        if(o.type==='poop'){
+        if(
+            obstacle.type==='poop'
+        ){
 
-            drawPoop(o);
+            drawPoop(
+                obstacle
+            );
 
-        }else if(o.type==='dick'){
+        }else if(
+            obstacle.type==='dick'
+        ){
 
-            drawDick(o);
+            drawDick(
+                obstacle,
+                state.t
+            );
 
-        }else if(o.type==='shield'){
+        }else if(
+            obstacle.type==='shield'
+        ){
 
-            drawShieldIcon(o);
+            drawShield(
+                obstacle
+            );
 
-        }else if(o.type==='ak'){
+        }else if(
+            obstacle.type==='ak'
+        ){
 
-            drawAkIcon(o);
+            drawAK(
+                obstacle
+            );
 
         }
 
     }
 
 
-    /* =====================================================
-       DRAW BULLETS
-       ===================================================== */
+    /*
+        Bullets.
+    */
 
     for(
-        const b
+        const bullet
         of bullets
     ){
 
-        ctx.save();
-
         ctx.fillStyle='#ffe08a';
-        ctx.shadowColor='#ffe08a';
-        ctx.shadowBlur=7;
 
         ctx.fillRect(
-            b.x,
-            b.y,
+            bullet.x,
+            bullet.y,
             10,
             3
         );
 
-        ctx.restore();
-
     }
 
 
-    /* =====================================================
-       DRAW PARTICLES
-       ===================================================== */
+    /*
+        Particles.
+    */
 
     for(
-        const p
+        const particle
         of particles
     ){
 
         ctx.globalAlpha=
             Math.max(
                 0,
-                p.life/p.maxLife
+                particle.life*2
             );
 
-        ctx.fillStyle=p.col;
+        ctx.fillStyle=
+            particle.color;
 
         ctx.fillRect(
-            p.x,
-            p.y,
+            particle.x,
+            particle.y,
             5,
             5
         );
@@ -3047,19 +3636,12 @@ function loop(now){
     ctx.globalAlpha=1;
 
 
-    /* =====================================================
-       ACTIVE SHIELD
-       ===================================================== */
-
-    drawShieldAura();
-
-
-    /* =====================================================
-       PLAYER GUN
-       ===================================================== */
+    /*
+        АК в руках.
+    */
 
     if(
-        gunT>0 &&
+        gunTimer>0 &&
         state.running
     ){
 
@@ -3068,23 +3650,66 @@ function loop(now){
     }
 
 
-    /* =====================================================
-       PLAYER DOM
-       ===================================================== */
+    /*
+        Shield visual around player.
+    */
 
-    const heroDoll=
-        heroEl.querySelector('.doll');
+    if(
+        shieldTimer>0 &&
+        state.running
+    ){
 
-    if(heroDoll){
+        const cx=
+            player.x+
+            player.w/2;
 
-        heroDoll.classList.toggle(
-            'run',
-            state.running &&
-            !state.over &&
-            player.onGround
+        const cy=
+            player.y+
+            player.h/2;
+
+        const radius=
+            Math.max(
+                player.w,
+                player.h
+            )*.62+
+            Math.sin(
+                state.t*7
+            )*2;
+
+        ctx.save();
+
+        ctx.globalAlpha=.22;
+
+        ctx.fillStyle='#4db8ff';
+
+        ctx.beginPath();
+
+        ctx.arc(
+            cx,
+            cy,
+            radius,
+            0,
+            Math.PI*2
         );
 
+        ctx.fill();
+
+        ctx.globalAlpha=.85;
+
+        ctx.strokeStyle='#8bd8ff';
+
+        ctx.lineWidth=2;
+
+        ctx.stroke();
+
+        ctx.restore();
+
     }
+
+
+    /*
+        DOM player.
+    */
 
     heroEl.style.left=
         player.x+'px';
@@ -3092,13 +3717,38 @@ function loop(now){
     heroEl.style.top=
         player.y+'px';
 
+    heroDoll.classList.toggle(
+        'run',
+        state.running &&
+        !state.over &&
+        player.onGround
+    );
 
-    requestAnimationFrame(loop);
+
+    requestAnimationFrame(
+        loop
+    );
 
 }
 
 
-requestAnimationFrame(loop);
+requestAnimationFrame(
+    loop
+);
+
+
+/* =========================================================
+   INITIAL PLAYER POSITION
+   ========================================================= */
+
+applySkin();
+
+state.groundY=
+    Math.floor(H*.70);
+
+player.y=
+    state.groundY-
+    player.h;
 
 })();
 </script>
