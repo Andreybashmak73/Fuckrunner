@@ -1,1 +1,218 @@
-see artifacts
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FUCKRUNNER</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;touch-action:manipulation}
+    html,body{width:100%;height:100%;overflow:hidden;background:#170d20;font-family:ui-monospace,Menlo,Consolas,monospace;user-select:none}
+    #wrap{position:relative;width:100%;height:100%}
+    canvas{display:block;width:100%;height:100%;background:#2a1638;image-rendering:pixelated}
+    #hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:15px;text-shadow:0 2px 0 #000;pointer-events:none;z-index:8}
+    #buff{color:#9fef6a;font-size:12px;margin-top:4px}
+    #cityTag{position:absolute;top:42px;left:50%;transform:translateX(-50%);color:#ffe08a;font-weight:800;font-size:13px;text-shadow:0 2px 0 #000;pointer-events:none;z-index:8;opacity:0;transition:opacity .3s}
+    #overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,4,14,.88);color:#fff;text-align:center;padding:16px;z-index:20;overflow:auto}
+    #overlay h1{font-size:26px;margin-bottom:8px;color:#ff4d6d;text-shadow:3px 3px 0 #3a0010}
+    #overlay p{opacity:.92;margin:6px 0 16px;max-width:360px;line-height:1.35}
+    button.main{appearance:none;border:3px solid #fff;background:#ff4d6d;color:#fff;font-weight:800;font-size:17px;font-family:inherit;padding:12px 24px;cursor:pointer}
+    button.main:disabled{opacity:.4}
+    .hint{font-size:12px;opacity:.7;margin-top:12px}
+    #screen-pick{display:none;width:min(560px,96vw)}
+    #screen-pick.show{display:block}
+    #screen-title.hide{display:none}
+    .sec{color:#ffe08a;font-size:12px;font-weight:800;margin:10px 0 6px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+    .card{background:#241428;border:3px solid #5a3a50;color:#fff;cursor:pointer;padding:8px 4px 6px;font-family:inherit;min-height:150px}
+    .card .nm{font-size:12px;font-weight:800;margin-bottom:4px;color:#ffe08a}
+    .card.sel{border-color:#ff4d6d;box-shadow:0 0 0 3px rgba(255,77,109,.35)}
+    .diffs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+    .diff{background:#211327;border:3px solid #51374b;color:#fff;font-family:inherit;font-weight:800;font-size:10px;padding:8px 4px;cursor:pointer}
+    .diff small{display:block;color:#aaa;font-size:8px;margin-top:4px;font-weight:600}
+    .diff.sel{border-color:#54c7ff;background:#17283a}
+    .stage{position:relative;height:110px;overflow:hidden}
+    .doll{position:absolute;left:50%;bottom:4px;width:58px;height:100px;margin-left:-29px;pointer-events:none}
+    .doll.skin-labuba{width:78px;margin-left:-39px}
+    .doll .cap{position:absolute;left:9px;top:0;width:40px;height:16px;background:#111;border-radius:8px 8px 2px 2px;z-index:6}
+    .doll .cap:after{content:'';position:absolute;right:-8px;bottom:2px;width:18px;height:6px;background:#111;border-radius:0 6px 6px 0}
+    .doll .tag{position:absolute;left:9px;top:4px;width:40px;color:#eee;font:800 6px/1 sans-serif;text-align:center;z-index:7}
+    .doll .head{position:absolute;left:16px;top:11px;width:26px;height:26px;background:#f0b48a;border-radius:50%;z-index:4}
+    .doll .eye{position:absolute;top:19px;width:4px;height:4px;background:#222;border-radius:50%;z-index:5}
+    .doll .eye.l{left:22px}.doll .eye.r{left:32px}
+    .doll .shirt{position:absolute;left:8px;top:34px;width:42px;height:38px;background:#2ea44f;border-radius:8px 8px 4px 4px;z-index:3}
+    .doll .collar{position:absolute;left:8px;top:34px;width:42px;height:8px;background:#217a3a;border-radius:8px 8px 0 0;z-index:4}
+    .doll .belt,.doll .ep,.doll .hair,.doll .chain{display:none}
+    .doll .arm{position:absolute;top:38px;width:10px;height:24px;background:#e0a07a;border-radius:5px;transform-origin:50% 0;z-index:2}
+    .doll .arm.l{left:2px}.doll .arm.r{right:2px}
+    .doll .leg{position:absolute;bottom:0;width:10px;height:28px;background:#3a2a22;border-radius:5px;transform-origin:50% 0}
+    .doll .leg.l{left:16px}.doll .leg.r{right:16px}
+    .doll.run .arm,.doll.run .leg{animation:arms .32s linear infinite}
+    .doll.run .leg{animation-name:legs}
+    .doll.run .arm.l,.doll.run .leg.r{animation-direction:reverse}
+    .doll.skin-vega .cap,.doll.skin-vega .cap:after{background:#1a2a18}
+    .doll.skin-vega .tag{color:#c9a227}
+    .doll.skin-vega .shirt{background:#3b5c32;border-radius:6px}
+    .doll.skin-vega .collar{background:#2a4324}
+    .doll.skin-vega .shirt:before{content:'';position:absolute;left:18px;top:10px;width:6px;height:18px;background:#2a4324}
+    .doll.skin-vega .shirt:after{content:'';position:absolute;inset:6px 4px 8px;background:radial-gradient(circle at 20% 30%,#2a4324 3px,transparent 4px),radial-gradient(circle at 70% 55%,#4a6a3a 3px,transparent 4px),radial-gradient(circle at 40% 80%,#1e301c 3px,transparent 4px),radial-gradient(circle at 80% 20%,#2f3a28 3px,transparent 4px)}
+    .doll.skin-vega .belt{display:block;position:absolute;left:8px;top:62px;width:42px;height:6px;background:#2a2118;z-index:5}
+    .doll.skin-vega .belt:after{content:'';position:absolute;left:17px;top:0;width:8px;height:6px;background:#c9a227}
+    .doll.skin-vega .ep{display:block;position:absolute;top:36px;width:14px;height:7px;background:#c9a227;z-index:6}
+    .doll.skin-vega .ep.l{left:2px}.doll.skin-vega .ep.r{right:2px}
+    .doll.skin-vega .ep:after{content:'';position:absolute;left:3px;top:2px;width:8px;height:2px;background:#7a1a1a}
+    .doll.skin-vega .leg{background:#2f3a28}
+    .doll.skin-vega .arm{background:#3b5c32}
+    .doll.skin-bumble .head{background:#6b3a22}
+    .doll.skin-bumble .arm{background:#1a1a1a}
+    .doll.skin-bumble .shirt{background:#161616}
+    .doll.skin-bumble .shirt:after{content:'';position:absolute;inset:6px 4px 8px;background:radial-gradient(circle at 25% 35%,#2c2c2c 3px,transparent 4px),radial-gradient(circle at 75% 60%,#0a0a0a 3px,transparent 4px),radial-gradient(circle at 50% 15%,#3a3a3a 3px,transparent 4px)}
+    .doll.skin-bumble .collar{background:#c9a227}
+    .doll.skin-bumble .chain{display:block;position:absolute;left:16px;top:42px;width:26px;height:14px;border:3px solid #efc44a;border-top:0;border-radius:0 0 14px 14px;z-index:6}
+    .doll.skin-bumble .cap,.doll.skin-bumble .cap:after{background:#111}
+    .doll.skin-bumble .tag{color:#c9a227}
+    .doll.skin-bumble .ep{display:block;position:absolute;top:36px;width:14px;height:7px;background:#c9a227;z-index:6}
+    .doll.skin-bumble .ep.l{left:2px}.doll.skin-bumble .ep.r{right:2px}
+    .doll.skin-bumble .belt{display:block;position:absolute;left:8px;top:62px;width:42px;height:6px;background:#c9a227;z-index:5}
+    .doll.skin-bumble .leg{background:#111}
+    .doll.skin-labuba .head{left:24px;width:30px;height:28px}
+    .doll.skin-labuba .eye.l{left:30px}.doll.skin-labuba .eye.r{left:44px}
+    .doll.skin-labuba .cap,.doll.skin-labuba .tag{left:18px}
+    .doll.skin-labuba .cap,.doll.skin-labuba .cap:after{background:#1a2a18}
+    .doll.skin-labuba .tag{color:#c9a227}
+    .doll.skin-labuba .shirt{left:4px;width:70px;height:44px;background:#4a5c34;border-radius:14px 14px 6px 6px}
+    .doll.skin-labuba .shirt:after{content:'';position:absolute;inset:8px 6px 10px;background:radial-gradient(circle at 20% 30%,#334226 4px,transparent 5px),radial-gradient(circle at 70% 50%,#2a3a22 4px,transparent 5px),radial-gradient(circle at 45% 80%,#5a6c40 4px,transparent 5px)}
+    .doll.skin-labuba .collar{left:4px;width:70px;background:#334226}
+    .doll.skin-labuba .belt{display:block;position:absolute;left:4px;top:68px;width:70px;height:7px;background:#2a2118;z-index:5}
+    .doll.skin-labuba .belt:after{content:'';position:absolute;left:30px;top:0;width:10px;height:7px;background:#c9a227}
+    .doll.skin-labuba .ep{display:block;position:absolute;top:36px;width:16px;height:8px;background:#c9a227;z-index:6}
+    .doll.skin-labuba .ep.l{left:0}.doll.skin-labuba .ep.r{right:0}
+    .doll.skin-labuba .ep:after{content:'';position:absolute;left:4px;top:2px;width:8px;height:3px;background:#7a1a1a}
+    .doll.skin-labuba .arm{background:#4a5c34}
+    .doll.skin-labuba .leg{background:#2f3a28}
+    .doll.skin-labuba .arm.l{left:-2px}.doll.skin-labuba .arm.r{right:-2px}
+    .doll.skin-labuba .leg.l{left:20px}.doll.skin-labuba .leg.r{right:20px}
+    .doll.skin-girl .hair{display:block;position:absolute;left:12px;top:6px;width:34px;height:28px;background:#f2d36b;border-radius:16px 16px 4px 4px;z-index:1}
+    .doll.skin-girl .cap,.doll.skin-girl .tag,.doll.skin-girl .collar{display:none}
+    .doll.skin-girl .shirt{background:#ff7ab0;border-radius:10px 10px 18px 18px;height:42px}
+    .doll.skin-girl .head,.doll.skin-girl .arm{background:#f7c9a8}
+    #hero{position:absolute;left:90px;width:58px;height:100px;pointer-events:none;z-index:5;margin-left:0}
+    #hero.shielded{filter:drop-shadow(0 0 8px #4df)}
+    #hero.armed .arm.r{visibility:hidden}
+    @keyframes legs{0%{transform:rotate(28deg)}50%{transform:rotate(-28deg)}100%{transform:rotate(28deg)}}
+    @keyframes arms{0%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}100%{transform:rotate(-24deg)}}
+  </style>
+</head>
+<body>
+<div id="wrap">
+<canvas id="c"></canvas>
+<div id="hero" class="doll idle skin-vega">
+  <div class="hair"></div><div class="cap"></div><div class="tag">ВЕГА</div>
+  <div class="head"></div><div class="eye l"></div><div class="eye r"></div>
+  <div class="arm l"></div><div class="arm r"></div>
+  <div class="shirt"></div><div class="collar"></div>
+  <div class="ep l"></div><div class="ep r"></div>
+  <div class="belt"></div><div class="chain"></div>
+  <div class="leg l"></div><div class="leg r"></div>
+</div>
+<div id="hud"><div><div id="score">0 м</div><div id="buff"></div></div><div id="best">лучший счет 0</div></div>
+<div id="cityTag"></div>
+<div id="overlay">
+  <div id="screen-title">
+    <h1>FUCKRUNNER</h1>
+    <p>Обычный скинхед живёт свою обычную жизнь.</p>
+    <button class="main" id="pickBtn">ВЫБЕРИ БОЙЦА</button>
+    <div class="hint">тап — прыжок, второй тап в воздухе — выше</div>
+  </div>
+  <div id="screen-pick">
+    <h1>ВЫБЕРИ БОЙЦА</h1>
+    <div class="grid" id="grid"></div>
+    <div class="sec">СЛОЖНОСТЬ</div>
+    <div class="diffs">
+      <button class="diff" data-diff="easy">СОСУНОК<small>медленно</small></button>
+      <button class="diff sel" data-diff="normal">РАБОТЯГА<small>нормально</small></button>
+      <button class="diff" data-diff="hard">КИБОРГ<small>быстро</small></button>
+    </div>
+    <button class="main" id="start" disabled>ПОГНАЛИ</button>
+  </div>
+</div>
+</div>
+<script>
+(()=>{
+const tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();try{tg.setHeaderColor('#2a1630');tg.setBackgroundColor('#1a1020')}catch(e){}}
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+const overlay=document.getElementById('overlay'),titleScr=document.getElementById('screen-title'),pickScr=document.getElementById('screen-pick');
+const startBtn=document.getElementById('start'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best');
+const buffEl=document.getElementById('buff'),cityTag=document.getElementById('cityTag'),heroEl=document.getElementById('hero');
+const CITIES=[{name:'ЕКАТЕРИНБУРГ',src:'../bg_far.jpg'},{name:'ТОЛЬЯТТИ',src:'../bg_tlt.jpg'},{name:'УЛЬЯНОВСК',src:'../bg_uln.jpg'},{name:'КАЗАНЬ',src:'../bg_kzn.jpg'},{name:'ЙОШКАР-ОЛА',src:'../bg_yosh.jpg'},{name:'САРАТОВ',src:'../bg_sar.jpg'},{name:'САМАРА',src:'../bg_sam.jpg'}];
+const cityImgs=CITIES.map(c=>{const im=new Image();im.src=c.src;return im});
+const FIGHTERS=[{id:'vega',name:'Вегамэн',tag:'ВЕГА'},{id:'bumble',name:'Бамбл Бизи',tag:'BEE'},{id:'labuba',name:'Лабуба',tag:'ЛАБ'},{id:'girl',name:'Вагина реалистик',tag:''}];
+const DIFF={easy:{start:230,acc:4.2,gapA:1.2,gapB:1.9},normal:{start:260,acc:7.2,gapA:.95,gapB:1.6},hard:{start:290,acc:11,gapA:.75,gapB:1.25}};
+let difficulty='normal';
+const grid=document.getElementById('grid');
+FIGHTERS.forEach(f=>{const b=document.createElement('button');b.className='card';b.dataset.id=f.id;b.innerHTML=`<div class="nm">${f.name}</div><div class="stage"><div class="doll skin-${f.id}"><div class="hair"></div><div class="cap"></div><div class="tag">${f.tag}</div><div class="head"></div><div class="eye l"></div><div class="eye r"></div><div class="arm l"></div><div class="arm r"></div><div class="shirt"></div><div class="collar"></div><div class="ep l"></div><div class="ep r"></div><div class="belt"></div><div class="chain"></div><div class="leg l"></div><div class="leg r"></div></div></div>`;grid.appendChild(b)});
+let W=0,H=0,dpr=1;
+function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false}
+addEventListener('resize',resize);resize();
+const BEST_KEY='fuckrunner_ekb_best';let best=parseInt(localStorage.getItem(BEST_KEY)||'0',10);
+function renderBest(){bestEl.textContent='лучший счет '+best}renderBest();
+let skin='';
+document.getElementById('pickBtn').onclick=()=>{titleScr.classList.add('hide');pickScr.classList.add('show')};
+document.querySelectorAll('.card').forEach(card=>{card.onclick=()=>{document.querySelectorAll('.card').forEach(c=>{c.classList.remove('sel');const d=c.querySelector('.doll');if(d)d.classList.remove('run')});card.classList.add('sel');card.querySelector('.doll').classList.add('run');skin=card.dataset.id;startBtn.disabled=false;applySkin()}});
+document.querySelectorAll('.diff').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('.diff').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');difficulty=btn.dataset.diff}});
+function applySkin(){heroEl.classList.remove('skin-vega','skin-bumble','skin-labuba','skin-girl');heroEl.classList.add('skin-'+skin);heroEl.querySelector('.tag').textContent=skin==='vega'?'ВЕГА':skin==='bumble'?'BEE':skin==='labuba'?'ЛАБ':'';player.w=skin==='labuba'?78:58}
+const state={running:false,over:false,t:0,speed:260,dist:0,gravity:2400,groundY:0,city:0};
+const player={x:90,y:0,vy:0,w:58,h:92,onGround:true,jumpsUsed:0};
+const obstacles=[],bits=[],bullets=[];let spawnTimer=0,shieldT=0,gunT=0,fireAcc=0,powerTimer=45;
+function toastCity(i){if(i===state.city)return;state.city=i;cityTag.textContent=CITIES[i].name;cityTag.style.opacity='1';clearTimeout(toastCity._t);toastCity._t=setTimeout(()=>cityTag.style.opacity='0',1800)}
+function reset(){const d=DIFF[difficulty]||DIFF.normal;state.running=true;state.over=false;state.t=0;state.speed=d.start;state.dist=0;state.city=-1;obstacles.length=0;bits.length=0;bullets.length=0;spawnTimer=.8;player.vy=0;player.onGround=true;player.jumpsUsed=0;shieldT=0;gunT=0;fireAcc=0;powerTimer=45;applySkin();overlay.style.display='none';toastCity(0)}
+function boom(x,y,col){for(let i=0;i<9;i++)bits.push({x,y,vx:(Math.random()-.5)*240,vy:-70-Math.random()*160,life:.4,col})}
+function jump(){if(!state.running||state.over||player.jumpsUsed>=2)return;player.vy=player.jumpsUsed===0?-820:-1160;player.onGround=false;player.jumpsUsed++}
+addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='ArrowUp'){e.preventDefault();if(state.running)jump()}});
+addEventListener('pointerdown',e=>{if(e.target.closest('#overlay'))return;if(state.running)jump()});
+const TRACKS=['ushet.mp3','../bogi.mp3','../gorod.mp3','../Chto.mp3','../Police.mp3','../Big.mp3'];
+let lastTrack=-1,musicOn=false,skipGuard=0;const music=new Audio();music.volume=.55;
+function playRandom(){let i=Math.floor(Math.random()*TRACKS.length);if(TRACKS.length>1&&i===lastTrack)i=(i+1)%TRACKS.length;lastTrack=i;music.src=TRACKS[i];music.play().then(()=>skipGuard=0).catch(()=>{})}
+music.addEventListener('ended',playRandom);music.addEventListener('error',()=>{if(skipGuard++>8)return;playRandom()});
+startBtn.onclick=e=>{e.stopPropagation();if(!skin)return;reset();if(!musicOn){musicOn=true;playRandom()}};
+function spawn(){const r=Math.random();if(r<.10&&state.dist>80)obstacles.push({type:'cop',x:W+50,y:0,w:36,h:70});else if(r<.18&&state.dist>140)obstacles.push({type:'btr',x:W+50,y:0,w:96,h:42});else if(r<.58)obstacles.push({type:'poop',x:W+40,y:0,w:46,h:38});else obstacles.push({type:'dick',x:W+40,y:0,flyY:70+Math.random()*90,w:52,h:22,wob:Math.random()*6.28})}
+function spawnPower(){if(Math.random()<.5)obstacles.push({type:'shield',x:W+40,y:0,w:36,h:36});else obstacles.push({type:'ak',x:W+40,y:0,w:40,h:22})}
+function powerY(h){return state.groundY-player.h-236-h/2}
+const hit=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+function gameOver(kind){state.over=true;state.running=false;const score=Math.floor(state.dist);if(score>best){best=score;localStorage.setItem(BEST_KEY,String(best));renderBest()}titleScr.classList.remove('hide');pickScr.classList.remove('show');overlay.querySelector('#screen-title h1').textContent=kind==='dick'?'Есть пробитие':kind==='cop'?'Права нахуй':kind==='btr'?'Под гусеницу':'Это конец, ты в говне';overlay.querySelector('#screen-title p').textContent='Обычная жизнь оборвалась на '+score+' м.';overlay.style.display='flex'}
+function cityWidth(img,h){if(img&&img.complete&&img.naturalWidth)return Math.max(W*1.15,h*(img.naturalWidth/img.naturalHeight));return W*1.15}
+function drawCities(gy){const h=gy+6;const widths=cityImgs.map(im=>cityWidth(im,h));const total=widths.reduce((a,b)=>a+b,0)||W;const scroll=(state.dist*0.55)%total;let x=-scroll;let seen=state.city;for(let n=0;n<CITIES.length*2;n++){const i=n%CITIES.length,w=widths[i],im=cityImgs[i];if(im&&im.complete&&im.naturalWidth)ctx.drawImage(im,Math.floor(x),0,Math.ceil(w)+1,Math.ceil(h));if(x<=W*.4&&x+w>W*.4)seen=i;x+=w;if(x>W+4)break}toastCity(seen)}
+function drawBackdrop(){const gy=state.groundY;const g=ctx.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#3a2460');g.addColorStop(1,'#c45a3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,gy);drawCities(gy);const roadH=Math.floor((H-gy)*.46);ctx.fillStyle='#4e4e56';ctx.fillRect(0,gy,W,roadH);ctx.fillStyle='#3d3d44';ctx.fillRect(0,gy,W,7);const dash=40,shift=(state.dist/0.12)%(dash*2);ctx.fillStyle='#6a6a72';for(let x=-dash;x<W+dash;x+=dash*2)ctx.fillRect(x-shift,gy+roadH*.46,18,3);ctx.fillStyle='#6e4e32';ctx.fillRect(0,gy+roadH,W,H-gy-roadH);ctx.fillStyle='#5a3e28';const tile=28,sh=(state.dist/0.12)%tile;for(let x=-tile;x<W+tile;x+=tile)ctx.fillRect(x-sh,gy+roadH+10,11,3)}
+function drawPoop(o){const x=o.x+o.w/2,y=o.y+o.h;ctx.save();ctx.translate(x,y);ctx.fillStyle='#5a2c10';ctx.beginPath();ctx.ellipse(0,-10,20,12,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(-4,-22,14,10,-.2,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(2,-32,9,8,.2,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(-6,-22,3,0,7);ctx.arc(4,-20,2.4,0,7);ctx.fill();ctx.fillStyle='#222';ctx.beginPath();ctx.arc(-6,-22,1.4,0,7);ctx.arc(4,-20,1.2,0,7);ctx.fill();ctx.restore()}
+function drawDick(o,t){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(t*6+o.wob)*6;ctx.save();ctx.translate(x,y);ctx.rotate(-.15+Math.sin(t*4+o.wob)*.12);ctx.fillStyle='#f0b48a';ctx.beginPath();ctx.roundRect(-22,-8,36,16,8);ctx.fill();ctx.fillStyle='#e08a8a';ctx.beginPath();ctx.ellipse(16,0,11,10,0,0,7);ctx.fill();ctx.fillStyle='#e0a07a';ctx.beginPath();ctx.ellipse(-20,6,8,7,0,0,7);ctx.ellipse(-12,8,8,7,0,0,7);ctx.fill();ctx.restore()}
+function drawShieldIcon(o){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(state.t*5)*4;ctx.save();ctx.translate(x,y);ctx.fillStyle='#1c6cff';ctx.beginPath();ctx.arc(0,0,16,0,7);ctx.fill();ctx.strokeStyle='#bfe6ff';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('S',0,1);ctx.restore()}
+function drawAkIcon(o){const x=o.x+o.w/2,y=o.y+o.h/2+Math.sin(state.t*5)*4;ctx.save();ctx.translate(x,y);ctx.rotate(-.25);ctx.fillStyle='#3a3a32';ctx.fillRect(-18,-4,36,8);ctx.fillStyle='#6b4a28';ctx.fillRect(-6,2,8,10);ctx.fillStyle='#c9a227';ctx.fillRect(12,-6,8,4);ctx.restore()}
+function drawCop(o){const x=o.x+o.w/2,y=o.y+o.h;ctx.save();ctx.translate(x,y);ctx.fillStyle='#1c3a7a';ctx.fillRect(-12,-52,24,36);ctx.fillStyle='#c9a227';ctx.fillRect(-14,-54,28,6);ctx.fillStyle='#f0b48a';ctx.beginPath();ctx.arc(0,-62,8,0,7);ctx.fill();ctx.fillStyle='#111';ctx.fillRect(-10,-70,20,8);ctx.fillStyle='#e8d24a';ctx.fillRect(10,-40,16,4);ctx.fillStyle='#2a2a2a';ctx.fillRect(-10,-16,8,16);ctx.fillRect(2,-16,8,16);ctx.restore()}
+function drawBtr(o){const x=o.x,y=o.y;ctx.fillStyle='#3f6b32';ctx.fillRect(x,y+10,o.w,o.h-10);ctx.fillStyle='#2d4f24';ctx.fillRect(x+28,y,40,16);ctx.fillStyle='#111';ctx.beginPath();ctx.arc(x+22,y+o.h,8,0,7);ctx.arc(x+o.w-18,y+o.h,8,0,7);ctx.fill();ctx.fillStyle='#8fd4ff';ctx.fillRect(x+34,y+4,12,8);ctx.fillRect(x+50,y+4,12,8)}
+function drawGun(){const px=player.x+player.w*.55,py=player.y+44;ctx.save();ctx.translate(px,py);ctx.rotate(-.12);ctx.fillStyle='#2c2c26';ctx.fillRect(0,-4,42,8);ctx.fillStyle='#5a3a20';ctx.fillRect(6,2,8,10);ctx.fillStyle='#111';ctx.fillRect(34,-6,10,4);ctx.restore()}
+let last=performance.now();
+function loop(now){const dt=Math.min(.033,(now-last)/1000);last=now;const d=DIFF[difficulty]||DIFF.normal;state.groundY=Math.floor(H*.70);if(player.onGround)player.y=state.groundY-player.h;
+if(state.running&&!state.over){state.t+=dt;state.speed+=d.acc*dt;state.dist+=state.speed*dt*.12;scoreEl.textContent=Math.floor(state.dist)+' м';shieldT=Math.max(0,shieldT-dt);gunT=Math.max(0,gunT-dt);const parts=[];if(shieldT>0)parts.push('ЩИТ '+Math.ceil(shieldT)+'с');if(gunT>0)parts.push('АК '+Math.ceil(gunT)+'с');buffEl.textContent=parts.join(' · ');
+player.vy+=state.gravity*(player.vy>0?2:1)*dt;player.y+=player.vy*dt;if(player.y>=state.groundY-player.h){player.y=state.groundY-player.h;player.vy=0;player.onGround=true;player.jumpsUsed=0}
+if(gunT>0){fireAcc+=dt;if(fireAcc>.09){fireAcc=0;const baseY=player.y+46;for(let k=-2;k<=2;k++){const ang=k*.16;bullets.push({x:player.x+player.w+8,y:baseY,vx:620*Math.cos(ang),vy:620*Math.sin(ang),life:.55})}}}
+spawnTimer-=dt;if(spawnTimer<=0){spawn();spawnTimer=d.gapA+Math.random()*(d.gapB-d.gapA)}powerTimer-=dt;if(powerTimer<=0){spawnPower();powerTimer=45}
+const pBox={x:player.x+8,y:player.y+12,w:player.w-16,h:player.h-16};
+for(let i=obstacles.length-1;i>=0;i--){const o=obstacles[i];o.x-=state.speed*dt;if(o.type==='dick')o.y=state.groundY-o.flyY-o.h;else if(o.type==='shield'||o.type==='ak')o.y=powerY(o.h)+Math.sin(state.t*5)*5;else o.y=state.groundY-o.h;const oBox={x:o.x+4,y:o.y+4,w:o.w-8,h:o.h-6};let shot=false;for(let b=bullets.length-1;b>=0;b--){const bu=bullets[b];if(o.type!=='shield'&&o.type!=='ak'&&hit({x:bu.x,y:bu.y,w:8,h:4},oBox)){boom(o.x+o.w/2,o.y,'#ffe08a');bullets.splice(b,1);shot=true;break}}if(shot){obstacles.splice(i,1);continue}if(hit(pBox,oBox)){if(o.type==='shield'){shieldT=15;boom(o.x,o.y,'#4df');obstacles.splice(i,1);continue}if(o.type==='ak'){gunT=15;boom(o.x,o.y,'#9f6');obstacles.splice(i,1);continue}if(shieldT>0){boom(o.x+o.w/2,o.y,'#fff');obstacles.splice(i,1);continue}gameOver(o.type)}if(o.x+o.w<-40)obstacles.splice(i,1)}
+for(let i=bullets.length-1;i>=0;i--){const b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;if(b.life<=0||b.x>W+20)bullets.splice(i,1)}}
+else player.y=state.groundY-player.h;
+for(let i=bits.length-1;i>=0;i--){const p=bits[i];p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=400*dt;if(p.life<=0)bits.splice(i,1)}
+drawBackdrop();
+for(const o of obstacles){if(o.type==='poop')drawPoop(o);else if(o.type==='dick')drawDick(o,state.t);else if(o.type==='shield')drawShieldIcon(o);else if(o.type==='ak')drawAkIcon(o);else if(o.type==='cop')drawCop(o);else if(o.type==='btr')drawBtr(o)}
+for(const b of bullets){ctx.fillStyle='#ffe08a';ctx.fillRect(b.x,b.y,10,3)}
+for(const p of bits){ctx.globalAlpha=Math.max(0,p.life*2);ctx.fillStyle=p.col;ctx.fillRect(p.x,p.y,5,5);ctx.globalAlpha=1}
+if(gunT>0&&state.running)drawGun();
+heroEl.classList.toggle('run',state.running&&!state.over&&player.onGround);
+heroEl.classList.toggle('idle',!state.running||state.over);
+heroEl.classList.toggle('shielded',shieldT>0);
+heroEl.classList.toggle('armed',gunT>0&&state.running);
+heroEl.style.left=player.x+'px';heroEl.style.top=player.y+'px';requestAnimationFrame(loop)}
+requestAnimationFrame(loop)})();
+</script>
+</body>
+</html>
